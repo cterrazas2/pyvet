@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pyvet"
+version = "0.1.0"
+description = "Python library to retrieve veteran data from the Department of Veterans Affairs"
+authors = ["cterrazas2 <12790854+cterrazas2@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.28.1"
+pandas = "^1.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
