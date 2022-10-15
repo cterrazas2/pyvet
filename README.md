@@ -26,11 +26,14 @@ To retrieve veteran data from the API, ensure your API key is set.
 You should store your API key in an environment variable or in the `creds.py` named, `API_KEY`.
 
 ## VA Facilities
-Here is a small example that grabs a list of all VA facilities:
+Here is a small example that grabs a list of all VA facilities.
 ```python
-from pyvet import facilities
+from pyvet.facilities.api import get_all_facilities, get_nearby_facilities
 
-nearby_facilities = facilities.get_nearby_facilities(
+all_facilities = get_all_facilities(print_csv_file=True)
+
+# or just nearby VA facilities and print a csv file
+nearby_facilities = get_nearby_facilities(
     address="", # optional
     city="Boston",
     state="MA",
@@ -38,32 +41,28 @@ nearby_facilities = facilities.get_nearby_facilities(
     drive_time=60,
     print_csv_file=True,
 )
-
-# or grab all VA facilities and print a csv file
-all_facilities = facilities.get_all_facilities(print_csv_file=True)
-
 ```
 ## VA Benefits Reference
 ```python
-from pyvet import benefits_reference
+from pyvet.benefits_reference.api import get_disabilities, get_intake_sites
 
 # All VA Disabilities info
-disabilities = benefits_reference.get_disabilities()
+disabilities = get_disabilities()
 
 # VA Intake Sites
-intake_sites = benefits_reference.get_intake_sites()
+intake_sites = get_intake_sites()
 
 ```
 
 ## VA Forms
 ```python
-from pyvet import forms
+from pyvet.forms.api import get_form, get_forms
 
 # All VA Forms
-all_forms = forms.get_forms()
+all_forms = get_forms()
 
 # Instructions and Enrollment Application for Health Benefits Form
-form = forms.get_form(form_name="10-10EZ")
+form = get_form(form_name="10-10EZ")
 
 ```
 

@@ -1,7 +1,7 @@
 import json
 import unittest
 from pyvet import creds
-from pyvet import forms
+from pyvet.forms.api import get_form, get_forms
 
 from tests.data.mock_forms_data import MOCK_FORM, MOCK_FORMS
 from unittest.mock import patch
@@ -15,12 +15,12 @@ class TestForms(unittest.TestCase):
         self.api_key = creds.API_KEY
         self.forms_url = creds.VA_SANDBOX_API + "va_forms/v0/forms"
 
-    @patch("pyvet.forms.requests.get")
+    @patch("pyvet.forms.api.requests.get")
     def test_get_form(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = form_json
         mock_form_name = "vha_506"
-        form = forms.get_form(form_name=mock_form_name)
+        form = get_form(form_name=mock_form_name)
         self.assertDictEqual(form, form_json)
         mock_get.assert_called_once_with(
             self.forms_url + f"/{mock_form_name}",
@@ -28,12 +28,12 @@ class TestForms(unittest.TestCase):
             headers=dict(apiKey=self.api_key),
         )
 
-    @patch("pyvet.forms.requests.get")
+    @patch("pyvet.forms.api.requests.get")
     def test_get_forms(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = forms_json
 
-        all_forms = forms.get_forms()
+        all_forms = get_forms()
         self.assertDictEqual(all_forms, forms_json)
         mock_get.assert_called_once_with(
             self.forms_url,
