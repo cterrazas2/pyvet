@@ -9,7 +9,7 @@ mock_confirmed = dict(veteran_status="confirmed")
 
 class TestVeteranConfirmation(unittest.TestCase):
     def setUp(self):
-        self.api_key = creds.API_KEY
+        self.headers = creds.API_KEY_HEADER
         self.confirmation_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"
 
     @patch("pyvet.veteran_confirmation.api.requests.post")
@@ -35,7 +35,7 @@ class TestVeteranConfirmation(unittest.TestCase):
                 middle_name="E",
                 gender="F",
             ),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
 

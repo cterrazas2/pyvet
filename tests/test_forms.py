@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 class TestForms(unittest.TestCase):
     def setUp(self):
-        self.api_key = creds.API_KEY
+        self.headers = creds.API_KEY_HEADER
         self.forms_url = creds.VA_SANDBOX_API + "va_forms/v0/forms"
 
     @patch("pyvet.forms.api.requests.get")
@@ -21,7 +21,7 @@ class TestForms(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.forms_url + f"/{mock_form_name}",
             params=dict(form_name=mock_form_name),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.forms.api.requests.get")
@@ -34,7 +34,7 @@ class TestForms(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.forms_url,
             params=dict(query=""),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
 

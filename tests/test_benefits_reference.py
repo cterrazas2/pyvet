@@ -27,7 +27,7 @@ from unittest.mock import patch
 
 class TestBenefitsReference(unittest.TestCase):
     def setUp(self):
-        self.api_key = creds.API_KEY
+        self.headers = creds.API_KEY_HEADER
         self.benefits_reference_url = (
             creds.VA_SANDBOX_API + "benefits-reference-data/v1/"
         )
@@ -40,7 +40,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(contention_types, MOCK_CONTENTION)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "contention-types",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -52,7 +52,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(countries, MOCK_COUNTRIES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "countries",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -64,7 +64,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(disabilities, MOCK_DISABILITIES_DATA)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "disabilities",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -76,7 +76,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(intake_sites, MOCK_INTAKE_SITES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "intake-sites",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -88,7 +88,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(mil_pay_types, MOCK_MILITARY_PAY_TYPES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "military-pay-types",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -100,7 +100,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(branches, MOCK_SERVICE_BRANCES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "service-branches",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -112,7 +112,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(special, MOCK_SPECIAL_CIRCUMSTANCES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "special-circumstances",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -124,7 +124,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(states, MOCK_STATES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "states",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.benefits_reference.api.requests.get")
@@ -136,7 +136,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(centers, MOCK_TREATMENT_CENTERS)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "treatment-centers",
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
 

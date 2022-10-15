@@ -19,7 +19,7 @@ from unittest.mock import patch
 
 class TestFacilities(unittest.TestCase):
     def setUp(self):
-        self.api_key = creds.API_KEY
+        self.headers = creds.API_KEY_HEADER
         self.facilities_url = creds.VA_SANDBOX_API + "va_facilities/v0/"
 
     @patch("pyvet.facilities.api.requests.get")
@@ -32,7 +32,7 @@ class TestFacilities(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.facilities_url + f"facilities/{mock_id}",
             params=dict(id=mock_id),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.facilities.api.requests.get")
@@ -45,7 +45,7 @@ class TestFacilities(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities/all",
             params=dict(Accept="application/geo+json"),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.facilities.api.requests.get")
@@ -58,7 +58,7 @@ class TestFacilities(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.facilities_url + "ids",
             params=dict(type="health"),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.facilities.api.requests.get")
@@ -87,7 +87,7 @@ class TestFacilities(unittest.TestCase):
                 zip=mock_zip,
                 drive_time=mock_drive_time,
             ),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
     @patch("pyvet.facilities.api.requests.get")
@@ -123,7 +123,7 @@ class TestFacilities(unittest.TestCase):
                 visn=0,
                 zip=92056,
             ),
-            headers=dict(apiKey=self.api_key),
+            headers=self.headers,
         )
 
 
