@@ -7,7 +7,7 @@ from unittest.mock import patch
 mock_confirmed = dict(veteran_status="confirmed")
 
 
-class TestForms(unittest.TestCase):
+class TestVeteranConfirmation(unittest.TestCase):
     def setUp(self):
         self.api_key = creds.API_KEY
         self.forms_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"

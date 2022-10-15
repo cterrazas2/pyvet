@@ -25,7 +25,7 @@ from tests.data.mock_benefits_reference import (
 from unittest.mock import patch
 
 
-class BenefitsReference(unittest.TestCase):
+class TestBenefitsReference(unittest.TestCase):
     def setUp(self):
         self.api_key = creds.API_KEY
         self.benefits_reference_url = (

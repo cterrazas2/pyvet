@@ -17,7 +17,7 @@ from tests.data.mock_facilities import (
 from unittest.mock import patch
 
 
-class TestFacility(unittest.TestCase):
+class TestFacilities(unittest.TestCase):
     def setUp(self):
         self.api_key = creds.API_KEY
         self.facilities_url = creds.VA_SANDBOX_API + "va_facilities/v0/"
