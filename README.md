@@ -13,7 +13,7 @@ apis:
 -  Health API
 -  Veteran Verification API
 
-You can find more information about these APIS and request API access [here]("https://developer.va.gov/explore/").
+You can find more information about these APIS and request API access [here](https://developer.va.gov/explore/).
 
 ## Install
 To install the package use:
