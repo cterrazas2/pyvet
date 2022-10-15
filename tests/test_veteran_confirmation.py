@@ -10,7 +10,7 @@ mock_confirmed = dict(veteran_status="confirmed")
 class TestVeteranConfirmation(unittest.TestCase):
     def setUp(self):
         self.api_key = creds.API_KEY
-        self.forms_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"
+        self.confirmation_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"
 
     @patch("pyvet.veteran_confirmation.api.requests.post")
     def test_get_status(self, mock_get):
@@ -26,7 +26,7 @@ class TestVeteranConfirmation(unittest.TestCase):
         )
         self.assertDictEqual(vet_status, mock_confirmed)
         mock_get.assert_called_once_with(
-            self.forms_url + "status",
+            self.confirmation_url + "status",
             json=dict(
                 ssn="796-13-0115",
                 first_name="Tamara",
