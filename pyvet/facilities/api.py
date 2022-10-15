@@ -114,18 +114,91 @@ def get_nearby(
         logging.error(e)
 
 
-def get_facilities_bbox():
-    """Gets all VA Facilities within a bounding box, with optional params.
+def get_facilities_by_query(
+    bbox: list,
+    ids: list,
+    lat: float,
+    long: float,
+    radius: float,
+    type: str,
+    services: list,
+    mobile: bool,
+    state: str,
+    visn: int,
+    zip_code: str,
+):
+    """Gets all VA Facilities with optional query parameters.
+    Parameters
+    ----------
+    bbox : list
+        The bbox to limit the query.
+    ids : list
+        The ids to limit the query.
+    lat: float
+        Latitude for the query.
+    long: float
+        Longitude for th query.
+    radius: float
+        Radius size to set.
+    type: str
+        Type of facilities of ["health", "benefits", "cemetery", "vet_center"]
+    services: list
+        Service types to filter query.
+    mobile: bool
+        For mobile search filter.
+    state: str
+        State to query.
+    visn: int
+        VISN search of matching facilities.
+    zip_code: str
+        Zip code to search for facilities.
     Returns
     -------
     r : json
         Response in json format.
     """
-    params = dict(zip="92083")
+    retries = 0
+    params = dict(
+        bbox=bbox,
+        ids=ids,
+        lat=lat,
+        long=long,
+        radius=radius,
+        type=type,
+        services=services,
+        mobile=mobile,
+        state=state,
+        visn=visn,
+        zip=zip_code,
+    )
     bbox_url = FACILITIES_URL + "/facilities"
-    r = requests.get(bbox_url, params=params, headers=API_KEY_HEADER)
-    r.raise_for_status()
-    return r.json()
+    try:
+        r = requests.get(bbox_url, params=params, headers=API_KEY_HEADER)
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            get_facilities_by_query(
+                bbox,
+                ids,
+                lat,
+                long,
+                radius,
+                type,
+                services,
+                mobile,
+                state,
+                visn,
+                zip_code,
+            )
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def get_all(print_csv_file: bool = False):

@@ -1,0 +1,43 @@
+import unittest
+from pyvet import creds
+from pyvet.veteran_confirmation.api import get_status
+
+from unittest.mock import patch
+
+mock_confirmed = dict(veteran_status="confirmed")
+
+
+class TestForms(unittest.TestCase):
+    def setUp(self):
+        self.api_key = creds.API_KEY
+        self.forms_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"
+
+    @patch("pyvet.veteran_confirmation.api.requests.post")
+    def test_get_status(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = mock_confirmed
+        vet_status = get_status(
+            ssn="796-13-0115",
+            first_name="Tamara",
+            last_name="Ellis",
+            birth_date="1967-06-19",
+            middle_name="E",
+            gender="F",
+        )
+        self.assertDictEqual(vet_status, mock_confirmed)
+        mock_get.assert_called_once_with(
+            self.forms_url + "status",
+            json=dict(
+                ssn="796-13-0115",
+                first_name="Tamara",
+                last_name="Ellis",
+                birth_date="1967-06-19",
+                middle_name="E",
+                gender="F",
+            ),
+            headers=dict(apiKey=self.api_key),
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

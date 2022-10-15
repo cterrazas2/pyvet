@@ -1,27 +1,12 @@
 """
 Veteran Verification API: https://developer.va.gov/explore/verification
 """
+import logging
 import requests
 
 from pyvet.creds import API_KEY_HEADER, API_URL
 
-CONFIRMATION_URL = API_URL + "veteran_confirmation/v0/"
-VERIFICATION_URL = API_URL + "veteran_verification/v0/"
-
-
-def get_status(ssn, first_name, last_name, birth_date, middle_name="", gender="M"):
-    """Gets a veteran's status."""
-    status_url = CONFIRMATION_URL + "status"
-    print(f"status url = {status_url}")
-    params = dict(
-        ssn=ssn,
-        first_name=first_name,
-        last_name=last_name,
-        birth_date=birth_date,
-        middle_name=middle_name,
-        gender=gender,
-    )
-    return requests.get(status_url, params=params, headers=API_KEY_HEADER).json()
+VERIFICATION_URL = API_URL + "veteran_verification/v1/"
 
 
 def get_service_history():
@@ -36,7 +21,7 @@ def get_disability_rating():
     return requests.get(disability_rating_url)
 
 
-def send_status(ssn, gender, ln, bd, fn, mn):
+def get_status(ssn, gender, ln, bd, fn, mn):
     """Sends a veteran's confirmation status with required params."""
     data = dict(
         ssn=ssn,
@@ -46,5 +31,5 @@ def send_status(ssn, gender, ln, bd, fn, mn):
         first_name=fn,
         middle_name=mn,
     )
-    status_url = CONFIRMATION_URL + "/status"
+    status_url = VERIFICATION_URL + "/status"
     return requests.post(status_url, data=data)
