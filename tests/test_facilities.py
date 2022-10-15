@@ -21,7 +21,6 @@ class TestFacility(unittest.TestCase):
     def setUp(self):
         self.api_key = creds.API_KEY
         self.facilities_url = creds.VA_SANDBOX_API + "va_facilities/v0/"
-        self.maxDiff = None
 
     @patch("pyvet.facilities.api.requests.get")
     def test_get_facility(self, mock_get):
