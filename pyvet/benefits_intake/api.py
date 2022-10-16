@@ -1,37 +1,50 @@
 """
 Benefits Intake API: https://developer.va.gov/explore/benefits/docs/benefits?version=current
 """
-import requests
+import logging
 
+import requests
+from pprint import pprint
 from pyvet.creds import API_KEY_HEADER, API_URL
 
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
-def create_path_and_upload_file():
-    """Creates a path and then uploads a file.
+def create_path_to_upload_file():
+    """Creates a path to upload a file.
     Returns
     -------
     r : json
         Response in json format.
     """
+    retries = 0
     ref_url = BENEFITS_INTAKE_URL + "uploads"
-    r = requests.post(ref_url, headers=API_KEY_HEADER)
-    r.raise_for_status()
-    r = r.json()
-    print(f"request = {r}")
-    attrs = r.get("data_json").get("attributes")
-    params = {**attrs}
-    upload_file(params=params)
-    return r.json()
+    try:
+        r = requests.post(ref_url, headers=API_KEY_HEADER)
+        r.raise_for_status()
+        r = r.json()
+        return r
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            create_path_to_upload_file()
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
-def upload_file(params):
+def upload_file(params, files):
     """Upload a file for benefit intake.
     Parameters
     ----------
     params : dict
         The params to submit with the file upload.
+    files: str
+        Pointer to files.
 
     Returns
     -------
@@ -39,11 +52,27 @@ def upload_file(params):
         Response in json format.
     """
     ref_url = BENEFITS_INTAKE_URL + "path"
-    print(f"params = {params}")
-    r = requests.put(ref_url, data=params, headers=API_KEY_HEADER)
-    print(f"upload_file request = {r}")
-    r.raise_for_status()
-    return r.json()
+    retries = 0
+    try:
+        r = requests.put(params.get("location"), files=files)
+        print(r.request.headers)
+        print(r.request.body)
+        r.raise_for_status()
+        if r.status_code == 200:
+            return r
+        else:
+            logging.error(f"Invalid Response status code of {r.status_code}")
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            upload_file(params)
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def bulk_status_report():

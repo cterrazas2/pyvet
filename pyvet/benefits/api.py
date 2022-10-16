@@ -1,6 +1,7 @@
 """
 Benefits API: https://developer.va.gov/explore/benefits/docs/claims?version=current
 """
+import logging
 import requests
 
 from pyvet.creds import API_KEY_HEADER, API_URL
@@ -28,12 +29,12 @@ def get_claims(ssn, fn, ln):
     return requests.get(claims_url, params=payload)
 
 
-def get_claim(vet_id, ssn, fn, ln):
+def get_claim(claim_id, ssn="", fn="", ln=""):
     """Gets a claim for a veteran by an id, with required params.
     Parameters
     ----------
-    vet_id : str
-        Veteran id for claim.
+    claim_id : str
+        I for claim.
     ssn : str
         Veteran's ssn for claim.
     fn : str
@@ -43,14 +44,29 @@ def get_claim(vet_id, ssn, fn, ln):
     Returns
     -------
     """
-    payload = {
-        "id": vet_id,
-        "X-VA-SSN": ssn,
-        "X-VA-First-Name": fn,
-        "X-VA-Last-Name": ln,
-    }
-    claim_url = CLAIMS_URL + "/claims/" + vet_id
-    return requests.get(claim_url, params=payload)
+    retries = 0
+    claim_url = CLAIMS_URL + "/claims/" + claim_id
+    claim_headers = dict(**API_KEY_HEADER)
+    claim_headers["id"] = claim_id
+    claim_headers["X-VA-SSN"] = ssn
+    claim_headers["X-VA-First-Name"] = fn
+    claim_headers["X-VA-Last-Name"] = ln
+    try:
+        r = requests.get(claim_url, headers=claim_headers)
+        r.raise_for_status()
+        r = r.json()
+        return r
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            get_claim(claim_id, ssn, fn, ln)
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def submit_claim(ssn, fn, ln, bd):
