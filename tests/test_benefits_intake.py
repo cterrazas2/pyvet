@@ -12,7 +12,7 @@ mock_create_path = dict(
             status="pending",
             code="string",
             detail="string",
-            location="https://sandbox-api.va.gov/services_user_content/vba_documents/{idpath}",
+            location="https://sandbox-api.va.gov/services_user_content/vba_documents/some-random-id",
             updated_at="2018-07-30T17:31:15.958Z",
             uploaded_pdf=None,
         ),
