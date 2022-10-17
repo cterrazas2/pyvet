@@ -75,17 +75,35 @@ def upload_file(params, files):
         logging.error(e)
 
 
-def bulk_status_report():
+def bulk_status_report(guids: list):
     """Retrieves a bulk status report of all reports uploaded.
+    Parameters
+    ----------
+    guids : list
+        The list of guids to get a status.
     Returns
     -------
     r : json
         Response in json format.
     """
-    ref_url = BENEFITS_INTAKE_URL + "uploads/report"
-    r = requests.post(ref_url, headers=API_KEY_HEADER)
-    r.raise_for_status()
-    return r.json()
+    retries = 0
+    status_url = BENEFITS_INTAKE_URL + "uploads/report"
+    try:
+        r = requests.post(status_url, json=dict(ids=guids), headers=API_KEY_HEADER)
+        r.raise_for_status()
+        r = r.json()
+        return r
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            bulk_status_report(guids)
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def get_uploaded_document(doc_id):
@@ -100,10 +118,24 @@ def get_uploaded_document(doc_id):
     r : json
         Response in json format.
     """
+    retries = 0
     ref_url = BENEFITS_INTAKE_URL + f"uploads/{doc_id}"
-    r = requests.get(ref_url, headers=API_KEY_HEADER)
-    r.raise_for_status()
-    return r.json()
+    try:
+        r = requests.get(ref_url, headers=API_KEY_HEADER)
+        r.raise_for_status()
+        r = r.json()
+        return r
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            bulk_status_report(guids)
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def download_uploaded_document(doc_id):
@@ -117,7 +149,21 @@ def download_uploaded_document(doc_id):
     r : json
         Response in json format.
     """
+    retries = 0
     ref_url = BENEFITS_INTAKE_URL + f"uploads/{doc_id}/download"
-    r = requests.get(ref_url, headers=API_KEY_HEADER)
-    r.raise_for_status()
-    return r.json()
+    try:
+        r = requests.get(ref_url, headers=API_KEY_HEADER)
+        r.raise_for_status()
+        r = r.json()
+        return r
+    except requests.exceptions.Timeout as e:
+        if retries < 4:
+            retries += 1
+            logging.error(f"Connection timeout, retry #{retries}")
+            bulk_status_report(guids)
+        else:
+            logging.error(e)
+    except requests.exceptions.TooManyRedirects as e:
+        logging.error(e)
+    except requests.exceptions.RequestException as e:
+        logging.error(e)

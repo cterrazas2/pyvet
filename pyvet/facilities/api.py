@@ -82,17 +82,15 @@ def get_nearby(
         if print_csv_file:
             i = 1
             output_file = "nearby.csv"
-            for facility in r.get("data_json"):
-                f = get_facility(facility.get("id")).get("data_json").get("attributes")
+            for facility in r.get("data"):
+                f = get_facility(facility.get("id")).get("data").get("attributes")
                 pd_norm = pd.json_normalize(f)
                 if i == 1:
                     pd_norm.to_csv(output_file)
                 else:
                     pd_norm.to_csv(output_file, mode="a", header=False)
                 i += 1
-            logging.info(
-                "Success: Nearby VA Facilities data_json populated in nearby.csv."
-            )
+            logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
         return r
     except requests.exceptions.Timeout as e:
         if retries < 4:
@@ -230,9 +228,7 @@ def get_all(print_csv_file: bool = False):
                 else:
                     pd_norm.to_csv(output_file, mode="a", header=False)
                 i += 1
-            logging.info(
-                "Success: Facilities data_json populated in all_va_facilities.csv."
-            )
+            logging.info("Success: Facilities data populated in all_va_facilities.csv.")
         return r
     except requests.exceptions.Timeout as e:
         if retries < 4:
