@@ -37,7 +37,7 @@ def create_path_to_upload_file():
         logging.error(e)
 
 
-def upload_file(params, files):
+def upload_file(params: dict, files: str):
     """Upload a file for benefit intake.
     Parameters
     ----------
@@ -106,7 +106,7 @@ def bulk_status_report(guids: list):
         logging.error(e)
 
 
-def get_uploaded_document(doc_id):
+def get_uploaded_document(doc_id: str):
     """Get an uploaded document.
     Parameters
     ----------
@@ -138,7 +138,7 @@ def get_uploaded_document(doc_id):
         logging.error(e)
 
 
-def download_uploaded_document(doc_id):
+def download_uploaded_document(doc_id: str):
     """Downloads a previously uploaded document.
     Parameters
     ----------

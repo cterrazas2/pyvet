@@ -22,12 +22,12 @@ CONFIRMATION_URL = API_URL + "veteran_confirmation/v0/"
 
 
 def get_status(
-    ssn="796-13-0115",
-    first_name="Tamara",
-    last_name="Ellis",
-    birth_date="1967-06-19",
-    middle_name="E",
-    gender="F",
+    ssn: str = "796-13-0115",
+    first_name: str = "Tamara",
+    last_name: str = "Ellis",
+    birth_date: str = "1967-06-19",
+    middle_name: str = "E",
+    gender: str = "F",
 ):
     """Gets a veteran's status."""
     retries = 0

@@ -9,7 +9,7 @@ from pyvet.creds import API_KEY_HEADER, API_URL
 FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
-def get_forms(query=""):
+def get_forms(query: str = ""):
     """Gets forms or filtered with optional params.
     Parameters
     ----------
