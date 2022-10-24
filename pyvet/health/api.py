@@ -5,7 +5,8 @@ import logging
 
 import requests
 
-from pyvet.creds import API_KEY_HEADER, API_URL
+from pyvet.creds import API_URL
+from pyvet.client import current_session as session
 
 HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
@@ -59,30 +60,10 @@ def get_location(
         "_count": count,
     }
     ids_url = HEALTH_URL + "Location"
-    retries = 0
     try:
-        r = requests.get(ids_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(ids_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_location(
-                practitioner_id,
-                identifier,
-                address,
-                city,
-                state,
-                zip_code,
-                name,
-                page,
-                count,
-            )
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -99,20 +80,10 @@ def get_location_by_id(resource_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000")
         Response in json format.
     """
     ids_url = HEALTH_URL + f"Location/{resource_id}"
-    retries = 0
     try:
-        r = requests.get(ids_url, headers=API_KEY_HEADER)
+        r = session.get(ids_url)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_location_by_id(resource_id)
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -166,30 +137,10 @@ def get_organization(
         "_count": count,
     }
     org_url = HEALTH_URL + "Organization"
-    retries = 0
     try:
-        r = requests.get(org_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(org_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_organization(
-                org_id,
-                identifier,
-                address,
-                city,
-                state,
-                zip_code,
-                name,
-                page,
-                count,
-            )
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -206,20 +157,10 @@ def get_organization_by_id(org_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
         Response in json format.
     """
     org_url = HEALTH_URL + f"Organization/{org_id}"
-    retries = 0
     try:
-        r = requests.get(org_url, headers=API_KEY_HEADER)
+        r = session.get(org_url)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_organization_by_id(org_id)
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -265,28 +206,10 @@ def get_practitioner(
         "_count": count,
     }
     pr_role_url = HEALTH_URL + "Practitioner"
-    retries = 0
     try:
-        r = requests.get(pr_role_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(pr_role_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_practitioner(
-                resource_id,
-                prac_id,
-                family,
-                given,
-                name,
-                page,
-                count,
-            )
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -303,20 +226,10 @@ def get_practitioner_by_id(pr_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000"):
         Response in json format.
     """
     pr_id_url = HEALTH_URL + f"Practitioner/{pr_id}"
-    retries = 0
     try:
-        r = requests.get(pr_id_url, headers=API_KEY_HEADER)
+        r = session.get(pr_id_url)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_practitioner_by_id(pr_id)
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -354,26 +267,10 @@ def get_practitioner_role(
         "_count": count,
     }
     pr_role_url = HEALTH_URL + "PractitionerRole"
-    retries = 0
     try:
-        r = requests.get(pr_role_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(pr_role_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_practitioner_role(
-                resource_id,
-                prac_id,
-                prac_name,
-                page,
-                count,
-            )
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -392,19 +289,9 @@ def get_practitioner_role_by_id(
         Response in json format.
     """
     pr_role_id_url = HEALTH_URL + f"PractitionerRole/{pr_role_id}"
-    retries = 0
     try:
-        r = requests.get(pr_role_id_url, headers=API_KEY_HEADER)
+        r = session.get(pr_role_id_url)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_practitioner_role_by_id(pr_role_id)
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)

@@ -1,4 +1,5 @@
 import unittest
+from requests import Session
 from pyvet import creds
 from pyvet.health.api import (
     get_location,
@@ -23,15 +24,16 @@ from tests.data.mock_health_data import (
 from unittest.mock import patch
 
 
+@patch.object(Session, "get", headers=creds.API_KEY_HEADER)
 class TestHealthProviderDirectory(unittest.TestCase):
     def setUp(self):
         self.headers = creds.API_KEY_HEADER
         self.health_url = creds.VA_SANDBOX_API + "provider-directory/v0/r4/"
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_location(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_LOCATION
+        assert mock_get.headers == self.headers
         mock_params = dict(
             practitioner_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
@@ -58,25 +60,23 @@ class TestHealthProviderDirectory(unittest.TestCase):
                 "page": 1,
                 "_count": 30,
             },
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_location_by_id(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_LOCATION_ID
+        assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
         location = get_location_by_id(resource_id=mock_id)
         self.assertDictEqual(location, MOCK_LOCATION_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"Location/{mock_id}",
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_organization(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_ORG
+        assert mock_get.headers == self.headers
         mock_params = dict(
             org_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
@@ -103,25 +103,23 @@ class TestHealthProviderDirectory(unittest.TestCase):
                 "page": 1,
                 "_count": 30,
             },
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_organization_by_id(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_ORG_ID
+        assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
         organization = get_organization_by_id(org_id=mock_id)
         self.assertDictEqual(organization, MOCK_ORG_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"Organization/{mock_id}",
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_practitioner(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER
+        assert mock_get.headers == self.headers
         mock_params = dict(
             resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             prac_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
@@ -144,25 +142,23 @@ class TestHealthProviderDirectory(unittest.TestCase):
                 "page": 1,
                 "_count": 30,
             },
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_practitioner_by_id(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ID
+        assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
         practitioner = get_practitioner_by_id(pr_id=mock_id)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"Practitioner/{mock_id}",
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_practitioner_role(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ROLE
+        assert mock_get.headers == self.headers
         mock_params = dict(
             resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             prac_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
@@ -181,19 +177,17 @@ class TestHealthProviderDirectory(unittest.TestCase):
                 "page": 1,
                 "_count": 30,
             },
-            headers=self.headers,
         )
 
-    @patch("pyvet.health.api.requests.get")
     def test_get_practitioner_role_by_id(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ROLE_ID
+        assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
         practitioner = get_practitioner_role_by_id(pr_role_id=mock_id)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER_ROLE_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"PractitionerRole/{mock_id}",
-            headers=self.headers,
         )
 
 

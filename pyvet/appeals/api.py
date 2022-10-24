@@ -8,7 +8,7 @@ from pyvet.creds import API_KEY_HEADER, API_URL
 APPEALS_URL = API_URL + "appeals/v0/appeals"
 
 
-def get_appeals(vet_ssn, username):
+def get_appeals(vet_ssn: str, username: str):
     """Gets appeals for a veteran for a user with optional params.
     Parameters
     ----------

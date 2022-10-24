@@ -1,21 +1,23 @@
 import unittest
 from pyvet import creds
 from pyvet.veteran_confirmation.api import get_status
+from requests import Session
 
 from unittest.mock import patch
 
 mock_confirmed = dict(veteran_status="confirmed")
 
 
+@patch.object(Session, "post", headers=creds.API_KEY_HEADER)
 class TestVeteranConfirmation(unittest.TestCase):
     def setUp(self):
         self.headers = creds.API_KEY_HEADER
         self.confirmation_url = creds.VA_SANDBOX_API + "veteran_confirmation/v0/"
 
-    @patch("pyvet.veteran_confirmation.api.requests.post")
-    def test_get_status(self, mock_get):
-        mock_get.return_value.status_code = 200
-        mock_get.return_value.json.return_value = mock_confirmed
+    def test_get_status(self, mock_post):
+        mock_post.return_value.status_code = 200
+        mock_post.return_value.json.return_value = mock_confirmed
+        assert mock_post.headers == self.headers
         vet_status = get_status(
             ssn="796-13-0115",
             first_name="Tamara",
@@ -25,7 +27,7 @@ class TestVeteranConfirmation(unittest.TestCase):
             gender="F",
         )
         self.assertDictEqual(vet_status, mock_confirmed)
-        mock_get.assert_called_once_with(
+        mock_post.assert_called_once_with(
             self.confirmation_url + "status",
             json=dict(
                 ssn="796-13-0115",
@@ -35,7 +37,6 @@ class TestVeteranConfirmation(unittest.TestCase):
                 middle_name="E",
                 gender="F",
             ),
-            headers=self.headers,
         )
 
 

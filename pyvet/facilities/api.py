@@ -5,7 +5,8 @@ import logging
 import pandas as pd
 import requests
 
-from pyvet.creds import API_KEY_HEADER, API_URL
+from pyvet.creds import API_URL
+from pyvet.client import current_session as session
 
 FACILITIES_URL = API_URL + "va_facilities/v0"
 
@@ -19,20 +20,10 @@ def get_ids():
     """
     params = dict(type="health")
     ids_url = FACILITIES_URL + "/ids"
-    retries = 0
     try:
-        r = requests.get(ids_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(ids_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.info(f"Connection timeout, retry #{retries}")
-            get_ids()
-        else:
-            print(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -66,7 +57,6 @@ def get_nearby(
     r : json
         Response in json format.
     """
-    retries = 0
     params = dict(
         street_address=address,
         city=city,
@@ -76,7 +66,7 @@ def get_nearby(
     )
     nearby_url = FACILITIES_URL + "/nearby"
     try:
-        r = requests.get(nearby_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(nearby_url, params=params)
         r.raise_for_status()
         r = r.json()
         if print_csv_file:
@@ -92,22 +82,6 @@ def get_nearby(
                 i += 1
             logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
         return r
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.error(f"Connection timeout, retry #{retries}")
-            get_nearby(
-                address,
-                city,
-                state,
-                zip_code,
-                drive_time,
-                print_csv_file,
-            )
-        else:
-            logging.error(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -155,7 +129,6 @@ def get_facilities_by_query(
     r : json
         Response in json format.
     """
-    retries = 0
     params = dict(
         bbox=bbox,
         ids=ids,
@@ -171,30 +144,9 @@ def get_facilities_by_query(
     )
     bbox_url = FACILITIES_URL + "/facilities"
     try:
-        r = requests.get(bbox_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(bbox_url, params=params)
         r.raise_for_status()
         return r.json()
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.error(f"Connection timeout, retry #{retries}")
-            get_facilities_by_query(
-                bbox,
-                ids,
-                lat,
-                long,
-                radius,
-                type,
-                services,
-                mobile,
-                state,
-                visn,
-                zip_code,
-            )
-        else:
-            logging.error(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -213,9 +165,8 @@ def get_all(print_csv_file: bool = False):
     """
     params = dict(Accept="application/geo+json")
     all_url = FACILITIES_URL + "/facilities/all"
-    retries = 0
     try:
-        r = requests.get(all_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(all_url, params=params)
         r.raise_for_status()
         r = r.json()
         if print_csv_file:
@@ -230,15 +181,6 @@ def get_all(print_csv_file: bool = False):
                 i += 1
             logging.info("Success: Facilities data populated in all_va_facilities.csv.")
         return r
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.error(f"Connection timeout, retry #{retries}")
-            get_all(print_csv_file)
-        else:
-            logging.error(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -255,22 +197,15 @@ def get_facility(f_id: str):
     r : json
         Response in json format.
     """
-    retries = 0
     params = dict(id=f_id)
     facility_url = FACILITIES_URL + "/facilities/" + f_id
     try:
-        r = requests.get(facility_url, params=params, headers=API_KEY_HEADER)
+        r = session.get(
+            facility_url,
+            params=params,
+        )
         r.raise_for_status()
         r = r.json()
         return r
-    except requests.exceptions.Timeout as e:
-        if retries < 4:
-            retries += 1
-            logging.error(f"Connection timeout, retry #{retries}")
-            get_facility(f_id)
-        else:
-            logging.error(e)
-    except requests.exceptions.TooManyRedirects as e:
-        logging.error(e)
     except requests.exceptions.RequestException as e:
         logging.error(e)

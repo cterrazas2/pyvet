@@ -1,4 +1,5 @@
 import unittest
+from requests import Session
 from pyvet import creds
 from pyvet.benefits_intake.api import (
     create_path_to_upload_file,
@@ -82,17 +83,18 @@ class TestBenefitsIntake(unittest.TestCase):
         self.headers = creds.API_KEY_HEADER
         self.benefits_intake_url = creds.VA_SANDBOX_API + "vba_documents/v1/"
 
-    @patch("pyvet.benefits_intake.api.requests.post")
+    @patch.object(Session, "post", headers=creds.API_KEY_HEADER)
     def test_create_path_to_upload_files(self, mock_post):
         mock_post.return_value.status_code = 200
         mock_post.return_value.json.return_value = mock_create_path
+        assert mock_post.headers == self.headers
         resp = create_path_to_upload_file()
         self.assertDictEqual(resp, mock_create_path)
         mock_post.assert_called_once_with(
-            self.benefits_intake_url + "uploads", headers=self.headers
+            self.benefits_intake_url + "uploads",
         )
 
-    @patch("pyvet.benefits_intake.api.requests.put")
+    @patch.object(Session, "put", headers=creds.API_KEY_HEADER)
     def test_upload_file(self, mock_put):
         mock_put.return_value.status_code = 200
         mock_files = (
@@ -100,6 +102,7 @@ class TestBenefitsIntake(unittest.TestCase):
             ("file_2", (None, "more text")),
             ("file_3", (None, "and more text")),
         )
+        assert mock_put.headers == self.headers
         mock_params = dict(
             guid="6d8433c1-cd55-4c24-affd-f592287a7572",
             status="pending",
@@ -116,41 +119,41 @@ class TestBenefitsIntake(unittest.TestCase):
             files=mock_files,
         )
 
-    @patch("pyvet.benefits_intake.api.requests.post")
+    @patch.object(Session, "post", headers=creds.API_KEY_HEADER)
     def test_bulk_status_report(self, mock_post):
         mock_post.return_value.status_code = 200
         mock_post.return_value.json.return_value = mock_bulk
+        assert mock_post.headers == self.headers
         mock_guids = ["6d8433c1-cd55-4c24-affd-f592287a7572"]
         bulk = bulk_status_report(guids=mock_guids)
         self.assertDictEqual(bulk, mock_bulk)
         mock_post.assert_called_once_with(
             self.benefits_intake_url + "uploads/report",
             json=dict(ids=mock_guids),
-            headers=self.headers,
         )
 
-    @patch("pyvet.benefits_intake.api.requests.get")
+    @patch.object(Session, "get", headers=creds.API_KEY_HEADER)
     def test_upload_document(self, mock_get):
         self.maxDiff = None
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_doc
+        assert mock_get.headers == self.headers
         mock_file_guid = "6d8433c1-cd55-4c24-affd-f592287a7572"
         doc = get_uploaded_document(doc_id=mock_file_guid)
         self.assertDictEqual(doc, mock_doc)
         mock_get.assert_called_once_with(
             self.benefits_intake_url + f"uploads/{mock_file_guid}",
-            headers=self.headers,
         )
 
-    @patch("pyvet.benefits_intake.api.requests.get")
+    @patch.object(Session, "get", headers=creds.API_KEY_HEADER)
     def test_download_uploaded_document(self, mock_get):
         self.maxDiff = None
         mock_get.return_value.status_code = 200
+        assert mock_get.headers == self.headers
         mock_file_guid = "6d8433c1-cd55-4c24-affd-f592287a7572"
         download_uploaded_document(doc_id=mock_file_guid)
         mock_get.assert_called_once_with(
             self.benefits_intake_url + f"uploads/{mock_file_guid}/download",
-            headers=self.headers,
         )
 
 
