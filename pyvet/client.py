@@ -12,7 +12,6 @@ from requests.packages.urllib3.util.retry import Retry
 
 
 def create_session():
-    logging.error("Creating a client session...")
     session = requests.Session()
     session.headers = API_KEY_HEADER
     retry = Retry(
@@ -25,7 +24,6 @@ def create_session():
     adapter = HTTPAdapter(max_retries=retry)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
-    logging.error("Successfully created a client session...")
     return session
 
 
