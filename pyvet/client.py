@@ -29,9 +29,7 @@ def create_session():
 
 current_session = create_session()
 
-if current_session is None:
-    logging.error("Unable to create a client session")
-elif current_session.headers.get("apiKey") == "REPLACE ME":
+if current_session.headers.get("apiKey") == "REPLACE ME":
     logging.error(
         "No API key set, visit: https://developer.va.gov/onboarding/request-sandbox-access"
     )
