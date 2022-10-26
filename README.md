@@ -26,14 +26,14 @@ To retrieve veteran data from the API, ensure your API key is set.
 You should store your API key in an environment variable or in the `creds.py` named, `API_KEY`.
 
 ## VA Facilities
-Here is a small example that grabs a list of all VA facilities.
+Here is a small example that grabs a list of all, and nearby, VA facilities.
 ```python
 from pyvet.facilities.api import get_all, get_nearby
 
 # get all VA facilities and export it to a csv file
 all_facilities = get_all(print_csv_file=True)
 
-# or just get nearby VA facilities and print a csv file
+# or just get nearby VA facilities and export it to a csv file
 nearby_facilities = get_nearby(
     address="", # optional
     city="Boston",
