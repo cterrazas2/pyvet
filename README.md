@@ -28,16 +28,17 @@ You should store your API key in an environment variable or in the `creds.py` na
 ## VA Facilities
 Here is a small example that grabs a list of all VA facilities.
 ```python
-from pyvet.facilities.api import get_all_facilities, get_nearby_facilities
+from pyvet.facilities.api import get_all, get_nearby
 
-all_facilities = get_all_facilities(print_csv_file=True)
+# get all VA facilities and export it to a csv file
+all_facilities = get_all(print_csv_file=True)
 
-# or just nearby VA facilities and print a csv file
-nearby_facilities = get_nearby_facilities(
+# or just get nearby VA facilities and print a csv file
+nearby_facilities = get_nearby(
     address="", # optional
     city="Boston",
     state="MA",
-    zip_code=-02108,
+    zip_code="02108",
     drive_time=60,
     print_csv_file=True,
 )
