@@ -4,7 +4,6 @@ Benefits Intake API: https://developer.va.gov/explore/benefits/docs/benefits?ver
 import logging
 
 import requests
-from pprint import pprint
 from pyvet.client import current_session as session
 from pyvet.creds import API_URL
 
@@ -44,8 +43,6 @@ def upload_file(params: dict, files: str):
     """
     try:
         r = session.put(params.get("location"), files=files)
-        print(r.request.headers)
-        print(r.request.body)
         r.raise_for_status()
         if r.status_code == 200:
             return r.json()
