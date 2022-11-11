@@ -15,7 +15,7 @@ def populate_csv(file_name: str, data: list):
     """Populates a csv file"""
     for i, row in enumerate(data):
         pd_norm = pd.json_normalize(row)
-        if i == 1:
+        if i == 0:
             pd_norm.to_csv(file_name)
         else:
             pd_norm.to_csv(file_name, mode="a", header=False)
