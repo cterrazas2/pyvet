@@ -1,7 +1,7 @@
 # PyVet
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-A Python library to research and analyze veteran data from the Veterans Affairs (VA) Lighthouse API.
+A Python library to research and analyze veteran data from the [Veterans Affairs](https://github.com/department-of-veterans-affairs) (VA) Lighthouse API.
 
 The [VA Lighthouse API](https://developer.va.gov) provides different types of veteran data through a subset of the following
 apis (internal VA apis are not supported):
