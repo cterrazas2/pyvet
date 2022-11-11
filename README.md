@@ -3,7 +3,7 @@
 
 A Python library to research and analyze veteran data from the Veterans Affairs (VA) Lighthouse API.
 
-The VA Lighthouse API provides different types of veteran data through a subset of the following
+The [VA Lighthouse API](https://developer.va.gov) provides different types of veteran data through a subset of the following
 apis (internal VA apis are not supported):
 
 -  Benefits API
@@ -12,7 +12,7 @@ apis (internal VA apis are not supported):
 -  Health API
 -  Veteran Verification API
 
-You can find more information about these APIS and request API access [here](https://developer.va.gov/explore/).
+You can find more information about these APIS and request API access [here](https://developer.va.gov/onboarding/request-sandbox-access).
 
 ## Install
 To install the package use:
