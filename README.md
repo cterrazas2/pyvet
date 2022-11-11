@@ -30,7 +30,7 @@ Here is a small example that grabs a list of all, and nearby, VA facilities.
 from pyvet.facilities.api import get_all, get_nearby
 
 # get all VA facilities and export it to a csv file
-all_facilities = get_all(print_csv_file=True)
+all_facilities = get_all(export_csv_file=True)
 
 # or just get nearby VA facilities and export it to a csv file
 nearby_facilities = get_nearby(
@@ -39,7 +39,7 @@ nearby_facilities = get_nearby(
     state="MA",
     zip_code="02108",
     drive_time=60,
-    print_csv_file=True,
+    export_csv_file=True,
 )
 ```
 ## VA Benefits Reference

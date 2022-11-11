@@ -40,7 +40,7 @@ class TestFacilities(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_FACILITIES
 
-        all_facilities = get_all(print_csv_file=False)
+        all_facilities = get_all(export_csv_file=False)
         self.assertDictEqual(all_facilities, MOCK_FACILITIES)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities/all",

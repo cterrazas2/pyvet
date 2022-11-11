@@ -11,8 +11,8 @@ from pyvet.client import current_session as session
 FACILITIES_URL = API_URL + "va_facilities/v0"
 
 
-def populate_csv(file_name: str, data: list):
-    """Populates a csv file"""
+def export_to_csv(file_name: str, data: list):
+    """Exports data to a csv file"""
     for i, row in enumerate(data):
         pd_norm = pd.json_normalize(row)
         if i == 0:
@@ -44,7 +44,7 @@ def get_nearby(
     state: str = "CA",
     zip_code: str = "90073",
     drive_time: int = 60,
-    print_csv_file: bool = False,
+    export_csv_file: bool = False,
 ):
     """Gets all nearby VA Facilities with optional params.
     Parameters
@@ -59,8 +59,8 @@ def get_nearby(
         Zip code to start the search.
     drive_time : int
         The maximum drive time to filter results.
-    print_csv_file : bool
-        Flag to populate the results of facilities nearby intp a csv file.
+    export_csv_file : bool
+        Flag to export nearby facilities into a csv file.
 
     Returns
     -------
@@ -79,10 +79,10 @@ def get_nearby(
         r = session.get(nearby_url, params=params)
         r.raise_for_status()
         r = r.json()
-        if print_csv_file:
+        if export_csv_file:
             output_file = "nearby.csv"
             csv_data = r.get("data")
-            populate_csv(file_name=output_file, data=csv_data)
+            export_to_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
         return r
     except requests.exceptions.RequestException as e:
@@ -154,12 +154,12 @@ def get_facilities_by_query(
         logging.error(e)
 
 
-def get_all(print_csv_file: bool = False):
+def get_all(export_csv_file: bool = False):
     """Gets all VA Facilities with optional params.
     Parameters
     ----------
-    print_csv_file : bool
-        Flag to populate the results of all facilities into a csv file.
+    export_csv_file : bool
+        Flag to export all facilities into a csv file.
 
     Returns
     -------
@@ -172,10 +172,10 @@ def get_all(print_csv_file: bool = False):
         r = session.get(all_url, params=params)
         r.raise_for_status()
         r = r.json()
-        if print_csv_file:
+        if export_csv_file:
             output_file = "all_va_facilities.csv"
             csv_data = r.get("features")
-            populate_csv(file_name=output_file, data=csv_data)
+            export_to_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Facilities data populated in all_va_facilities.csv.")
         return r
     except requests.exceptions.RequestException as e:
