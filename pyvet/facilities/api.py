@@ -11,6 +11,16 @@ from pyvet.client import current_session as session
 FACILITIES_URL = API_URL + "va_facilities/v0"
 
 
+def populate_csv(file_name: str, data: list):
+    """Populates a csv file"""
+    for i, row in enumerate(data):
+        pd_norm = pd.json_normalize(row)
+        if i == 1:
+            pd_norm.to_csv(file_name)
+        else:
+            pd_norm.to_csv(file_name, mode="a", header=False)
+
+
 def get_ids():
     """Gets all VA Facility IDs with optional params.
     Returns
@@ -50,7 +60,7 @@ def get_nearby(
     drive_time : int
         The maximum drive time to filter results.
     print_csv_file : bool
-        Flag to print the results of facilities nearby.
+        Flag to populate the results of facilities nearby intp a csv file.
 
     Returns
     -------
@@ -70,16 +80,9 @@ def get_nearby(
         r.raise_for_status()
         r = r.json()
         if print_csv_file:
-            i = 1
             output_file = "nearby.csv"
-            for facility in r.get("data"):
-                f = get_facility(facility.get("id")).get("data").get("attributes")
-                pd_norm = pd.json_normalize(f)
-                if i == 1:
-                    pd_norm.to_csv(output_file)
-                else:
-                    pd_norm.to_csv(output_file, mode="a", header=False)
-                i += 1
+            csv_data = r.get("data")
+            populate_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
         return r
     except requests.exceptions.RequestException as e:
@@ -156,7 +159,7 @@ def get_all(print_csv_file: bool = False):
     Parameters
     ----------
     print_csv_file : bool
-        Flag to print the results of facilities nearby.
+        Flag to populate the results of all facilities into a csv file.
 
     Returns
     -------
@@ -170,15 +173,9 @@ def get_all(print_csv_file: bool = False):
         r.raise_for_status()
         r = r.json()
         if print_csv_file:
-            i = 1
             output_file = "all_va_facilities.csv"
-            for facility in r.get("features"):
-                pd_norm = pd.json_normalize(facility)
-                if i == 1:
-                    pd_norm.to_csv(output_file)
-                else:
-                    pd_norm.to_csv(output_file, mode="a", header=False)
-                i += 1
+            csv_data = r.get("features")
+            populate_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Facilities data populated in all_va_facilities.csv.")
         return r
     except requests.exceptions.RequestException as e:
