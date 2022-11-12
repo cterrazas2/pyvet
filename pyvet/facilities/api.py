@@ -12,7 +12,7 @@ FACILITIES_URL = API_URL + "va_facilities/v0"
 
 
 def export_to_csv(file_name: str, data: list):
-    """Exports data to a csv file"""
+    """Exports data to a csv file."""
     for i, row in enumerate(data):
         pd_norm = pd.json_normalize(row)
         if i == 0:
