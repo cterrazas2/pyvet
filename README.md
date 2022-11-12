@@ -4,7 +4,7 @@
 A Python library to research and analyze veteran data from the [Veterans Affairs](https://github.com/department-of-veterans-affairs) (VA) Lighthouse API.
 
 The [VA Lighthouse API](https://developer.va.gov) provides different types of veteran data through a subset of the following
-apis (internal VA apis are not supported):
+apis (internal VA and Oauth token apis are not yet supported):
 
 -  Benefits API
 -  Facilities API
@@ -64,6 +64,21 @@ all_forms = get_forms()
 # Instructions and Enrollment Application for Health Benefits Form
 form = get_form(form_name="10-10EZ")
 
+```
+
+## Veteran Confirmation
+```python
+from pyvet.veteran_confirmation.api import get_status
+
+# Confirm veteran status, will return confirmed or not confirmed. Note, this is fake VA data below.
+status = get_status(
+    ssn="796-13-0115",
+    first_name="Tamara",
+    last_name="Ellis",
+    birth_date="1967-06-19",
+    middle_name="E",
+    gender="F",
+)
 ```
 
 ## Contributing
