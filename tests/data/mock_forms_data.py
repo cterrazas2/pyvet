@@ -10,7 +10,7 @@ MOCK_FORM = {
             "last_revision_on": "2020-01-17",
             "created_at": "2021-03-30T16:28:30.338Z",
             "pages": 5,
-            "sha256": "5fe171299ece147e8b456961a38e17f1391026f26e9e170229317bc95d9827b7",
+            "sha256": "5fe171299ece147e8b456961a38e17f1391026f26e9e170229317bc95d9827b7",  # pragma: allowlist secret
             "valid_pdf": True,
             "form_usage": "<p>Use VA Form 10-10EZ if you’re a Veteran and want to apply for VA health care. You must be enrolled in...</p>",
             "form_tool_intro": "You can apply online instead of filling out and sending us the paper form.",
@@ -26,7 +26,7 @@ MOCK_FORM = {
             "va_form_administration": "Veterans Health Administration",
             "versions": [
                 {
-                    "sha256": "5fe171299ece147e8b456961a38e17f1391026f26e9e170229317bc95d9827b7",
+                    "sha256": "5fe171299ece147e8b456961a38e17f1391026f26e9e170229317bc95d9827b7",  # pragma: allowlist secret
                     "revision_on": "2012-01-01",
                 }
             ],
@@ -47,7 +47,7 @@ MOCK_FORMS = {
                 "first_issued_on": "2016-07-10",
                 "last_revision_on": "2020-01-17",
                 "pages": 5,
-                "sha256": "6e6465e2e1c89225871daa9b6d86b92d1c263c7b02f98541212af7b35272372b",
+                "sha256": "6e6465e2e1c89225871daa9b6d86b92d1c263c7b02f98541212af7b35272372b",  # pragma: allowlist secret
                 "last_sha256_change": "2019-05-30",
                 "valid_pdf": True,
                 "form_usage": "<p>Use VA Form 10-10EZ if you’re a Veteran and want to apply for VA health care. You must be enrolled in...</p>",
