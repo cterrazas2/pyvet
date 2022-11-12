@@ -1,7 +1,6 @@
 # Contributing to PyVet
 
-Welcome, thank you for wanting to contribute to `pyvet`! This is a tool that helps organizations, companies, and even veterans
-themselves analyze and research data from the Department of Veterans Affairs. This document outlines the quickest way to start contributing and get familiar with the code base.
+Welcome, and thank you for wanting to contribute to `pyvet`! This is python library that helps organizations, companies, and even veterans themselves analyze and research data from the Department of Veterans Affairs. This document outlines the quickest way to start contributing and get familiar with the code base.
 
 # Code Setup
 ```
@@ -25,7 +24,7 @@ themselves analyze and research data from the Department of Veterans Affairs. Th
 ```
 
 # Environment
-PyVet uses [Poetry](https://python-poetry.org) for dependencies and virtual environments.
+PyVet uses [Poetry](https://python-poetry.org) for management of dependencies and virtual environments.
 ```bash
 # install and create virtual environment
 $ poetry install
@@ -38,9 +37,9 @@ $ pytest -v
 ```
 
 # Style
-PyVet uses Black for code formatting, this should be automatically triggered for you when you try and commit (once you install `precommit`).
+PyVet uses Black for code formatting, this should be automatically triggered for you when you try and commit (once you install `precommit` that is).
 
-Check out the code base and follow the same style for naming conventions (snake_case) and comments.
+Check out the code base and follow the same style for things like naming conventions (snake_case) and comments (numpy).
 
 # Tests
 To run all the tests you can run:
