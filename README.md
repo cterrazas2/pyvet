@@ -66,5 +66,8 @@ form = get_form(form_name="10-10EZ")
 
 ```
 
+## Contributing
+See the `Contributing to Pyvet` documentation.
+
 ## License
 MIT
