@@ -21,7 +21,7 @@ def get_disability_rating():
     return requests.get(disability_rating_url)
 
 
-def get_status(ssn, gender, ln, bd, fn, mn):
+def get_status(ssn: str, gender: str, ln: str, bd: str, fn: str, mn: str):
     """Sends a veteran's confirmation status with required params."""
     data = dict(
         ssn=ssn,

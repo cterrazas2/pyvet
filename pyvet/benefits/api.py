@@ -9,7 +9,7 @@ from pyvet.creds import API_KEY_HEADER, API_URL
 CLAIMS_URL = API_URL + "claims/v1"
 
 
-def get_claims(ssn, fn, ln):
+def get_claims(ssn: str, fn: str, ln: str):
     """
     Parameters
     ----------
@@ -29,7 +29,7 @@ def get_claims(ssn, fn, ln):
     return requests.get(claims_url, params=payload)
 
 
-def get_claim(claim_id, ssn="", fn="", ln=""):
+def get_claim(claim_id: str, ssn: str = "", fn: str = "", ln: str = ""):
     """Gets a claim for a veteran by an id, with required params.
     Parameters
     ----------
@@ -69,7 +69,7 @@ def get_claim(claim_id, ssn="", fn="", ln=""):
         logging.error(e)
 
 
-def submit_claim(ssn, fn, ln, bd):
+def submit_claim(ssn: str, fn: str, ln: str, bd: str):
     """Submits a claim for a veteran with required params.
     Parameters
     ----------
@@ -99,7 +99,7 @@ def submit_claim(ssn, fn, ln, bd):
     return requests.post(claim_url, params=payload, data=data)
 
 
-def upload_to_claim(claim_id, ssn, fn, ln, bd):
+def upload_to_claim(claim_id: str, ssn: str, fn: str, ln: str, bd: str):
     """Uploads data_json to a veteran's claim by a claim id, with required params.
     Parameters
     ----------

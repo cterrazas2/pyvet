@@ -30,7 +30,7 @@ def get_forms(query: str = ""):
         logging.error(e)
 
 
-def get_form(form_name="10-10EZ"):
+def get_form(form_name: str = "10-10EZ"):
     """Gets a form based on a form name
     Parameters
     ----------

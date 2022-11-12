@@ -12,15 +12,15 @@ HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
 
 def get_location(
-    practitioner_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    address="151 KNOLLCROFT ROAD",
-    city="LYONS",
-    state="NJ",
-    zip_code="07939",
-    name="VISUAL IMPAIRMENT SVCS OUTPATIENT REHAB",
-    page=1,
-    count=30,
+    practitioner_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+    identifier: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+    address: str = "151 KNOLLCROFT ROAD",
+    city: str = "LYONS",
+    state: str = "NJ",
+    zip_code: str = "07939",
+    name: str = "VISUAL IMPAIRMENT SVCS OUTPATIENT REHAB",
+    page: int = 1,
+    count: int = 30,
 ):
     """Gets provider's location.
     Parameters
@@ -89,15 +89,15 @@ def get_location_by_id(resource_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000")
 
 
 def get_organization(
-    org_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    address="2360 E PERSHING BLVD",
-    city="CHEYENNE",
-    state="WY",
-    zip_code="82001",
-    name="CHEYENNE VA MEDICAL",
-    page=1,
-    count=30,
+    org_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+    identifier: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+    address: str = "2360 E PERSHING BLVD",
+    city: str = "CHEYENNE",
+    state: str = "WY",
+    zip_code: str = "82001",
+    name: str = "CHEYENNE VA MEDICAL",
+    page: int = 1,
+    count: int = 30,
 ):
     """Gets an organization's location.
     Parameters
@@ -145,7 +145,7 @@ def get_organization(
         logging.error(e)
 
 
-def get_organization_by_id(org_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
+def get_organization_by_id(org_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
     """Gets an organization's location.
     Parameters
     ----------
