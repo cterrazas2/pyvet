@@ -24,7 +24,7 @@ def create_path_to_upload_files():
         r = session.post(ref_url)
         r.raise_for_status()
         r = r.json()
-        return r
+        return r.get("data").get("attributes")
     except requests.exceptions.RequestException as e:
         logging.error(e)
 

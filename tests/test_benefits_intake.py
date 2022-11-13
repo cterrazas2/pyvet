@@ -89,8 +89,11 @@ class TestBenefitsIntake(unittest.TestCase):
         mock_post.return_value.status_code = 200
         mock_post.return_value.json.return_value = mock_create_path
         assert mock_post.headers == self.headers
-        resp = create_path_to_upload_files()
-        self.assertDictEqual(resp, mock_create_path)
+        created_path = create_path_to_upload_files()
+        self.assertDictEqual(
+            created_path,
+            mock_create_path.get("data").get("attributes"),
+        )
         mock_post.assert_called_once_with(
             self.benefits_intake_url + "uploads",
         )
