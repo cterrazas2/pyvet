@@ -47,13 +47,13 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
 
     Notes
     -------
-    To upload a file to the VA benefits intake api, files must contain any of the below fields (except metadata) and all naming must match exactly:
+    To upload files to the VA benefits intake api, files must contain any of the below fields (except metadata) and all naming must match exactly:
         metadata - a dict of file metadata
         content - main content file
         attachment1 - 1st attachment file
         attachmentN - Nth attachemnt file
 
-    Currently, pyvet will look in the upload_dir, defaults to `uploads/`, within the current working directory.
+    Currently, pyvet will look in the uploads_dir, defaults to `uploads/`, within the current working directory.
     You should ensure this directory exists and place all files you want to upload here. Below is an example file
     structure:
 
