@@ -8,7 +8,7 @@ Welcome, and thank you for wanting to contribute to `pyvet`! This is a python li
     /benefits_intake          # The VA Benefits Intake API
         api.py                # All apis have this file
     /benefits_reference       # The VA Benefits Reference API
-    /facilities                # The VA <name> API
+    /facilities               # The VA <name> API
     .
     .
     .
