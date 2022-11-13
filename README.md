@@ -84,9 +84,9 @@ status = get_status(
 ## Veteran Benefits Intake
 You can upload multiple files to the Veteran Benefits Administration (VBA) with `pyvet`.
 ```python
-from pyvet.benefits_intake.api import create_path_to_upload_file, upload_files
+from pyvet.benefits_intake.api import create_path_to_upload_files, upload_files
 
-params = create_path_to_upload_file().get("data").get("attributes")
+params = create_path_to_upload_files().get("data").get("attributes")
 metadata = {
     "veteranFirstName": "Jane",
     "veteranLastName": "Doe",

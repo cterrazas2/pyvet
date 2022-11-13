@@ -3,7 +3,7 @@ import unittest
 from requests import Session
 from pyvet import creds
 from pyvet.benefits_intake.api import (
-    create_path_to_upload_file,
+    create_path_to_upload_files,
     upload_files,
     bulk_status_report,
     get_uploaded_document,
@@ -89,7 +89,7 @@ class TestBenefitsIntake(unittest.TestCase):
         mock_post.return_value.status_code = 200
         mock_post.return_value.json.return_value = mock_create_path
         assert mock_post.headers == self.headers
-        resp = create_path_to_upload_file()
+        resp = create_path_to_upload_files()
         self.assertDictEqual(resp, mock_create_path)
         mock_post.assert_called_once_with(
             self.benefits_intake_url + "uploads",

@@ -12,8 +12,8 @@ from pyvet.creds import API_URL
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
-def create_path_to_upload_file():
-    """Creates a path to upload a file.
+def create_path_to_upload_files():
+    """Creates a path to upload files.
     Returns
     -------
     r : json
@@ -88,14 +88,16 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
         try:
             for file in os.listdir(uploads_dir):
                 if not os.path.isdir(file) and "attachments" not in file:
-                    files["content"] = open(uploads_dir + file, "rb")
+                    with open(uploads_dir + file, "rb") as fp:
+                        files["content"] = fp
         except OSError as ose:
             logging.error(ose)
 
         # then upload all other attachment pdfs
         try:
             for i, file in enumerate(os.listdir(attachments_dir)):
-                files[f"attachment{i+1}"] = open(attachments_dir + file, "rb")
+                with open(attachments_dir + file, "rb") as fp:
+                    files[f"attachment{i+1}"] = fp
         except OSError as ose:
             logging.error(ose)
 
