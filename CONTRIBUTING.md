@@ -1,6 +1,6 @@
 # Contributing to PyVet
 
-Welcome, and thank you for wanting to contribute to `pyvet`! This is python library that helps organizations, companies, and even veterans themselves analyze and research data from the Department of Veterans Affairs. This document outlines the quickest way to start contributing and get familiar with the code base.
+Welcome, and thank you for wanting to contribute to `pyvet`! This is a python library that helps organizations, companies, and even veterans themselves analyze and research data from the Department of Veterans Affairs. This document outlines the quickest way to start contributing and get familiar with the code base.
 
 # Code Setup
 ```

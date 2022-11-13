@@ -1,14 +1,15 @@
+import json
 import unittest
 from requests import Session
 from pyvet import creds
 from pyvet.benefits_intake.api import (
     create_path_to_upload_file,
-    upload_file,
+    upload_files,
     bulk_status_report,
     get_uploaded_document,
     download_uploaded_document,
 )
-from unittest.mock import patch
+from unittest.mock import ANY, patch
 
 mock_create_path = dict(
     data=dict(
@@ -95,13 +96,8 @@ class TestBenefitsIntake(unittest.TestCase):
         )
 
     @patch.object(Session, "put", headers=creds.API_KEY_HEADER)
-    def test_upload_file(self, mock_put):
+    def test_upload_files(self, mock_put):
         mock_put.return_value.status_code = 200
-        mock_files = (
-            ("file_1", (None, "text")),
-            ("file_2", (None, "more text")),
-            ("file_3", (None, "and more text")),
-        )
         assert mock_put.headers == self.headers
         mock_params = dict(
             guid="6d8433c1-cd55-4c24-affd-f592287a7572",
@@ -112,8 +108,28 @@ class TestBenefitsIntake(unittest.TestCase):
             updated_at="2018-07-30T17:31:15.958Z",
             uploaded_pdf="null",
         )
+        mock_metadata = {
+            "veteranFirstName": "Jane",
+            "veteranLastName": "Doe",
+            "fileNumber": "012345678",
+            "zipCode": "97202",
+            "source": "MyVSO",
+            "docType": "21-22",
+            "businessLine": "CMP",
+        }
+        test_upload_dir = "tests/mock_uploads_data"
         upload_url = mock_params.get("location")
-        upload_file(params=mock_params, files=mock_files)
+        upload_files(
+            params=mock_params,
+            uploads_dir=test_upload_dir,
+            metadata=mock_metadata,
+        )
+        mock_files = {
+            "metadata": (None, json.dumps(mock_metadata) + ";type=application/json"),
+            "content": ANY,
+            "attachment1": ANY,
+        }
+
         mock_put.assert_called_once_with(
             upload_url,
             files=mock_files,
