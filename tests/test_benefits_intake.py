@@ -9,7 +9,7 @@ from pyvet.benefits_intake.api import (
     get_uploaded_document,
     download_uploaded_document,
 )
-from unittest.mock import ANY, patch
+from unittest.mock import ANY, patch, mock_open
 
 mock_create_path = dict(
     data=dict(
@@ -95,8 +95,9 @@ class TestBenefitsIntake(unittest.TestCase):
             self.benefits_intake_url + "uploads",
         )
 
+    @patch("builtins.open", new_callable=mock_open, read_data="some data")
     @patch.object(Session, "put", headers=creds.API_KEY_HEADER)
-    def test_upload_files(self, mock_put):
+    def test_upload_files(self, mock_put, mock_open):
         mock_put.return_value.status_code = 200
         assert mock_put.headers == self.headers
         mock_params = dict(
@@ -129,7 +130,7 @@ class TestBenefitsIntake(unittest.TestCase):
             "content": ANY,
             "attachment1": ANY,
         }
-
+        mock_open.assert_called()
         mock_put.assert_called_once_with(
             upload_url,
             files=mock_files,

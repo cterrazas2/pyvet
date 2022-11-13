@@ -88,16 +88,14 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
         try:
             for file in os.listdir(uploads_dir):
                 if not os.path.isdir(file) and "attachments" not in file:
-                    with open(uploads_dir + file, "rb") as fp:
-                        files["content"] = fp
+                    files["content"] = open(uploads_dir + file, "rb")
         except OSError as ose:
             logging.error(ose)
 
         # then upload all other attachment pdfs
         try:
             for i, file in enumerate(os.listdir(attachments_dir)):
-                with open(attachments_dir + file, "rb") as fp:
-                    files[f"attachment{i+1}"] = fp
+                files[f"attachment{i+1}"] = open(attachments_dir + file, "rb")
         except OSError as ose:
             logging.error(ose)
 
