@@ -68,11 +68,6 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
     uploads_dir = pathlib.Path().resolve().as_posix() + f"/{uploads_dir}/"
     attachments_dir = uploads_dir + "attachments/"
 
-    if not os.path.isdir(uploads_dir):
-        logging.error(f"{uploads_dir} does not exist.")
-    if not os.path.isdir(attachments_dir):
-        logging.error(f"{attachments_dir} does not exist.")
-
     files = {}
 
     # add any metadata
@@ -158,7 +153,7 @@ def get_uploaded_document(doc_id: str):
 
 
 def download_uploaded_document(doc_id: str):
-    """Downloads a previously uploaded document.
+    """Downloads a previously uploaded document. This endpoint is only for testing environment.
     Parameters
     ----------
     doc_id : str
