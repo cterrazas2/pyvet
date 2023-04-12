@@ -72,12 +72,16 @@ from pyvet.veteran_confirmation.api import get_status
 
 # Confirm veteran status, will return confirmed or not confirmed. Note, this is fake VA data below.
 status = get_status(
-    ssn="796-13-0115",
-    first_name="Tamara",
-    last_name="Ellis",
-    birth_date="1967-06-19",
-    middle_name="E",
-    gender="F",
+    first_name="Alfredo",
+    last_name= "Armstrong",
+    birth_date= "1993-06-08",
+    middle_name= "M",
+    gender= "M",
+    street_address= "17020 Tortoise St",
+    city= "Round Rock",
+    zip_code= "78664",
+    state= "TX",
+    country= "USA",
 )
 ```
 
