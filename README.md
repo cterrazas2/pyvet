@@ -82,6 +82,11 @@ status = get_status(
     zip_code= "78664",
     state= "TX",
     country= "USA",
+    home_phone_number="555-555-5555",
+    mothers_maiden_mame="Smith",
+    birth_place_city="Johnson City",
+    birth_place_state="MA",
+    birth_place_country="USA",
 )
 ```
 
