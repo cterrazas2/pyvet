@@ -29,6 +29,11 @@ class TestVeteranConfirmation(unittest.TestCase):
             zip_code="78664",
             state="TX",
             country="USA",
+            home_phone_number="555-555-5555",
+            mothers_maiden_mame="Smith",
+            birth_place_city="Johnson City",
+            birth_place_state="MA",
+            birth_place_country="USA",
         )
         self.assertDictEqual(vet_status, mock_confirmed)
         mock_post.assert_called_once_with(
@@ -44,6 +49,11 @@ class TestVeteranConfirmation(unittest.TestCase):
                 zipCode="78664",
                 state="TX",
                 country="USA",
+                homePhoneNumber="555-555-5555",
+                mothersMaidenName="Smith",
+                birthPlaceCity="Johnson City",
+                birthPlaceState="MA",
+                birthPlaceCountry="USA",
             ),
         )
 
