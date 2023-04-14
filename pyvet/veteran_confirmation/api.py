@@ -84,8 +84,6 @@ def get_status(
     )
     try:
         r = session.post(status_url, json=json_data)
-        print(r.text)
-        print(r.request.body)
         r.raise_for_status()
         r = r.json()
         return r
