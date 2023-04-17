@@ -11,21 +11,21 @@ CONFIRMATION_URL = API_URL + "veteran-confirmation/v1/"
 
 
 def get_status(
-    first_name: str = "Alfredo",
-    last_name: str = "Armstrong",
-    birth_date: str = "1993-06-08",
-    middle_name: str = "M",
-    gender: str = "M",
-    street_address: str = "17020 Tortoise St",
-    city: str = "Round Rock",
-    zip_code: str = "78664",
-    state: str = "TX",
-    country: str = "USA",
-    home_phone_number: str = "555-555-5555",
-    mothers_maiden_mame: str = "Smith",
-    birth_place_city: str = "Johnson City",
-    birth_place_state: str = "MA",
-    birth_place_country: str = "USA",
+    first_name: str,
+    last_name: str,
+    birth_date: str,
+    middle_name: str,
+    gender: str,
+    street_address: str,
+    city: str,
+    zip_code: str,
+    state: str,
+    country: str,
+    home_phone_number: str,
+    mothers_maiden_mame: str,
+    birth_place_city: str,
+    birth_place_state: str,
+    birth_place_country: str,
 ):
     """Gets a veteran's status.
     Parameters

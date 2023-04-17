@@ -10,8 +10,17 @@ from pyvet.creds import API_URL
 BENEFITS_REFERENCE_URL = API_URL + "benefits-reference-data/v1/"
 
 
-def get_contention_types():
+def get_contention_types(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all contention types.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -19,7 +28,7 @@ def get_contention_types():
     """
     ref_url = BENEFITS_REFERENCE_URL + "contention-types"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -27,8 +36,17 @@ def get_contention_types():
         logging.error(e)
 
 
-def get_countries():
+def get_countries(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Fetches all countries.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -36,7 +54,7 @@ def get_countries():
     """
     ref_url = BENEFITS_REFERENCE_URL + "countries"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -44,8 +62,17 @@ def get_countries():
         logging.error(e)
 
 
-def get_disabilities():
+def get_disabilities(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all VA disabilities.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -53,7 +80,7 @@ def get_disabilities():
     """
     ref_url = BENEFITS_REFERENCE_URL + "disabilities"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -61,8 +88,17 @@ def get_disabilities():
         logging.error(e)
 
 
-def get_intake_sites():
+def get_intake_sites(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get intake sites across the country.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -70,7 +106,7 @@ def get_intake_sites():
     """
     ref_url = BENEFITS_REFERENCE_URL + "intake-sites"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -78,8 +114,17 @@ def get_intake_sites():
         logging.error(e)
 
 
-def get_military_pay_types():
+def get_military_pay_types(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all military pay types.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -87,7 +132,7 @@ def get_military_pay_types():
     """
     ref_url = BENEFITS_REFERENCE_URL + "military-pay-types"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -95,8 +140,17 @@ def get_military_pay_types():
         logging.error(e)
 
 
-def get_service_branches():
+def get_service_branches(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all service branches.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -104,7 +158,7 @@ def get_service_branches():
     """
     ref_url = BENEFITS_REFERENCE_URL + "service-branches"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -112,8 +166,17 @@ def get_service_branches():
         logging.error(e)
 
 
-def get_special_circumstances():
+def get_special_circumstances(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all special circumstances.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -121,7 +184,7 @@ def get_special_circumstances():
     """
     ref_url = BENEFITS_REFERENCE_URL + "special-circumstances"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -129,8 +192,17 @@ def get_special_circumstances():
         logging.error(e)
 
 
-def get_states():
+def get_states(
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all states.
+    Parameters
+    ----------
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -138,7 +210,7 @@ def get_states():
     """
     ref_url = BENEFITS_REFERENCE_URL + "states"
     try:
-        r = session.get(ref_url)
+        r = session.get(ref_url, params=dict(page=page, pageSize=page_size))
         r.raise_for_status()
         r = r.json()
         return r
@@ -146,8 +218,20 @@ def get_states():
         logging.error(e)
 
 
-def get_treatment_centers():
+def get_treatment_centers(
+    state_code: int = None,
+    page: int = 1,
+    page_size: int = 30,
+):
     """Get all treatments centers.
+    Parameters
+    ----------
+    state_code: : int
+        The state to find treatment centers in.
+    page : int
+        The number of pages to limit.
+    page_size : int
+        Maximum size of page.
     Returns
     -------
     r : json
@@ -155,7 +239,9 @@ def get_treatment_centers():
     """
     ref_url = BENEFITS_REFERENCE_URL + "treatment-centers"
     try:
-        r = session.get(ref_url)
+        r = session.get(
+            ref_url, params=dict(stateCode=state_code, page=page, pageSize=page_size)
+        )
         r.raise_for_status()
         r = r.json()
         return r

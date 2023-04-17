@@ -91,10 +91,10 @@ class TestFacilities(unittest.TestCase):
         queried_facilities = get_facilities_by_query(
             bbox=[],
             ids=[],
-            lat=0.0,
-            long=0.0,
+            latitude=0.0,
+            longitude=0.0,
             radius=10.0,
-            type="health",
+            facility_type="health",
             services=[],
             mobile=False,
             state="CA",
@@ -116,6 +116,8 @@ class TestFacilities(unittest.TestCase):
                 state="CA",
                 visn=0,
                 zip=92056,
+                page=1,
+                per_page=30,
             ),
         )
 

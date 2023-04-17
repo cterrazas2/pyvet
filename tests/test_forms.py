@@ -33,7 +33,7 @@ class TestForms(unittest.TestCase):
         self.assertDictEqual(all_forms, MOCK_FORMS)
         mock_get.assert_called_once_with(
             self.forms_url,
-            params=dict(query=""),
+            params=dict(query=None),
         )
 
 

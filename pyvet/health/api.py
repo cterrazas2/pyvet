@@ -12,13 +12,13 @@ HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
 
 def get_location(
-    practitioner_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    identifier: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    address: str = "151 KNOLLCROFT ROAD",
-    city: str = "LYONS",
-    state: str = "NJ",
-    zip_code: str = "07939",
-    name: str = "VISUAL IMPAIRMENT SVCS OUTPATIENT REHAB",
+    practitioner_id: str,
+    identifier: str,
+    address: str,
+    city: str,
+    state: str,
+    zip_code: str,
+    name: str,
     page: int = 1,
     count: int = 30,
 ):
@@ -68,7 +68,7 @@ def get_location(
         logging.error(e)
 
 
-def get_location_by_id(resource_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
+def get_location_by_id(resource_id: str):
     """Gets provider's location.
     Parameters
     ----------
@@ -89,13 +89,13 @@ def get_location_by_id(resource_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000")
 
 
 def get_organization(
-    org_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    identifier: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-    address: str = "2360 E PERSHING BLVD",
-    city: str = "CHEYENNE",
-    state: str = "WY",
-    zip_code: str = "82001",
-    name: str = "CHEYENNE VA MEDICAL",
+    org_id: str,
+    identifier: str,
+    address: str,
+    city: str,
+    state: str,
+    zip_code: str,
+    name: str,
     page: int = 1,
     count: int = 30,
 ):
@@ -145,7 +145,7 @@ def get_organization(
         logging.error(e)
 
 
-def get_organization_by_id(org_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
+def get_organization_by_id(org_id: str):
     """Gets an organization's location.
     Parameters
     ----------
@@ -166,11 +166,11 @@ def get_organization_by_id(org_id: str = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"):
 
 
 def get_practitioner(
-    resource_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000",
-    prac_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000",
-    family: str = "DOE922",
-    given: str = "JANE460",
-    name: str = "DOE922",
+    resource_id: str,
+    prac_id: str,
+    family: str,
+    given: str,
+    name: str,
     page: int = 1,
     count: int = 30,
 ):
@@ -214,7 +214,7 @@ def get_practitioner(
         logging.error(e)
 
 
-def get_practitioner_by_id(pr_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000"):
+def get_practitioner_by_id(pr_id: str):
     """Get practitioner by id.
     Parameters
     ----------
@@ -235,9 +235,9 @@ def get_practitioner_by_id(pr_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000"):
 
 
 def get_practitioner_role(
-    resource_id: str = "I2-6KYHN4VYERE5OHKPXWAPAU5BO4000000",
-    prac_id: str = "I2-HRJI2MVST2IQSPR7U5SACWIWZA000000",
-    prac_name: str = "DOE922",
+    resource_id: str,
+    prac_id: str,
+    prac_name: str,
     page: int = 1,
     count: int = 30,
 ):
@@ -275,9 +275,7 @@ def get_practitioner_role(
         logging.error(e)
 
 
-def get_practitioner_role_by_id(
-    pr_role_id: str = "I2-6KYHN4VYERE5OHKPXWAPAU5BO4000000",
-):
+def get_practitioner_role_by_id(pr_role_id: str):
     """Get practitioner role by id.
     Parameters
     ----------

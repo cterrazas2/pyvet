@@ -10,12 +10,12 @@ from pyvet.client import current_session as session
 FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
-def get_forms(query: str = ""):
+def get_forms(query: str = None):
     """Gets forms or filtered with optional params.
     Parameters
     ----------
     query : str
-        The query to find forms.
+        The query to find forms (optional).
 
     Returns
     -------
@@ -30,7 +30,7 @@ def get_forms(query: str = ""):
         logging.error(e)
 
 
-def get_form(form_name: str = "10-10EZ"):
+def get_form(form_name: str):
     """Gets a form based on a form name
     Parameters
     ----------
