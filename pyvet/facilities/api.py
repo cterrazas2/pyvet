@@ -9,6 +9,17 @@ from pyvet.creds import API_URL
 from pyvet.client import current_session as session
 
 FACILITIES_URL = API_URL + "va_facilities/v0"
+FACILITIES_QUERY_MSG = """
+    Parameter combinations for `/facilities` query:
+
+    You may optionally specify page and per_page with any query. You must specify one of the following parameter combinations:
+    bbox[], with the option of any combination of type, services[], or mobile
+    ids
+    lat and long, with the option of any combination of radius, ids, type, services[], or mobile
+    state, with the option of any combination of type, services[], or mobile
+    visn
+    zip, with the option of any combination of type, services[], or mobile
+    """
 
 
 def export_to_csv(file_name: str, data: list):
@@ -39,11 +50,11 @@ def get_ids():
 
 
 def get_nearby(
-    address: str = "",
-    city: str = "Los Angeles",
-    state: str = "CA",
-    zip_code: str = "90073",
-    drive_time: int = 60,
+    address: str,
+    city: str,
+    state: str,
+    zip_code: str,
+    drive_time: int = None,
     export_csv_file: bool = False,
 ):
     """Gets all nearby VA Facilities with optional params.
@@ -90,17 +101,19 @@ def get_nearby(
 
 
 def get_facilities_by_query(
-    bbox: list,
-    ids: list,
-    lat: float,
-    long: float,
-    radius: float,
-    type: str,
-    services: list,
-    mobile: bool,
-    state: str,
-    visn: int,
-    zip_code: str,
+    bbox: list = None,
+    ids: list = None,
+    latitude: float = None,
+    longitude: float = None,
+    radius: float = None,
+    facility_type: str = None,
+    services: list = None,
+    mobile: bool = None,
+    state: str = None,
+    visn: int = None,
+    zip_code: str = None,
+    page: int = 1,
+    per_page: int = 30,
 ):
     """Gets all VA Facilities with optional query parameters.
     Parameters
@@ -109,13 +122,13 @@ def get_facilities_by_query(
         The bbox to limit the query.
     ids : list
         The ids to limit the query.
-    lat: float
+    latitude: float
         Latitude for the query.
-    long: float
+    longitude: float
         Longitude for th query.
     radius: float
         Radius size to set.
-    type: str
+    facility_type: str
         Type of facilities of ["health", "benefits", "cemetery", "vet_center"]
     services: list
         Service types to filter query.
@@ -127,31 +140,52 @@ def get_facilities_by_query(
         VISN search of matching facilities.
     zip_code: str
         Zip code to search for facilities.
+    page : int
+        The number of pages to limit.
+    per_page : int
+        Maximum count to limit.
     Returns
     -------
     r : json
         Response in json format.
     """
-    params = dict(
-        bbox=bbox,
-        ids=ids,
-        lat=lat,
-        long=long,
-        radius=radius,
-        type=type,
-        services=services,
-        mobile=mobile,
-        state=state,
-        visn=visn,
-        zip=zip_code,
+    # See FACILITIES_QUERY_MSG above for VA requirement here
+    combos_met = (
+        (bbox and (facility_type or services or mobile))
+        or ids
+        or (
+            (latitude and longitude)
+            and (radius or ids or facility_type or services or mobile)
+        )
+        or (state and (facility_type or services or mobile))
+        or visn
+        or (zip_code and (facility_type or services or mobile))
     )
-    bbox_url = FACILITIES_URL + "/facilities"
-    try:
-        r = session.get(bbox_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    if combos_met:
+        params = dict(
+            bbox=bbox,
+            ids=ids,
+            lat=latitude,
+            long=longitude,
+            radius=radius,
+            type=facility_type,
+            services=services,
+            mobile=mobile,
+            state=state,
+            visn=visn,
+            zip=zip_code,
+            page=page,
+            per_page=per_page,
+        )
+        bbox_url = FACILITIES_URL + "/facilities"
+        try:
+            r = session.get(bbox_url, params=params)
+            r.raise_for_status()
+            return r.json()
+        except requests.exceptions.RequestException as e:
+            logging.error(e)
+    else:
+        logging.error(FACILITIES_QUERY_MSG)
 
 
 def get_all(export_csv_file: bool = False):
