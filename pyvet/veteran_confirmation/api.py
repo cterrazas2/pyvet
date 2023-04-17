@@ -21,6 +21,11 @@ def get_status(
     zip_code: str = "78664",
     state: str = "TX",
     country: str = "USA",
+    home_phone_number: str = "555-555-5555",
+    mothers_maiden_mame: str = "Smith",
+    birth_place_city: str = "Johnson City",
+    birth_place_state: str = "MA",
+    birth_place_country: str = "USA",
 ):
     """Gets a veteran's status.
     Parameters
@@ -43,7 +48,18 @@ def get_status(
         The zip code of the veteran.
     state: str
         The state of the veteran.
-    Returns
+    country: str
+        The country the veteran lives in.
+    home_phone_number: str
+        Phone number of veteran.
+    mothers_maiden_mame: str
+        Veteran's mother's maiden name.
+    birth_place_city: str
+        City of birth for veteran.
+    birth_place_state: str
+        State of birth for veteran.
+    birth_place_country: str
+        Country of birth for veteran.
     -------
     r : json
         Response in json format.
@@ -60,6 +76,11 @@ def get_status(
         zipCode=zip_code,
         state=state,
         country=country,
+        homePhoneNumber=home_phone_number,
+        mothersMaidenName=mothers_maiden_mame,
+        birthPlaceCity=birth_place_city,
+        birthPlaceState=birth_place_state,
+        birthPlaceCountry=birth_place_country,
     )
     try:
         r = session.post(status_url, json=json_data)
