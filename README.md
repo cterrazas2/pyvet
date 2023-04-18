@@ -10,7 +10,7 @@ apis (internal VA and Oauth token apis are not yet supported):
 -  Facilities API
 -  Forms API
 -  Health API
--  Veteran Verification API
+-  Veteran Confirmation API
 
 You can find more information about these APIS and request API access [here](https://developer.va.gov/onboarding/request-sandbox-access).
 
