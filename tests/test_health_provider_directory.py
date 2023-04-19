@@ -35,7 +35,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.json.return_value = MOCK_LOCATION
         assert mock_get.headers == self.headers
         mock_params = dict(
-            practitioner_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             address="151 KNOLLCROFT ROAD",
             city="LYONS",
@@ -78,7 +78,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.json.return_value = MOCK_ORG
         assert mock_get.headers == self.headers
         mock_params = dict(
-            org_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             address="2360 E PERSHING BLVD",
             city="CHEYENNE",
@@ -110,7 +110,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.json.return_value = MOCK_ORG_ID
         assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
-        organization = get_organization_by_id(org_id=mock_id)
+        organization = get_organization_by_id(resource_id=mock_id)
         self.assertDictEqual(organization, MOCK_ORG_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"Organization/{mock_id}",
@@ -122,7 +122,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         assert mock_get.headers == self.headers
         mock_params = dict(
             resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            prac_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
             family="DOE922",
             given="JANE460",
             name="DOE922",
@@ -149,7 +149,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ID
         assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
-        practitioner = get_practitioner_by_id(pr_id=mock_id)
+        practitioner = get_practitioner_by_id(resource_id=mock_id)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"Practitioner/{mock_id}",
@@ -161,8 +161,8 @@ class TestHealthProviderDirectory(unittest.TestCase):
         assert mock_get.headers == self.headers
         mock_params = dict(
             resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            prac_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            prac_name="DOE922",
+            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            name="DOE922",
             page=1,
             count=30,
         )
@@ -184,7 +184,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ROLE_ID
         assert mock_get.headers == self.headers
         mock_id = "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000"
-        practitioner = get_practitioner_role_by_id(pr_role_id=mock_id)
+        practitioner = get_practitioner_role_by_id(resource_id=mock_id)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER_ROLE_ID)
         mock_get.assert_called_once_with(
             self.health_url + f"PractitionerRole/{mock_id}",
