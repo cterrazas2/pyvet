@@ -78,7 +78,6 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
         except Exception as e:
             logging.error(e)
     try:
-
         # upload the main content pdf
         try:
             for file in os.listdir(uploads_dir):

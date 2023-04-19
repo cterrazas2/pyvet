@@ -1,7 +1,7 @@
 import unittest
 from requests import Session
 from pyvet import creds
-from pyvet.benefits_reference.api import (
+from pyvet.benefits.reference.api import (
     get_disabilities,
     get_contention_types,
     get_countries,

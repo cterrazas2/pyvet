@@ -2,7 +2,7 @@ import json
 import unittest
 from requests import Session
 from pyvet import creds
-from pyvet.benefits_intake.api import (
+from pyvet.benefits.intake.api import (
     create_path_to_upload_files,
     upload_files,
     bulk_status_report,

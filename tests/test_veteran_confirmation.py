@@ -1,6 +1,6 @@
 import unittest
 from pyvet import creds
-from pyvet.veteran_confirmation.api import get_status
+from pyvet.veteran.confirmation.api import get_status
 from requests import Session
 
 from unittest.mock import patch

@@ -44,7 +44,7 @@ nearby_facilities = get_nearby(
 ```
 ## VA Benefits Reference
 ```python
-from pyvet.benefits_reference.api import get_disabilities, get_intake_sites
+from pyvet.benefits.reference.api import get_disabilities, get_intake_sites
 
 # All VA Disabilities info
 disabilities = get_disabilities()
@@ -68,7 +68,7 @@ form = get_form(form_name="10-10EZ")
 
 ## Veteran Confirmation
 ```python
-from pyvet.veteran_confirmation.api import get_status
+from pyvet.veteran.confirmation.api import get_status
 
 # Confirm veteran status, will return confirmed or not confirmed. Note, this is fake VA data below.
 status = get_status(
@@ -93,7 +93,7 @@ status = get_status(
 ## Veteran Benefits Intake
 You can upload multiple files to the Veteran Benefits Administration (VBA) with `pyvet`.
 ```python
-from pyvet.benefits_intake.api import create_path_to_upload_files, upload_files
+from pyvet.benefits.intake.api import create_path_to_upload_files, upload_files
 
 params = create_path_to_upload_files()
 metadata = {
