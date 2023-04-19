@@ -20,9 +20,8 @@ def get_forms(query: str = None):
     Returns
     -------
     """
-    params = dict(query=query)
     try:
-        r = session.get(FORMS_URL, params=params)
+        r = session.get(FORMS_URL, params=dict(query=query))
         r.raise_for_status()
         r = r.json()
         return r
@@ -41,10 +40,9 @@ def get_form(form_name: str):
     r : json
         Response in json format.
     """
-    params = dict(form_name=form_name)
     form_url = FORMS_URL + "/" + form_name
     try:
-        r = session.get(form_url, params=params)
+        r = session.get(form_url, params=dict(form_name=form_name))
         r.raise_for_status()
         r = r.json()
         return r
