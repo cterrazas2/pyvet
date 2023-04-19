@@ -12,23 +12,23 @@ HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
 
 def get_location(
-    practitioner_id: str,
-    identifier: str,
-    address: str,
-    city: str,
-    state: str,
-    zip_code: str,
-    name: str,
+    resource_id: str,
+    identifier: str = None,
+    address: str = None,
+    city: str = None,
+    state: str = None,
+    zip_code: str = None,
+    name: str = None,
     page: int = 1,
     count: int = 30,
 ):
     """Gets provider's location.
     Parameters
     ----------
-    practitioner_id : str
-        The id of the practitioner to locate.
+    resource_id : str
+        The logical id of the resource.
     identifier : str
-        The identifier of the practitioner to locate.
+        The logical identifier of the resource.
     address : str
         The address of the medical facility.
     city : str
@@ -49,7 +49,7 @@ def get_location(
         Response in json format.
     """
     params = {
-        "_id": practitioner_id,
+        "_id": resource_id,
         "identifier": identifier,
         "address": address,
         "address-city": city,
@@ -73,7 +73,7 @@ def get_location_by_id(resource_id: str):
     Parameters
     ----------
     resource_id: str
-        The id of the practitioner to locate.
+        The logical id of the resource.
     Returns
     -------
     r : json
@@ -89,23 +89,23 @@ def get_location_by_id(resource_id: str):
 
 
 def get_organization(
-    org_id: str,
-    identifier: str,
-    address: str,
-    city: str,
-    state: str,
-    zip_code: str,
-    name: str,
+    resource_id: str,
+    identifier: str = None,
+    address: str = None,
+    city: str = None,
+    state: str = None,
+    zip_code: str = None,
+    name: str = None,
     page: int = 1,
     count: int = 30,
 ):
     """Gets an organization's location.
     Parameters
     ----------
-    org_id: str
-        The id of the organization to locate.
+    resource_id: str
+        The logical id of the resource.
     identifier : str
-        The identifier of the organization to locate.
+        The logical identifier of the resource.
     address : str
         The address of the organization.
     city : str
@@ -126,7 +126,7 @@ def get_organization(
         Response in json format.
     """
     params = {
-        "_id": org_id,
+        "_id": resource_id,
         "identifier": identifier,
         "address": address,
         "address-city": city,
@@ -145,18 +145,18 @@ def get_organization(
         logging.error(e)
 
 
-def get_organization_by_id(org_id: str):
+def get_organization_by_id(resource_id: str):
     """Gets an organization's location.
     Parameters
     ----------
-    org_id: str
-        The id of the organization to locate.
+    resource_id: str
+        The logical id of the resource.
     Returns
     -------
     r : json
         Response in json format.
     """
-    org_url = HEALTH_URL + f"Organization/{org_id}"
+    org_url = HEALTH_URL + f"Organization/{resource_id}"
     try:
         r = session.get(org_url)
         r.raise_for_status()
@@ -167,10 +167,10 @@ def get_organization_by_id(org_id: str):
 
 def get_practitioner(
     resource_id: str,
-    prac_id: str,
-    family: str,
-    given: str,
-    name: str,
+    identifier: str = None,
+    family: str = None,
+    given: str = None,
+    name: str = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -178,9 +178,9 @@ def get_practitioner(
     Parameters
     ----------
     resource_id: str
-        The id of the resource to locate.
-    prac_id: str
-        The id of the practitioner role to locate.
+        The logical id of the resource.
+    identifier: str
+        The logical identifier of the resource.
     family: str
         The name of the practitioner role to locate.
     given: str
@@ -198,7 +198,7 @@ def get_practitioner(
     """
     params = {
         "_id": resource_id,
-        "identifier": prac_id,
+        "identifier": identifier,
         "family": family,
         "given": given,
         "name": name,
@@ -214,18 +214,18 @@ def get_practitioner(
         logging.error(e)
 
 
-def get_practitioner_by_id(pr_id: str):
+def get_practitioner_by_id(resource_id: str):
     """Get practitioner by id.
     Parameters
     ----------
-    pr_id: str
-        The id of the practitioner to locate.
+    resource_id: str
+        The logical id of the resource.
     Returns
     -------
     r : json
         Response in json format.
     """
-    pr_id_url = HEALTH_URL + f"Practitioner/{pr_id}"
+    pr_id_url = HEALTH_URL + f"Practitioner/{resource_id}"
     try:
         r = session.get(pr_id_url)
         r.raise_for_status()
@@ -236,8 +236,8 @@ def get_practitioner_by_id(pr_id: str):
 
 def get_practitioner_role(
     resource_id: str,
-    prac_id: str,
-    prac_name: str,
+    identifier: str = None,
+    name: str = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -245,10 +245,10 @@ def get_practitioner_role(
     Parameters
     ----------
     resource_id: str
-        The id of the resource to locate.
-    prac_id: str
+        The logical id of the resource.
+    identifier: str
         The id of the practitioner role to locate.
-    prac_name: str
+    name: str
         The name of the practitioner role to locate.
     page : int
         The number of pages to limit.
@@ -261,8 +261,8 @@ def get_practitioner_role(
     """
     params = {
         "_id": resource_id,
-        "practitioner.identifier": prac_id,
-        "practitioner.name": prac_name,
+        "practitioner.identifier": identifier,
+        "practitioner.name": name,
         "page": page,
         "_count": count,
     }
@@ -275,18 +275,18 @@ def get_practitioner_role(
         logging.error(e)
 
 
-def get_practitioner_role_by_id(pr_role_id: str):
+def get_practitioner_role_by_id(resource_id: str):
     """Get practitioner role by id.
     Parameters
     ----------
-    pr_role_id: str
-        The id of the practitioner role to locate.
+    resource_id: str
+        The logical id of the resource.
     Returns
     -------
     r : json
         Response in json format.
     """
-    pr_role_id_url = HEALTH_URL + f"PractitionerRole/{pr_role_id}"
+    pr_role_id_url = HEALTH_URL + f"PractitionerRole/{resource_id}"
     try:
         r = session.get(pr_role_id_url)
         r.raise_for_status()
