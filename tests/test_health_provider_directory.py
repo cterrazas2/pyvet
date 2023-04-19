@@ -1,7 +1,7 @@
 import unittest
 from requests import Session
 from pyvet import creds
-from pyvet.health.api import (
+from pyvet.health.provider.api import (
     get_location,
     get_location_by_id,
     get_organization,
