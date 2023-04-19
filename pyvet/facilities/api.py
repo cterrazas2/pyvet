@@ -10,7 +10,7 @@ from pyvet.client import current_session as session
 
 FACILITIES_URL = API_URL + "va_facilities/v0"
 FACILITIES_QUERY_MSG = """
-    Parameter combinations for `/facilities` query:
+    Parameter combinations for `/facilities` query not met:
 
     You may optionally specify page and per_page with any query. You must specify one of the following parameter combinations:
     bbox[], with the option of any combination of type, services[], or mobile
@@ -151,15 +151,60 @@ def get_facilities_by_query(
     """
     # See FACILITIES_QUERY_MSG above for VA requirement here
     combos_met = (
-        (bbox and (facility_type or services or mobile))
-        or ids
+        (
+            ids
+            and not bbox
+            and not latitude
+            and not longitude
+            and not radius
+            and not state
+            and not visn
+            and not zip_code
+        )
         or (
             (latitude and longitude)
-            and (radius or ids or facility_type or services or mobile)
+            and not bbox
+            and not state
+            and not visn
+            and not zip_code
         )
-        or (state and (facility_type or services or mobile))
-        or visn
-        or (zip_code and (facility_type or services or mobile))
+        or (
+            bbox
+            and not latitude
+            and not longitude
+            and not radius
+            and not state
+            and not visn
+            and not zip_code
+        )
+        or (
+            state
+            and not bbox
+            and not latitude
+            and not longitude
+            and not radius
+            and not visn
+            and not zip_code
+        )
+        or (
+            zip_code
+            and not bbox
+            and not latitude
+            and not longitude
+            and not radius
+            and not state
+            and not visn
+        )
+        or (
+            visn
+            and not bbox
+            and not latitude
+            and not longitude
+            and not radius
+            and not state
+            and not facility_type
+            and not zip_code
+        )
     )
     if combos_met:
         params = dict(

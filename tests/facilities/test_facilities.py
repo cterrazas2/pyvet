@@ -85,37 +85,196 @@ class TestFacilities(unittest.TestCase):
             ),
         )
 
-    def test_facilities_by_query(self, mock_get):
+    def test_facilities_invalid_query(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_QUERY_JSON
         queried_facilities = get_facilities_by_query(
-            bbox=[],
-            ids=[],
-            latitude=0.0,
-            longitude=0.0,
-            radius=10.0,
+            bbox=[-105.4, 39.4, -104.5, 40.1],
+            latitude=56.7,
+            longitude=-123.4,
+            ids=["vha_688", "vha_644"],
             facility_type="health",
             services=[],
             mobile=False,
-            state="CA",
-            visn=0,
-            zip_code=92056,
+        )
+        self.assertIsNone(queried_facilities)
+        mock_get.assert_not_called()
+
+    def test_facilities_ids_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            ids=["vha_688", "vha_644"],
+            facility_type="health",
+            services=[],
+            mobile=False,
         )
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
             params=dict(
-                bbox=[],
-                ids=[],
-                lat=0.0,
-                long=0.0,
+                bbox=None,
+                ids=["vha_688", "vha_644"],
+                lat=None,
+                long=None,
+                radius=None,
+                type="health",
+                services=[],
+                mobile=False,
+                state=None,
+                visn=None,
+                zip=None,
+                page=1,
+                per_page=30,
+            ),
+        )
+
+    def test_facilities_lat_lon_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            ids=["vha_688", "vha_644"],
+            latitude=56.7,
+            longitude=-123.4,
+            radius=10.0,
+            facility_type="health",
+            services=[],
+            mobile=False,
+        )
+        self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
+        mock_get.assert_called_once_with(
+            self.facilities_url + "facilities",
+            params=dict(
+                bbox=None,
+                ids=["vha_688", "vha_644"],
+                lat=56.7,
+                long=-123.4,
                 radius=10.0,
                 type="health",
                 services=[],
                 mobile=False,
+                state=None,
+                visn=None,
+                zip=None,
+                page=1,
+                per_page=30,
+            ),
+        )
+
+    def test_facilities_bbox_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            bbox=[-105.4, 39.4, -104.5, 40.1],
+            ids=["vha_688", "vha_644"],
+            facility_type="health",
+            services=[],
+            mobile=True,
+        )
+        self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
+        mock_get.assert_called_once_with(
+            self.facilities_url + "facilities",
+            params=dict(
+                bbox=[-105.4, 39.4, -104.5, 40.1],
+                ids=["vha_688", "vha_644"],
+                lat=None,
+                long=None,
+                radius=None,
+                type="health",
+                services=[],
+                mobile=True,
+                state=None,
+                visn=None,
+                zip=None,
+                page=1,
+                per_page=30,
+            ),
+        )
+
+    def test_facilities_state_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            ids=["vha_688", "vha_644"],
+            facility_type="health",
+            services=[],
+            mobile=True,
+            state="CA",
+        )
+        self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
+        mock_get.assert_called_once_with(
+            self.facilities_url + "facilities",
+            params=dict(
+                bbox=None,
+                ids=["vha_688", "vha_644"],
+                lat=None,
+                long=None,
+                radius=None,
+                type="health",
+                services=[],
+                mobile=True,
                 state="CA",
-                visn=0,
-                zip=92056,
+                visn=None,
+                zip=None,
+                page=1,
+                per_page=30,
+            ),
+        )
+
+    def test_facilities_zip_code_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            ids=["vha_688", "vha_644"],
+            facility_type="health",
+            services=[],
+            mobile=True,
+            zip_code="80301",
+        )
+        self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
+        mock_get.assert_called_once_with(
+            self.facilities_url + "facilities",
+            params=dict(
+                bbox=None,
+                ids=["vha_688", "vha_644"],
+                lat=None,
+                long=None,
+                radius=None,
+                type="health",
+                services=[],
+                mobile=True,
+                state=None,
+                visn=None,
+                zip="80301",
+                page=1,
+                per_page=30,
+            ),
+        )
+
+    def test_facilities_visn_query(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = MOCK_QUERY_JSON
+        queried_facilities = get_facilities_by_query(
+            ids=["vha_688", "vha_644"],
+            services=[],
+            mobile=True,
+            visn=26,
+        )
+        self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
+        mock_get.assert_called_once_with(
+            self.facilities_url + "facilities",
+            params=dict(
+                bbox=None,
+                ids=["vha_688", "vha_644"],
+                lat=None,
+                long=None,
+                radius=None,
+                type=None,
+                services=[],
+                mobile=True,
+                state=None,
+                visn=26,
+                zip=None,
                 page=1,
                 per_page=30,
             ),
