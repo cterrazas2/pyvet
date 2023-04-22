@@ -1,4 +1,5 @@
 # PyVet
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A Python library to research and analyze veteran data from the [Veterans Affairs](https://github.com/department-of-veterans-affairs) (VA) Lighthouse API.
@@ -6,26 +7,31 @@ A Python library to research and analyze veteran data from the [Veterans Affairs
 The [VA Lighthouse API](https://developer.va.gov) provides different types of veteran data through a subset of the following
 apis (internal VA and Oauth token apis are not yet supported):
 
--  Benefits API
--  Facilities API
--  Forms API
--  Health API
--  Veteran Confirmation API
+- Benefits API
+- Facilities API
+- Forms API
+- Health API
+- Veteran Confirmation API
 
 You can find more information about these APIS and request API access [here](https://developer.va.gov/onboarding/request-sandbox-access).
 
 ## Install
+
 To install the package use:
+
 ```shell
 pip install pyvet
 ```
 
 ## Usage
+
 To retrieve veteran data from the API, ensure your API key is set.
 You should store your API key in an environment variable or in the `creds.py` named, `API_KEY`.
 
 ## VA Facilities
+
 Here is a small example that grabs a list of all, and nearby, VA facilities.
+
 ```python
 from pyvet.facilities.api import get_all, get_nearby
 
@@ -42,7 +48,9 @@ nearby_facilities = get_nearby(
     export_csv_file=True,
 )
 ```
+
 ## VA Benefits Reference
+
 ```python
 from pyvet.benefits.reference.api import get_disabilities, get_intake_sites
 
@@ -55,6 +63,7 @@ intake_sites = get_intake_sites()
 ```
 
 ## VA Forms
+
 ```python
 from pyvet.forms.api import get_form, get_forms
 
@@ -67,6 +76,7 @@ form = get_form(form_name="10-10EZ")
 ```
 
 ## Veteran Confirmation
+
 ```python
 from pyvet.veteran.confirmation.api import get_status
 
@@ -91,7 +101,9 @@ status = get_status(
 ```
 
 ## Veteran Benefits Intake
+
 You can upload multiple files to the Veteran Benefits Administration (VBA) with `pyvet`.
+
 ```python
 from pyvet.benefits.intake.api import create_path_to_upload_files, upload_files
 
@@ -113,7 +125,9 @@ uploaded_files = upload_files(
 ```
 
 ## Contributing
+
 See the [Contributing to Pyvet](https://github.com/cterrazas2/pyvet/blob/main/CONTRIBUTING.md) documentation.
 
 ## License
+
 MIT
