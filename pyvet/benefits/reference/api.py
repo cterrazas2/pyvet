@@ -14,7 +14,7 @@ def get_contention_types(
     page: int = 1,
     page_size: int = 30,
 ):
-    """Get all contention types.
+    """Fetches all contention types.
     Parameters
     ----------
     page : int
@@ -40,7 +40,7 @@ def get_countries(
     page: int = 1,
     page_size: int = 30,
 ):
-    """Fetches all countries.
+    """Get all countries.
     Parameters
     ----------
     page : int
@@ -92,7 +92,7 @@ def get_intake_sites(
     page: int = 1,
     page_size: int = 30,
 ):
-    """Get intake sites across the country.
+    """Get all VA intake sites.
     Parameters
     ----------
     page : int

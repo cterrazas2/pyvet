@@ -72,7 +72,7 @@ def get_location_by_id(resource_id: str):
     """Gets provider's location.
     Parameters
     ----------
-    resource_id: str
+    resource_id : str
         The logical id of the resource.
     Returns
     -------
@@ -174,7 +174,7 @@ def get_practitioner(
     page: int = 1,
     count: int = 30,
 ):
-    """Get practitioner role
+    """Gets a practitioner's role
     Parameters
     ----------
     resource_id: str
@@ -215,7 +215,7 @@ def get_practitioner(
 
 
 def get_practitioner_by_id(resource_id: str):
-    """Get practitioner by id.
+    """Gets a practitioner by id.
     Parameters
     ----------
     resource_id: str
@@ -241,7 +241,7 @@ def get_practitioner_role(
     page: int = 1,
     count: int = 30,
 ):
-    """Get practitioner role
+    """Gets a practitioner's role
     Parameters
     ----------
     resource_id: str
@@ -276,7 +276,7 @@ def get_practitioner_role(
 
 
 def get_practitioner_role_by_id(resource_id: str):
-    """Get practitioner role by id.
+    """Gets a practitioner's role by id.
     Parameters
     ----------
     resource_id: str

@@ -23,7 +23,14 @@ FACILITIES_QUERY_MSG = """
 
 
 def export_to_csv(file_name: str, data: list):
-    """Exports data to a csv file."""
+    """Exports data to csv file.
+    Parameters
+    ----------
+    file_name : str
+        The name of the csv file.
+    data : list
+        The data to be exported.
+    """
     for i, row in enumerate(data):
         pd_norm = pd.json_normalize(row)
         if i == 0:
@@ -57,22 +64,21 @@ def get_nearby(
     drive_time: int = None,
     export_csv_file: bool = False,
 ):
-    """Gets all nearby VA Facilities with optional params.
+    """Gets all VA Facilities within a certain drive time.
     Parameters
     ----------
     address : str
-        The address to start the search.
+        The address to search.
     city : str
-        City name to start the search.
+        The city to search.
     state : str
-        State to start the search.
+        The state to search.
     zip_code : str
-        Zip code to start the search.
+        The zip code to search.
     drive_time : int
-        The maximum drive time to filter results.
+        The drive time to search.
     export_csv_file : bool
-        Flag to export nearby facilities into a csv file.
-
+        Whether to export data to csv file.
     Returns
     -------
     r : json
@@ -115,35 +121,35 @@ def get_facilities_by_query(
     page: int = 1,
     per_page: int = 30,
 ):
-    """Gets all VA Facilities with optional query parameters.
+    """Gets all VA Facilities with optional params.
     Parameters
     ----------
     bbox : list
-        The bbox to limit the query.
+        The bounding box to search.
     ids : list
-        The ids to limit the query.
-    latitude: float
-        Latitude for the query.
-    longitude: float
-        Longitude for th query.
-    radius: float
-        Radius size to set.
-    facility_type: str
-        Type of facilities of ["health", "benefits", "cemetery", "vet_center"]
-    services: list
-        Service types to filter query.
-    mobile: bool
-        For mobile search filter.
-    state: str
-        State to query.
-    visn: int
-        VISN search of matching facilities.
-    zip_code: str
-        Zip code to search for facilities.
+        The ids to search.
+    latitude : float
+        The latitude to search.
+    longitude : float
+        The longitude to search.
+    radius : float
+        The radius to search.
+    facility_type : str
+        The facility type to search ["health", "benefits", "cemetery", "vet_center"].
+    services : list
+        The services to search.
+    mobile : bool
+        The mobile to search.
+    state : str
+        The state to search.
+    visn : int
+        The visn to search.
+    zip_code : str
+        The zip code to search.
     page : int
-        The number of pages to limit.
+        The page to search.
     per_page : int
-        Maximum count to limit.
+        The per page to search.
     Returns
     -------
     r : json
@@ -234,12 +240,11 @@ def get_facilities_by_query(
 
 
 def get_all(export_csv_file: bool = False):
-    """Gets all VA Facilities with optional params.
+    """Gets all VA Facilities.
     Parameters
     ----------
     export_csv_file : bool
-        Flag to export all facilities into a csv file.
-
+        Whether to export data to csv file.
     Returns
     -------
     r : json
@@ -262,12 +267,11 @@ def get_all(export_csv_file: bool = False):
 
 
 def get_facility(f_id: str):
-    """Gets a VA Facility with required id param.
+    """Gets a VA Facility by id.
     Parameters
     ----------
     f_id : str
-        Facility id to retrieve.
-
+        The id of the facility.
     Returns
     -------
     r : json

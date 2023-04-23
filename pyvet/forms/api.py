@@ -11,14 +11,15 @@ FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
 def get_forms(query: str = None):
-    """Gets forms or filtered with optional params.
+    """Gets all forms with optional params.
     Parameters
     ----------
     query : str
-        The query to find forms (optional).
-
+        The query to search for.
     Returns
     -------
+    r : json
+        Response in json format.
     """
     try:
         r = session.get(FORMS_URL, params=dict(query=query))
@@ -30,11 +31,11 @@ def get_forms(query: str = None):
 
 
 def get_form(form_name: str):
-    """Gets a form based on a form name
+    """Gets a form by name.
     Parameters
     ----------
     form_name : str
-        The target form name to retrieve.
+        The name of the form.
     Returns
     -------
     r : json
