@@ -13,7 +13,7 @@ BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
 def create_path_to_upload_files():
-    """Creates a path to upload files.
+    """Creates a path to upload files to the VA benefits intake api.
     Returns
     -------
     r : json
@@ -109,11 +109,12 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
 
 
 def bulk_status_report(guids: list):
-    """Retrieves a bulk status report of all reports uploaded.
+    """Get the status of multiple documents.
     Parameters
     ----------
     guids : list
-        The list of guids to get a status.
+        A list of guids to fetch the status of.
+
     Returns
     -------
     r : json
@@ -130,12 +131,11 @@ def bulk_status_report(guids: list):
 
 
 def get_uploaded_document(doc_id: str):
-    """Get an uploaded document.
+    """Gets the status of a previously uploaded document.
     Parameters
     ----------
     doc_id : str
-        The doc id to fetch.
-
+        The doc id of the document to get the status of.
     Returns
     -------
     r : json
