@@ -12,6 +12,12 @@ from requests.packages.urllib3.util.retry import Retry
 
 
 def create_session():
+    """Create a session with the VA API.
+    Returns
+    -------
+    session : requests.Session:
+        A session object with the VA API key.
+    """
     session = requests.Session()
     session.headers = API_KEY_HEADER
     retry = Retry(
