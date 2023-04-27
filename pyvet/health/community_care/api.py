@@ -1,5 +1,5 @@
 """
-Health API: https://developer.va.gov/explore/health
+Health API: https://developer.va.gov/explore/health/docs/community_care?version=current
 """
 import logging
 
