@@ -19,11 +19,10 @@ You can find more information about these APIS and request API access [here](htt
 
 The documentation can be browsed in the [docs](docs) folder, and key documents are linked below.
 
-- [Local installation](docs/how-to/installation.md)
+- [Installation](docs/how-to/installation.md)
 - [Quick start](docs/tutorials/quick_start.md)
 - [Open Data API example requests](docs/tutorials/open_data_apis.md)
 - [Oauth API example requests](docs/tutorials/oauth2_apis.md)
-
-## Contributing
-
-See the [Contributing to Pyvet](https://github.com/cterrazas2/pyvet/blob/main/CONTRIBUTING.md) documentation.
+- [Run Tests](docs/how-to/run_tests.md)
+- [Architecture](docs/reference/architecture.md)
+- [Code Style](docs/reference/style.md)
