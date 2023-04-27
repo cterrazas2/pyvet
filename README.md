@@ -26,3 +26,4 @@ The documentation can be browsed in the [docs](docs) folder, and key documents a
 - [Run Tests](docs/how-to/run_tests.md)
 - [Architecture](docs/reference/architecture.md)
 - [Code Style](docs/reference/style.md)
+- [Authorization](docs/explanation/authorization.md)
