@@ -11,17 +11,10 @@ from pyvet.benefits.claims.api import (
     submit_intent_to_file,
     get_last_active_intent_to_file,
 )
-from unittest.mock import ANY, patch, mock_open
+from unittest.mock import patch
 
 
-mock_headers = (
-    dict(
-        apiKey=creds.API_KEY_HEADER.get("apiKey"),
-        # Authorization=creds.API_KEY_HEADER.get(
-        #     "Authorization", "Bearer somerandomtoken"
-        # ),
-    ),
-)
+mock_headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
 
 mock_claims = {
     "data": [
@@ -103,36 +96,57 @@ mock_claim = {
 
 class TestBenefitsClaims(unittest.TestCase):
     def setUp(self):
-        self.headers = mock_headers
+        self.headers = dict(
+            apiKey=creds.API_KEY_HEADER.get("apiKey"),
+            Authorization="Bearer somerandomtoken",
+        )
         self.benefits_claims_url = creds.VA_SANDBOX_API + "claims/v1/"
 
-    @patch("pyvet.client.get_bearer_token", return_value="somerandomtoken")
-    @patch.object(Session, "get", headers=mock_headers)
-    def test_get_claims(self, mock_get, mock_token):
+    @patch(
+        "pyvet.benefits.claims.api.get_bearer_token",
+        return_value="somerandomtoken",
+    )
+    @patch.object(Session().headers, "get", return_value=None)
+    @patch.object(
+        Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+    )
+    def test_get_claims(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_claims
-        assert mock_get.headers == self.headers
+        assert mock_auth.return_value == None
         some_veteran_claims = get_claims(
             ssn="796130115",
             first_name="Tamara",
             last_name="Ellis",
             birth_date="1967-06-19",
         )
+        assert mock_get.headers == mock_headers
         mock_token.assert_called_once()
         self.assertDictEqual(
             some_veteran_claims,
             mock_claims,
         )
         mock_get.assert_called_once_with(
-            self.benefits_intake_url + "claims",
+            self.benefits_claims_url + "claims",
+            headers=dict(
+                apiKey=creds.API_KEY_HEADER.get("apiKey"),
+                Authorization="Bearer somerandomtoken",
+            ),
         )
+        creds.API_KEY_HEADER["Authorization"] = None
 
-    @patch("pyvet.client.get_bearer_token", return_value="somerandomtoken")
-    @patch.object(Session, "get", headers=mock_headers)
-    def test_get_claim(self, mock_get, mock_token):
+    @patch(
+        "pyvet.benefits.claims.api.get_bearer_token",
+        return_value="somerandomtoken",
+    )
+    @patch.object(Session().headers, "get", return_value=None)
+    @patch.object(
+        Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+    )
+    def test_get_claim(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_claim
-        assert mock_get.headers == self.headers
+        assert mock_auth.return_value == None
         some_veteran_claim = get_claim(
             claim_id="600106271",
             ssn="796130115",
@@ -140,14 +154,20 @@ class TestBenefitsClaims(unittest.TestCase):
             last_name="Ellis",
             birth_date="1967-06-19",
         )
+        assert mock_get.headers == mock_headers
         mock_token.assert_called_once()
         self.assertDictEqual(
             some_veteran_claim,
             mock_claim,
         )
         mock_get.assert_called_once_with(
-            self.benefits_intake_url + f"claims/{600106271}",
+            self.benefits_claims_url + f"claims/{600106271}",
+            headers=dict(
+                apiKey=creds.API_KEY_HEADER.get("apiKey"),
+                Authorization="Bearer somerandomtoken",
+            ),
         )
+        creds.API_KEY_HEADER["Authorization"] = None
 
 
 if __name__ == "__main__":

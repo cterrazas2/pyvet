@@ -43,19 +43,25 @@ def get_claims(
     r : json
         Response in json format.
     """
+    claims_url = BENEFITS_INTAKE_URL + f"claims"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
-        if token is None:
-            logging.error("Fetching token failed.")
-            return
-        session.headers["Authorization"] = f"Bearer {token}"
+        logging.error("Fetcing token failed.")
+        return
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-
-    claims_url = BENEFITS_INTAKE_URL + f"claims"
     try:
         r = session.get(claims_url, headers=session.headers)
         r.raise_for_status()
@@ -94,12 +100,19 @@ def get_claim(
         Response in json format.
     """
     claim_url = BENEFITS_INTAKE_URL + f"claims/{claim_id}"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
-        if token is None:
-            logging.error("Fetcing token failed.")
-            return
-        session.headers["Authorization"] = f"Bearer {token}"
+        logging.error("Fetcing token failed.")
+        return
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
         session.headers["X-VA-First-Name"] = first_name
