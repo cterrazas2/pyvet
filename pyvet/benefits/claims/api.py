@@ -291,3 +291,121 @@ def get_last_active_intent_to_file(
         Response in json format.
     """
     pass
+
+
+def submit_poa(
+    is_representative: bool = False,
+    ssn: str = None,
+    first_name: str = None,
+    last_name: str = None,
+    birth_date: str = None,
+):
+    """Submit a Power of Attorney form 2122.
+    Parameters
+    ----------
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    pass
+
+
+def upload_signed_poa(
+    poa_id: str,
+    is_representative: bool = False,
+    ssn: str = None,
+    first_name: str = None,
+    last_name: str = None,
+    birth_date: str = None,
+):
+    """Upload a signed Power of Attorney form 2122.
+    Parameters
+    ----------
+    poa_id : str
+        The id of the Power of Attorney form 2122.
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    pass
+
+
+def get_poa_status_by_id(
+    poa_id: str,
+    is_representative: bool = False,
+    ssn: str = None,
+    first_name: str = None,
+    last_name: str = None,
+    birth_date: str = None,
+):
+    """Get the status of a Power of Attorney form 2122 by an id.
+    Parameters
+    ----------
+    poa_id : str
+        The id of the Power of Attorney form 2122.
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    pass
+
+
+def get_status_poa_last_active(
+    is_representative: bool = False,
+    ssn: str = None,
+    first_name: str = None,
+    last_name: str = None,
+    birth_date: str = None,
+):
+    """Get the status of the last active Power of Attorney form 2122.
+    Parameters
+    ----------
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    pass
