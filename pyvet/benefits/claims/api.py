@@ -15,7 +15,6 @@ from pyvet.creds import API_URL
 
 BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
 CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
-# "openid", "profile" "offline_access" , "claim.read", "claim.write"
 
 
 def get_claims(
