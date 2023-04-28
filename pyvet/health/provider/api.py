@@ -13,12 +13,12 @@ HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
 def get_location(
     resource_id: str,
-    identifier: str = None,
-    address: str = None,
-    city: str = None,
-    state: str = None,
-    zip_code: str = None,
-    name: str = None,
+    identifier: str | None = None,
+    address: str | None = None,
+    city: str | None = None,
+    state: str | None = None,
+    zip_code: str | None = None,
+    name: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -90,12 +90,12 @@ def get_location_by_id(resource_id: str):
 
 def get_organization(
     resource_id: str,
-    identifier: str = None,
-    address: str = None,
-    city: str = None,
-    state: str = None,
-    zip_code: str = None,
-    name: str = None,
+    identifier: str | None = None,
+    address: str | None = None,
+    city: str | None = None,
+    state: str | None = None,
+    zip_code: str | None = None,
+    name: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -167,10 +167,10 @@ def get_organization_by_id(resource_id: str):
 
 def get_practitioner(
     resource_id: str,
-    identifier: str = None,
-    family: str = None,
-    given: str = None,
-    name: str = None,
+    identifier: str | None = None,
+    family: str | None = None,
+    given: str | None = None,
+    name: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -236,8 +236,8 @@ def get_practitioner_by_id(resource_id: str):
 
 def get_practitioner_role(
     resource_id: str,
-    identifier: str = None,
-    name: str = None,
+    identifier: str | None = None,
+    name: str | None = None,
     page: int = 1,
     count: int = 30,
 ):

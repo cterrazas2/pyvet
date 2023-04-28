@@ -10,7 +10,7 @@ from pyvet.client import current_session as session
 FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
-def get_forms(query: str = None):
+def get_forms(query: str | None = None):
     """Gets all forms with optional params.
     Parameters
     ----------
