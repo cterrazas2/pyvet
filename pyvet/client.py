@@ -65,8 +65,8 @@ def get_bearer_token(va_api: str, scope=None):
         token = oidc.login(
             provider_config=oidc.config.ProviderConfig(
                 issuer=ISSUER,
-                token_endpoint=f"{AUTH_SERVER}/token",
                 authorization_endpoint=f"{AUTH_SERVER}/authorization",
+                token_endpoint=f"{AUTH_SERVER}/token",
             ),
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
