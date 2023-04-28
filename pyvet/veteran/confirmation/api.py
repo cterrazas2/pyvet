@@ -41,7 +41,7 @@ def get_status(
     gender : str
         The gender of the veteran.
     street_address: str
-        The street adress of the veteran.
+        The street address of the veteran.
     city: str
         The city of the veteran.
     zip_code: str

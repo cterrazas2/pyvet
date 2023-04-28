@@ -9,6 +9,7 @@ import requests
 from collections import defaultdict
 from pyvet.client import current_session as session
 from pyvet.creds import API_URL
+from typing import BinaryIO
 
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
@@ -72,9 +73,8 @@ def upload_files(
 
     uploads_dir = pathlib.Path().resolve().as_posix() + f"/{uploads_dir}/"
     attachments_dir = uploads_dir + "attachments/"
-    from typing import BinaryIO
 
-    files: dict[str, BinaryIO | tuple] = {}
+    files: dict[str, BinaryIO | tuple] = defaultdict()
 
     # add any metadata
     if metadata:

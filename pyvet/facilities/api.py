@@ -22,7 +22,7 @@ FACILITIES_QUERY_MSG = """
     """
 
 
-def export_to_csv(file_name: str, data: list[str]):
+def export_to_csv(file_name: str, data: list[dict[str, str]]):
     """Exports data to csv file.
     Parameters
     ----------
@@ -57,24 +57,18 @@ def get_ids():
 
 
 def get_nearby(
-    address: str,
-    city: str,
-    state: str,
-    zip_code: str,
+    latitude: float,
+    longitude: float,
     drive_time: int | None = None,
     export_csv_file: bool = False,
 ):
     """Gets all VA Facilities within a certain drive time.
     Parameters
     ----------
-    address : str
-        The address to search.
-    city : str
-        The city to search.
-    state : str
-        The state to search.
-    zip_code : str
-        The zip code to search.
+    latitude : float
+        The latitude to search.
+    longitude : float
+        The longitude to search.
     drive_time : int
         The drive time to search.
     export_csv_file : bool
@@ -85,10 +79,8 @@ def get_nearby(
         Response in json format.
     """
     params = dict(
-        street_address=address,
-        city=city,
-        state=state,
-        zip=zip_code,
+        lat=latitude,
+        lng=longitude,
         drive_time=drive_time,
     )
     nearby_url = FACILITIES_URL + "/nearby"
