@@ -17,7 +17,9 @@ HEALTH_SCOPE = (
 )
 
 
-def get_eligibility(patient: str, service_type: str, extended_drive_min: int = None):
+def get_eligibility(
+    patient: str, service_type: str, extended_drive_min: int | None = None
+):
     """Get community care eligibility for a patient for a particular service type.
     Parameters
     ----------

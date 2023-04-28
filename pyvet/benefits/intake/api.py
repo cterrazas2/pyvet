@@ -6,6 +6,7 @@ import logging
 import os
 import pathlib
 import requests
+from collections import defaultdict
 from pyvet.client import current_session as session
 from pyvet.creds import API_URL
 
@@ -47,7 +48,7 @@ def upload_files(
     Returns
     -------
     r : Response
-        A Response obejct from requests.
+        A Response object from requests.
 
     Notes
     -------
@@ -55,7 +56,7 @@ def upload_files(
         metadata - a dict of file metadata
         content - main content file
         attachment1 - 1st attachment file
-        attachmentN - Nth attachemnt file
+        attachmentN - Nth attachment file
 
     Currently, pyvet will look in the uploads_dir, defaults to `uploads/`, within the current working directory.
     You should ensure this directory exists and place all files you want to upload here. Below is an example file
@@ -64,15 +65,16 @@ def upload_files(
     uploads/
         attachments/
             attachment1.pdf
-            attachemnt2.pdf
+            attachment2.pdf
         main_content.pdf
 
     """
 
     uploads_dir = pathlib.Path().resolve().as_posix() + f"/{uploads_dir}/"
     attachments_dir = uploads_dir + "attachments/"
+    from typing import BinaryIO
 
-    files = {}
+    files: dict[str, BinaryIO | tuple] = {}
 
     # add any metadata
     if metadata:

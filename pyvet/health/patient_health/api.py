@@ -19,17 +19,16 @@ from pyvet.client import (
     current_session as session,
     get_bearer_token,
 )
-from typing import List
 
 HEALTH_URL = API_URL + "fhir/v0/r4/"
 HEALTH_SCOPE = "profile openid offline_access launch/patient patient/AllergyIntolerance.read patient/Appointment.read patient/Binary.read patient/Condition.read patient/Device.read patient/DeviceRequest.read patient/DiagnosticReport.read patient/DocumentReference.read patient/Encounter.read patient/Immunization.read patient/Location.read patient/Medication.read patient/MedicationOrder.read patient/MedicationRequest.read patient/MedicationStatement.read patient/Observation.read patient/Organization.read patient/Patient.read patient/Practitioner.read patient/PractitionerRole.read patient/Procedure.read"
 
 
 def get_allergy_intolerance(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -105,12 +104,12 @@ def get_allergy_intolerance_by_id(resource_id: str):
 
 
 def get_appointment(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    location: str = None,
-    last_updated: List[str] = None,
-    date: List[str] = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    location: str | None = None,
+    last_updated: list[str] | None = None,
+    date: list[str] | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -125,9 +124,9 @@ def get_appointment(
         The logical identifier of the resource.
     location : str
         The location of the appointment.
-    last_updated : List[str]
+    last_updated : list[str]
         The list of date(s) of when the appointment was last updated.
-    date : List[str]
+    date : list[str]
         The list of date(s) of the appointment.
     page : int
         The number of pages to limit.
@@ -219,14 +218,14 @@ def get_binary_by_id(resource_id: str):
 
 
 def get_condition(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    category: str = None,
-    clinical_status: str = None,
-    code: str = None,
-    onset_date: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    category: str | None = None,
+    clinical_status: str | None = None,
+    code: str | None = None,
+    onset_date: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -316,11 +315,11 @@ def get_condition_by_id(resource_id: str):
 
 
 def get_device(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    type: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    type: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -399,10 +398,10 @@ def get_device_by_id(resource_id: str):
 
 
 def get_device_request(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -478,14 +477,14 @@ def get_device_request_by_id(resource_id: str):
 
 
 def get_diagnostic_report(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    category: str = None,
-    code: str = None,
-    date: List[str] = None,
-    status: str = None,
-    last_updated: List[str] = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    category: str | None = None,
+    code: str | None = None,
+    date: list[str] | None = None,
+    status: str | None = None,
+    last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -502,11 +501,11 @@ def get_diagnostic_report(
         The category of the diagnostic report.
     code : str
         The code of the diagnostic report.
-    date : List[str]
+    date : list[str]
         The list of date(s) of the diagnostic report.
     status : str
         The status of the diagnostic report.
-    last_updated : List[str]
+    last_updated : list[str]
         The list of date(s) of when the diagnostic report was last updated.
     page : int
         The number of pages to limit.
@@ -573,12 +572,12 @@ def get_diagnostic_report_by_id(resource_id: str):
 
 
 def get_document_reference(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    type: str = None,
-    date: List[str] = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    type: str | None = None,
+    date: list[str] | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -593,7 +592,7 @@ def get_document_reference(
         The logical identifier of the resource.
     type : str
         The type of the document reference.
-    date : List[str]
+    date : list[str]
         The list of date(s) of the document reference.
     last_updated : str
         The date of when the document reference record was last updated.
@@ -660,11 +659,11 @@ def get_document_reference_by_id(resource_id: str):
 
 
 def get_encounter(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    date: List[str] = None,
-    last_updated: List[str] = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    date: list[str] | None = None,
+    last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -677,9 +676,9 @@ def get_encounter(
         The logical id of the resource.
     identifier : str
         The logical identifier of the resource.
-    date : List[str]
+    date : list[str]
         The list of date(s) of the encounter.
-    last_updated : List[str]
+    last_updated : list[str]
         The list of date(s) of when the encounter was last updated.
     page : int
         The number of pages to limit.
@@ -743,10 +742,10 @@ def get_encounter_by_id(resource_id: str):
 
 
 def get_immunization(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -822,14 +821,14 @@ def get_immunization_by_id(resource_id: str):
 
 
 def get_location(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    address_city: str = None,
-    address_state: str = None,
-    address_postal_code: str = None,
-    name: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    address_city: str | None = None,
+    address_state: str | None = None,
+    address_postal_code: str | None = None,
+    name: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -917,10 +916,10 @@ def get_location_by_id(resource_id: str):
 
 
 def get_medication(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -996,11 +995,11 @@ def get_medication_by_id(resource_id: str):
 
 
 def get_medication_request(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    last_updated: str = None,
-    intent: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    last_updated: str | None = None,
+    intent: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1079,13 +1078,13 @@ def get_medication_request_by_id(resource_id: str):
 
 
 def get_observation(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    category: str = None,
-    code: str = None,
-    date: List[str] = None,
-    last_updated: List[str] = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    category: str | None = None,
+    code: str | None = None,
+    date: list[str] | None = None,
+    last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1102,9 +1101,9 @@ def get_observation(
         The category of the observation.
     code : str
         The code of the observation.
-    date : List[str]
+    date : list[str]
         The list of date(s) of the observation.
-    last_updated : List[str]
+    last_updated : list[str]
         The list of date(s) of when the observation was last updated.
     page : int
         The number of pages to limit.
@@ -1170,14 +1169,14 @@ def get_observation_by_id(resource_id: str):
 
 
 def get_organization(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    address_city: str = None,
-    address_state: str = None,
-    address_postal_code: str = None,
-    name: str = None,
-    last_updated: str = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    address_city: str | None = None,
+    address_state: str | None = None,
+    address_postal_code: str | None = None,
+    name: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1265,8 +1264,8 @@ def get_organization_by_id(resource_id: str):
 
 
 def get_patient(
-    resource_id: str = None,
-    identifier: str = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1336,12 +1335,12 @@ def get_patient_by_id(resource_id: str):
 
 
 def get_practitioner(
-    resource_id: str = None,
-    identifier: str = None,
-    family: str = None,
-    given: str = None,
-    name: str = None,
-    last_updated: str = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    family: str | None = None,
+    given: str | None = None,
+    name: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1423,10 +1422,10 @@ def get_practitioner_by_id(resource_id: str):
 
 
 def get_practitioner_role(
-    resource_id: str = None,
-    identifier: str = None,
-    name: str = None,
-    last_updated: str = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    name: str | None = None,
+    last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1502,11 +1501,11 @@ def get_practitioner_role_by_id(resource_id: str):
 
 
 def get_procedure(
-    patient: str = None,
-    resource_id: str = None,
-    identifier: str = None,
-    date: List[str] = None,
-    last_updated: List[str] = None,
+    patient: str | None = None,
+    resource_id: str | None = None,
+    identifier: str | None = None,
+    date: list[str] | None = None,
+    last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
 ):
@@ -1519,9 +1518,9 @@ def get_procedure(
         The logical id of the resource.
     identifier : str
         The logical identifier of the resource.
-    date : List[str]
+    date : list[str]
         The list of date(s) that describes the date that the procedure was performed.
-    last_updated : List[str]
+    last_updated : list[str]
         The list of date(s) of when the procedure was last updated.
     page : int
         The number of pages to limit.

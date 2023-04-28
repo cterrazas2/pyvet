@@ -61,26 +61,20 @@ class TestFacilities(unittest.TestCase):
     def test_nearby_facilities(self, mock_get):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_NEARBY
-        mock_address = ""
-        mock_city = "Boston"
-        mock_state = "MA"
-        mock_zip = "02108"
+        mock_lat = 33.21
+        mock_lon = -117.32
         mock_drive_time = 60
         nearby_facilities = get_nearby(
-            address=mock_address,
-            city=mock_city,
-            state=mock_state,
-            zip_code=mock_zip,
+            latitude=mock_lat,
+            longitude=mock_lon,
             drive_time=mock_drive_time,
         )
         self.assertDictEqual(nearby_facilities, MOCK_NEARBY)
         mock_get.assert_called_once_with(
             self.facilities_url + "nearby",
             params=dict(
-                street_address=mock_address,
-                city=mock_city,
-                state=mock_state,
-                zip=mock_zip,
+                lat=mock_lat,
+                lng=mock_lon,
                 drive_time=mock_drive_time,
             ),
         )

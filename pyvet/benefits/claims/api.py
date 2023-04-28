@@ -20,10 +20,10 @@ CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
 
 def get_claims(
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Get claims for a veteran.
     Parameters
@@ -74,10 +74,10 @@ def get_claims(
 def get_claim(
     claim_id: str,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Get claim details.
     Parameters
@@ -130,10 +130,10 @@ def get_claim(
 def submit_526(
     is_first_claim: bool = False,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Submit a 526 claim.
     Parameters
@@ -167,7 +167,7 @@ def submit_526(
         session.headers["X-VA-Birth-Date"] = birth_date
 
     try:
-        r.session.post(
+        r = session.post(
             submission_url,
             headers=session.headers,
             files={"form526": open("form526.pdf", "rb")},
@@ -182,10 +182,10 @@ def submit_526(
 def upload_526(
     doc_id: str,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Upload a 526 claim.
     Parameters
@@ -213,10 +213,10 @@ def upload_526(
 def upload_supporting_doc_526(
     doc_id: str,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Upload a supporting document for a 526 claim.
     Parameters
@@ -243,10 +243,10 @@ def upload_supporting_doc_526(
 
 def submit_intent_to_file(
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Submit an intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
@@ -269,10 +269,10 @@ def submit_intent_to_file(
 
 def get_last_active_intent_to_file(
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Get the last active intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
@@ -295,10 +295,10 @@ def get_last_active_intent_to_file(
 
 def submit_poa(
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Submit a Power of Attorney form 2122.
     Parameters
@@ -324,10 +324,10 @@ def submit_poa(
 def upload_signed_poa(
     poa_id: str,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Upload a signed Power of Attorney form 2122.
     Parameters
@@ -355,10 +355,10 @@ def upload_signed_poa(
 def get_poa_status_by_id(
     poa_id: str,
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Get the status of a Power of Attorney form 2122 by an id.
     Parameters
@@ -385,10 +385,10 @@ def get_poa_status_by_id(
 
 def get_status_poa_last_active(
     is_representative: bool = False,
-    ssn: str = None,
-    first_name: str = None,
-    last_name: str = None,
-    birth_date: str = None,
+    ssn: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+    birth_date: str | None = None,
 ):
     """Get the status of the last active Power of Attorney form 2122.
     Parameters
