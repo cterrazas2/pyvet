@@ -61,7 +61,7 @@ def get_nearby(
     city: str,
     state: str,
     zip_code: str,
-    drive_time: int = None,
+    drive_time: int | None = None,
     export_csv_file: bool = False,
 ):
     """Gets all VA Facilities within a certain drive time.
@@ -107,17 +107,17 @@ def get_nearby(
 
 
 def get_facilities_by_query(
-    bbox: list = None,
-    ids: list = None,
-    latitude: float = None,
-    longitude: float = None,
-    radius: float = None,
-    facility_type: str = None,
-    services: list = None,
-    mobile: bool = None,
-    state: str = None,
-    visn: int = None,
-    zip_code: str = None,
+    bbox: list | None = None,
+    ids: list | None = None,
+    latitude: float | None = None,
+    longitude: float | None = None,
+    radius: float | None = None,
+    facility_type: str | None = None,
+    services: list | None = None,
+    mobile: bool | None = None,
+    state: str | None = None,
+    visn: int | None = None,
+    zip_code: str | None = None,
     page: int = 1,
     per_page: int = 30,
 ):

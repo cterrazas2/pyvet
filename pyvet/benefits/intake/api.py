@@ -29,7 +29,9 @@ def create_path_to_upload_files():
         logging.error(e)
 
 
-def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = None):
+def upload_files(
+    params: dict, uploads_dir: str = "uploads", metadata: dict | None = None
+):
     """Uploads file(s) to the benefit intake api.
     Parameters
     ----------

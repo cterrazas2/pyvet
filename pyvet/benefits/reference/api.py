@@ -219,7 +219,7 @@ def get_states(
 
 
 def get_treatment_centers(
-    state_code: int = None,
+    state_code: int | None = None,
     page: int = 1,
     page_size: int = 30,
 ):
