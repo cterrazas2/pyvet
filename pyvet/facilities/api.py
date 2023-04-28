@@ -22,7 +22,7 @@ FACILITIES_QUERY_MSG = """
     """
 
 
-def export_to_csv(file_name: str, data: list):
+def export_to_csv(file_name: str, data: list[str]):
     """Exports data to csv file.
     Parameters
     ----------
@@ -107,13 +107,13 @@ def get_nearby(
 
 
 def get_facilities_by_query(
-    bbox: list | None = None,
-    ids: list | None = None,
+    bbox: list[float] | None = None,
+    ids: list[str] | None = None,
     latitude: float | None = None,
     longitude: float | None = None,
     radius: float | None = None,
     facility_type: str | None = None,
-    services: list | None = None,
+    services: list[str] | None = None,
     mobile: bool | None = None,
     state: str | None = None,
     visn: int | None = None,
