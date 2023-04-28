@@ -1,4 +1,3 @@
-import json
 import unittest
 from requests import Session
 from pyvet import creds

@@ -42,7 +42,7 @@ def get_claims(
     r : json
         Response in json format.
     """
-    claims_url = BENEFITS_INTAKE_URL + f"claims"
+    claims_url = BENEFITS_INTAKE_URL + "claims"
     authorization = session.headers.get("Authorization")
     if authorization is None:
         logging.error("No token set.")
@@ -154,7 +154,7 @@ def submit_526(
     r : json
         Response in json format.
     """
-    submission_url = BENEFITS_INTAKE_URL + f"forms/526"
+    submission_url = BENEFITS_INTAKE_URL + "forms/526"
     token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
     if session.headers.get("Authorization") is None:
         session.headers["Authorization"] = f"Bearer {token}"
