@@ -1,5 +1,5 @@
 """
-Veteran Verification API: https://developer.va.gov/explore/verification/docs/veteran-verification?version=current
+Veteran Verification API: https://developer.va.gov/explore/verification/docs/veteran_verification?version=current
 """
 import logging
 import requests
@@ -10,7 +10,7 @@ from pyvet.client import (
     get_bearer_token,
 )
 
-VERIFICATION_URL = API_URL + "veteran-verification/v1/"
+VERIFICATION_URL = API_URL + "veteran_verification/v1/"
 VERIFICATION_SCOPE = "profile openid offline_access disability_rating.read service_history.read veteran_status.read"
 
 
@@ -23,7 +23,7 @@ def get_status():
     """
     if session.headers.get("Authorization") is None:
         token = get_bearer_token(
-            va_api="veteran-verification", scope=VERIFICATION_SCOPE
+            va_api="veteran_verification", scope=VERIFICATION_SCOPE
         )
         if token is None:
             logging.error("Fetching token failed.")
@@ -48,7 +48,7 @@ def get_disability_rating():
     """
     if session.headers.get("Authorization") is None:
         token = get_bearer_token(
-            va_api="veteran-verification", scope=VERIFICATION_SCOPE
+            va_api="veteran_verification", scope=VERIFICATION_SCOPE
         )
         if token is None:
             logging.error("Fetching token failed.")
@@ -73,7 +73,7 @@ def get_service_history():
     """
     if session.headers.get("Authorization") is None:
         token = get_bearer_token(
-            va_api="veteran-verification", scope=VERIFICATION_SCOPE
+            va_api="veteran_verification", scope=VERIFICATION_SCOPE
         )
         if token is None:
             logging.error("Fetching token failed.")

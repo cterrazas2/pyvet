@@ -71,7 +71,7 @@ class TestVeteranVerification(unittest.TestCase):
     def setUp(self):
         self.headers = creds.API_KEY_HEADER
         self.headers["Authorization"] = "Bearer somerandomtoken"
-        self.verification_url = creds.VA_SANDBOX_API + "veteran-verification/v1/"
+        self.verification_url = creds.VA_SANDBOX_API + "veteran_verification/v1/"
 
     def test_get_status(self, mock_get):
         mock_get.return_value.status_code = 200
