@@ -29,7 +29,11 @@ def create_path_to_upload_files():
         logging.error(e)
 
 
-def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = None):
+def upload_files(
+    params: dict[str, str],
+    uploads_dir: str = "uploads",
+    metadata: dict[str, str] | None = None,
+):
     """Uploads file(s) to the benefit intake api.
     Parameters
     ----------
@@ -108,7 +112,7 @@ def upload_files(params: dict, uploads_dir: str = "uploads", metadata: dict = No
         logging.error(e)
 
 
-def bulk_status_report(guids: list):
+def bulk_status_report(guids: list[str]):
     """Get the status of multiple documents.
     Parameters
     ----------
