@@ -13,7 +13,7 @@ PyVet uses [Poetry](https://python-poetry.org) for management of dependencies an
 
 To install the `pyvet` package run the following:
 
-```shell
+```console
 pip install pyvet
 ```
 
@@ -21,12 +21,12 @@ pip install pyvet
 
 Clone the `pyvet` git repo.
 
-```shell
+```console
 git clone git@github.com:cterrazas2/pyvet.git
 ```
 
 Or use the `gh` cli:
 
-```shell
+```console
 gh clone git@github.com:cterrazas2/pyvet.git
 ```

@@ -4,7 +4,7 @@
 
 ## Code Setup
 
-```text
+```console
 /pyvet                            # This is where the main code lives
     /benefits                     # The VA Benefits APIs
         /intake                   # The VA Benefit Intake API
