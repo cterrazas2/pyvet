@@ -43,7 +43,6 @@ def get_allergy_intolerance(
     r : json
         Response in json format.
     """
-    print(f"session.headers: {session.headers}")
     if session.headers.get("Authorization") is None:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
