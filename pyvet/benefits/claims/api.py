@@ -111,7 +111,7 @@ def get_claim(
         }"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetcing token failed.")
-        return
+        return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
         session.headers["X-VA-First-Name"] = first_name
@@ -266,6 +266,7 @@ def submit_intent_to_file(
 
 def get_last_active_intent_to_file(
     is_representative: bool = False,
+    intent_type: str = "compensation",
     ssn: str = "",
     first_name: str = "",
     last_name: str = "",
@@ -287,7 +288,33 @@ def get_last_active_intent_to_file(
     r : json
         Response in json format.
     """
-    pass
+    active_intent_url = BENEFITS_INTAKE_URL + "claims/forms/0966/active"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetcing token failed.")
+        return None
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+    try:
+        r = session.get(
+            active_intent_url, headers=session.headers, params={"type": intent_type}
+        )
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def submit_poa(
@@ -377,7 +404,31 @@ def get_poa_status_by_id(
     r : json
         Response in json format.
     """
-    pass
+    poa_url = BENEFITS_INTAKE_URL + f"claims/forms/2122/{poa_id}"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetcing token failed.")
+        return None
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+    try:
+        r = session.get(poa_url, headers=session.headers)
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def get_status_poa_last_active(
@@ -405,4 +456,28 @@ def get_status_poa_last_active(
     r : json
         Response in json format.
     """
-    pass
+    poa_url = BENEFITS_INTAKE_URL + "claims/forms/2122/active"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetcing token failed.")
+        return None
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+    try:
+        r = session.get(poa_url, headers=session.headers)
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
