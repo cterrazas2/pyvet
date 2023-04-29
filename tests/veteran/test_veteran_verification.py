@@ -57,6 +57,11 @@ mock_service_history = {
 }
 
 
+@patch(
+    "pyvet.veteran.verification.api.get_bearer_token",
+    return_value="somerandomtoken",
+)
+@patch.object(Session().headers, "get", return_value=None)
 @patch.object(
     Session,
     "get",
@@ -72,32 +77,43 @@ class TestVeteranVerification(unittest.TestCase):
         self.headers = creds.API_KEY_HEADER
         self.headers["Authorization"] = "Bearer somerandomtoken"
         self.verification_url = creds.VA_SANDBOX_API + "veteran_verification/v1/"
+        creds.API_KEY_HEADER["Authorization"] = None
 
-    def test_get_status(self, mock_get):
+    def test_get_status(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_confirmed
-        assert mock_get.headers == self.headers
+        assert mock_auth.return_value == None
         vet_status = get_status()
+        mock_token.assert_called_once()
+        assert mock_token.return_value == "somerandomtoken"
+        assert mock_get.headers == self.headers
         self.assertDictEqual(vet_status, mock_confirmed)
         mock_get.assert_called_once_with(
             self.verification_url + "status", headers=self.headers
         )
 
-    def test_disability_rating(self, mock_get):
+    def test_disability_rating(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_disability_rating
-        assert mock_get.headers == self.headers
+        assert mock_auth.return_value == None
         disability_rating = get_disability_rating()
+        mock_token.assert_called_once()
+        assert mock_token.return_value == "somerandomtoken"
+        assert mock_get.headers == self.headers
         self.assertDictEqual(disability_rating, mock_disability_rating)
         mock_get.assert_called_once_with(
             self.verification_url + "disability_rating", headers=self.headers
         )
 
-    def test_service_history(self, mock_get):
+    def test_service_history(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = mock_service_history
-        assert mock_get.headers == self.headers
+        assert mock_auth.return_value == None
         service_history = get_service_history()
+        mock_token.assert_called_once()
+        assert mock_token.return_value == "somerandomtoken"
+        print(f"mock_get.headers: {mock_get.headers}")
+        assert mock_get.headers == self.headers
         self.assertDictEqual(service_history, mock_service_history)
         mock_get.assert_called_once_with(
             self.verification_url + "service_history", headers=self.headers

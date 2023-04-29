@@ -71,6 +71,7 @@ class TestHealthCommunityCare(unittest.TestCase):
     def setUp(self):
         self.headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
         self.health_url = creds.VA_SANDBOX_API + "community-care/v0/eligibility/"
+        creds.API_KEY_HEADER["Authorization"] = None
 
     def test_get_eligibility(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200

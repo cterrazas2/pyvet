@@ -1,14 +1,5 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/fhir?version=current
-
-Resources
-
-    Organization
-    Patient
-    Practitioner
-    PractitionerRole
-    Procedure
-    Metadata
 """
 import logging
 
@@ -52,6 +43,7 @@ def get_allergy_intolerance(
     r : json
         Response in json format.
     """
+    print(f"session.headers: {session.headers}")
     if session.headers.get("Authorization") is None:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
@@ -1324,7 +1316,7 @@ def get_patient_by_id(resource_id: str):
             logging.error("Fetching token failed.")
             return
         session.headers["Authorization"] = f"Bearer {token}"
-    patient_url = HEALTH_URL + f"Patient{resource_id}"
+    patient_url = HEALTH_URL + f"Patient/{resource_id}"
     try:
         r = session.get(patient_url, headers=session.headers)
         r.raise_for_status()

@@ -100,6 +100,7 @@ class TestBenefitsClaims(unittest.TestCase):
             Authorization="Bearer somerandomtoken",
         )
         self.benefits_claims_url = creds.VA_SANDBOX_API + "claims/v1/"
+        creds.API_KEY_HEADER["Authorization"] = None
 
     @patch(
         "pyvet.benefits.claims.api.get_bearer_token",
@@ -166,7 +167,6 @@ class TestBenefitsClaims(unittest.TestCase):
                 Authorization="Bearer somerandomtoken",
             ),
         )
-        creds.API_KEY_HEADER["Authorization"] = None
 
 
 if __name__ == "__main__":
