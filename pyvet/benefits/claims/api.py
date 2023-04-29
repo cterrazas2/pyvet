@@ -23,7 +23,7 @@ def get_claims(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Get claims for a veteran.
     Parameters
     ----------
@@ -133,7 +133,7 @@ def submit_526(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Submit a 526 claim.
     Parameters
     ----------
@@ -185,7 +185,7 @@ def upload_526(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Upload a 526 claim.
     Parameters
     ----------
@@ -246,7 +246,7 @@ def submit_intent_to_file(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Submit an intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
         If the consumer is a representative on behalf of a veteran.
@@ -272,7 +272,7 @@ def get_last_active_intent_to_file(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Get the last active intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
         If the consumer is a representative on behalf of a veteran.
@@ -298,7 +298,7 @@ def submit_poa(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Submit a Power of Attorney form 2122.
     Parameters
     ----------
@@ -327,7 +327,7 @@ def upload_signed_poa(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Upload a signed Power of Attorney form 2122.
     Parameters
     ----------
@@ -358,7 +358,7 @@ def get_poa_status_by_id(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Get the status of a Power of Attorney form 2122 by an id.
     Parameters
     ----------
@@ -388,7 +388,7 @@ def get_status_poa_last_active(
     first_name: str | None = None,
     last_name: str | None = None,
     birth_date: str | None = None,
-):
+) -> json:
     """Get the status of the last active Power of Attorney form 2122.
     Parameters
     ----------

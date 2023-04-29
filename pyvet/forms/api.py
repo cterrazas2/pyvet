@@ -1,6 +1,7 @@
 """
 Forms API: https://developer.va.gov/explore/vaForms/docs/vaForms?version=current
 """
+import json
 import logging
 import requests
 
@@ -10,7 +11,7 @@ from pyvet.client import current_session as session
 FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
-def get_forms(query: str | None = None):
+def get_forms(query: str | None = None) -> json:
     """Gets all forms with optional params.
     Parameters
     ----------
@@ -30,7 +31,7 @@ def get_forms(query: str | None = None):
         logging.error(e)
 
 
-def get_form(form_name: str):
+def get_form(form_name: str) -> json:
     """Gets a form by name.
     Parameters
     ----------

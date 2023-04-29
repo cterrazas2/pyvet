@@ -16,8 +16,8 @@ oidc-client = "^0.2.3"
 black = "^22.10.0"
 
 [tool.oidc]
-issuer = "https://sandbox-api.va.gov/"  # URL of your OIDC provider
-client_id = "<application ID>"  # Application ID given by your OIDC provider
+issuer = "$POETRY_VA_ISSUER"  # URL of your OIDC provider
+client_id = "$POETRY_VA_CLIENT_ID"  # Application ID given by your OIDC provider
 
 
 [build-system]

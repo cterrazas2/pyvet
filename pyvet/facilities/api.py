@@ -1,6 +1,7 @@
 """
 Facilities  API: https://developer.va.gov/explore/facilities/docs/facilities?version=current
 """
+import json
 import logging
 import pandas as pd
 import requests
@@ -22,7 +23,7 @@ FACILITIES_QUERY_MSG = """
     """
 
 
-def export_to_csv(file_name: str, data: list[dict[str, str]]):
+def export_to_csv(file_name: str, data: list[dict[str, str]]) -> None:
     """Exports data to csv file.
     Parameters
     ----------
@@ -39,7 +40,7 @@ def export_to_csv(file_name: str, data: list[dict[str, str]]):
             pd_norm.to_csv(file_name, mode="a", header=False)
 
 
-def get_ids():
+def get_ids() -> json:
     """Gets all VA Facility IDs with optional params.
     Returns
     -------
@@ -61,7 +62,7 @@ def get_nearby(
     longitude: float,
     drive_time: int | None = None,
     export_csv_file: bool = False,
-):
+) -> json:
     """Gets all VA Facilities within a certain drive time.
     Parameters
     ----------
@@ -112,7 +113,7 @@ def get_facilities_by_query(
     zip_code: str | None = None,
     page: int = 1,
     per_page: int = 30,
-):
+) -> json:
     """Gets all VA Facilities with optional params.
     Parameters
     ----------
@@ -231,7 +232,7 @@ def get_facilities_by_query(
         logging.error(FACILITIES_QUERY_MSG)
 
 
-def get_all(export_csv_file: bool = False):
+def get_all(export_csv_file: bool = False) -> json:
     """Gets all VA Facilities.
     Parameters
     ----------
@@ -258,7 +259,7 @@ def get_all(export_csv_file: bool = False):
         logging.error(e)
 
 
-def get_facility(f_id: str):
+def get_facility(f_id: str) -> json:
     """Gets a VA Facility by id.
     Parameters
     ----------

@@ -14,7 +14,7 @@ from typing import BinaryIO
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
-def create_path_to_upload_files():
+def create_path_to_upload_files() -> dict[str, str]:
     """Creates a path to upload files to the VA benefits intake api.
     Returns
     -------
@@ -35,7 +35,7 @@ def upload_files(
     params: dict[str, str],
     uploads_dir: str = "uploads",
     metadata: dict[str, str] | None = None,
-):
+) -> requests.Response:
     """Uploads file(s) to the benefit intake api.
     Parameters
     ----------
@@ -114,7 +114,7 @@ def upload_files(
         logging.error(e)
 
 
-def bulk_status_report(guids: list[str]):
+def bulk_status_report(guids: list[str]) -> json:
     """Get the status of multiple documents.
     Parameters
     ----------
@@ -136,7 +136,7 @@ def bulk_status_report(guids: list[str]):
         logging.error(e)
 
 
-def get_uploaded_document(doc_id: str):
+def get_uploaded_document(doc_id: str) -> json:
     """Gets the status of a previously uploaded document.
     Parameters
     ----------
@@ -157,7 +157,7 @@ def get_uploaded_document(doc_id: str):
         logging.error(e)
 
 
-def download_uploaded_document(doc_id: str):
+def download_uploaded_document(doc_id: str) -> json:
     """Downloads a previously uploaded document. This endpoint is only for testing environment.
     Parameters
     ----------

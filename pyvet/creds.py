@@ -33,6 +33,7 @@ API_FORCE_LIST = (500, 502, 504)
 # VA AUTH INFO     #
 ####################
 AUTH_SERVER = "https://sandbox-api.va.gov/oauth2"
-ISSUER = "https://sandbox-api.va.gov"
+# ISSUER = "https://sandbox-api.va.gov" # below is issuer from VA's '.well-known/openid-configuration' file
+ISSUER = "https://deptva-eval.okta.com/oauth2/default"
 REDIRECT = "http://127.0.0.1:39303/oauth2/callback"
 DEFAULT_SCOPE = "profile openid offline_access"

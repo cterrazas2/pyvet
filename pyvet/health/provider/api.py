@@ -1,8 +1,8 @@
 """
 Health API: https://developer.va.gov/explore/health
 """
+import json
 import logging
-
 import requests
 
 from pyvet.creds import API_URL
@@ -21,7 +21,7 @@ def get_location(
     name: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets provider's location.
     Parameters
     ----------
@@ -68,7 +68,7 @@ def get_location(
         logging.error(e)
 
 
-def get_location_by_id(resource_id: str):
+def get_location_by_id(resource_id: str) -> json:
     """Gets provider's location.
     Parameters
     ----------
@@ -98,7 +98,7 @@ def get_organization(
     name: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets an organization's location.
     Parameters
     ----------
@@ -145,7 +145,7 @@ def get_organization(
         logging.error(e)
 
 
-def get_organization_by_id(resource_id: str):
+def get_organization_by_id(resource_id: str) -> json:
     """Gets an organization's location.
     Parameters
     ----------
@@ -173,7 +173,7 @@ def get_practitioner(
     name: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets a practitioner's role
     Parameters
     ----------
@@ -214,7 +214,7 @@ def get_practitioner(
         logging.error(e)
 
 
-def get_practitioner_by_id(resource_id: str):
+def get_practitioner_by_id(resource_id: str) -> json:
     """Gets a practitioner by id.
     Parameters
     ----------
@@ -240,7 +240,7 @@ def get_practitioner_role(
     name: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets a practitioner's role
     Parameters
     ----------
@@ -275,7 +275,7 @@ def get_practitioner_role(
         logging.error(e)
 
 
-def get_practitioner_role_by_id(resource_id: str):
+def get_practitioner_role_by_id(resource_id: str) -> json:
     """Gets a practitioner's role by id.
     Parameters
     ----------

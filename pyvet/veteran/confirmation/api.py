@@ -1,6 +1,7 @@
 """
 Veteran Confirmation API: https://developer.va.gov/explore/verification/docs/veteran_confirmation?version=current
 """
+import json
 import logging
 import requests
 
@@ -26,7 +27,7 @@ def get_status(
     birth_place_city: str,
     birth_place_state: str,
     birth_place_country: str,
-):
+) -> json:
     """Gets a veteran's status.
     Parameters
     ----------

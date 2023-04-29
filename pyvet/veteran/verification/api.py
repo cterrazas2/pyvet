@@ -1,6 +1,7 @@
 """
 Veteran Verification API: https://developer.va.gov/explore/verification/docs/veteran_verification?version=current
 """
+import json
 import logging
 import requests
 
@@ -14,7 +15,7 @@ VERIFICATION_URL = API_URL + "veteran_verification/v1/"
 VERIFICATION_SCOPE = "profile openid offline_access disability_rating.read service_history.read veteran_status.read"
 
 
-def get_status():
+def get_status() -> json:
     """Gets a veteran's status via oidc.
     Returns
     -------
@@ -39,7 +40,7 @@ def get_status():
         logging.error(e)
 
 
-def get_disability_rating():
+def get_disability_rating() -> json:
     """Gets a veteran's disability rating via oidc.
     Returns
     -------
@@ -64,7 +65,7 @@ def get_disability_rating():
         logging.error(e)
 
 
-def get_service_history():
+def get_service_history() -> json:
     """Gets a veteran's service history via oidc.
     Returns
     -------

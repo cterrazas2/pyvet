@@ -1,8 +1,8 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/community_care?version=current
 """
+import json
 import logging
-
 import requests
 
 from pyvet.creds import API_URL
@@ -19,7 +19,7 @@ HEALTH_SCOPE = (
 
 def get_eligibility(
     patient: str, service_type: str, extended_drive_min: int | None = None
-):
+) -> json:
     """Get community care eligibility for a patient for a particular service type.
     Parameters
     ----------

@@ -17,6 +17,7 @@ from pyvet.creds import (
     ISSUER,
     REDIRECT,
 )
+from dataclasses import dataclass
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
@@ -40,7 +41,7 @@ disability_rating.read service_history.read veteran_status.read
 """
 
 
-def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str:
+def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> oidc.TokenResponse:
     """Get a bearer token from the VA OIDC server.
     Parameters
     ----------
@@ -55,6 +56,11 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str:
     """
     try:
         """
+        Update 04/29:
+        So, I looked in the va's '.well-known/openid-configuration' file and it indeed has the below routes:
+           authorization_endpoint: https://sandbox-api.va.gov/oauth2/authorization
+           token_endpoint: https://sandbox-api.va.gov/oauth2/token
+
         this doesn't work?:
         token_endpoint=f"https://sandbox-api.va.gov/oauth2/token",
 
@@ -65,7 +71,7 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str:
             token_endpoint=f"https://sandbox-api.va.gov/oauth2/{va_api}/v1/token",
             authorization_endpoint=f"https://sandbox-api.va.gov/oauth2/{va_api}/v1/authorization",
         """
-        # va_api_version = f"{va_api}/v1"
+        va_api_version = f"{va_api}/v1"
         token = oidc.login(
             provider_config=oidc.config.ProviderConfig(
                 issuer=ISSUER,
@@ -78,9 +84,18 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str:
             scope=scope,
             interactive=True,
         )
+        # current_session.token = token
         return token
     except Exception as e:
         logging.error(e)
+
+
+# @dataclass(frozen=True)
+# class RequestSession:
+#     """A session object with the VA API key."""
+
+#     session: requests.Session
+#     token: oidc.TokenResponse = None
 
 
 def create_session() -> requests.Session:

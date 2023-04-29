@@ -1,8 +1,8 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/fhir?version=current
 """
+import json
 import logging
-
 import requests
 
 from pyvet.creds import API_URL
@@ -22,7 +22,7 @@ def get_allergy_intolerance(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets allergy intolerance.
     Parameters
     ----------
@@ -68,7 +68,7 @@ def get_allergy_intolerance(
         logging.error(e)
 
 
-def get_allergy_intolerance_by_id(resource_id: str):
+def get_allergy_intolerance_by_id(resource_id: str) -> json:
     """Gets allergy intolerance by id.
     Parameters
     ----------
@@ -104,7 +104,7 @@ def get_appointment(
     date: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets appointment.
     Parameters
     ----------
@@ -155,7 +155,7 @@ def get_appointment(
         logging.error(e)
 
 
-def get_appointment_by_id(resource_id: str):
+def get_appointment_by_id(resource_id: str) -> json:
     """Gets appointment by id.
     Parameters
     ----------
@@ -182,7 +182,7 @@ def get_appointment_by_id(resource_id: str):
         logging.error(e)
 
 
-def get_binary_by_id(resource_id: str):
+def get_binary_by_id(resource_id: str) -> json:
     """Gets binary by id.
     Parameters
     ----------
@@ -220,7 +220,7 @@ def get_condition(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets condition.
     Parameters
     ----------
@@ -279,7 +279,7 @@ def get_condition(
         logging.error(e)
 
 
-def get_condition_by_id(resource_id: str):
+def get_condition_by_id(resource_id: str) -> json:
     """Gets condition by id.
     Parameters
     ----------
@@ -314,7 +314,7 @@ def get_device(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets device.
     Parameters
     ----------
@@ -362,7 +362,7 @@ def get_device(
         logging.error(e)
 
 
-def get_device_by_id(resource_id: str):
+def get_device_by_id(resource_id: str) -> json:
     """Gets device by id.
     Parameters
     ----------
@@ -396,7 +396,7 @@ def get_device_request(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets device request.
     Parameters
     ----------
@@ -441,7 +441,7 @@ def get_device_request(
         logging.error(e)
 
 
-def get_device_request_by_id(resource_id: str):
+def get_device_request_by_id(resource_id: str) -> json:
     """Gets device request by id.
     Parameters
     ----------
@@ -479,7 +479,7 @@ def get_diagnostic_report(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets diagnostic report.
     Parameters
     ----------
@@ -536,7 +536,7 @@ def get_diagnostic_report(
         logging.error(e)
 
 
-def get_diagnostic_report_by_id(resource_id: str):
+def get_diagnostic_report_by_id(resource_id: str) -> json:
     """Gets diagnostic report by id.
     Parameters
     ----------
@@ -572,7 +572,7 @@ def get_document_reference(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets document reference.
     Parameters
     ----------
@@ -623,7 +623,7 @@ def get_document_reference(
         logging.error(e)
 
 
-def get_document_reference_by_id(resource_id: str):
+def get_document_reference_by_id(resource_id: str) -> json:
     """Gets document reference by id.
     Parameters
     ----------
@@ -658,7 +658,7 @@ def get_encounter(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets encounter.
     Parameters
     ----------
@@ -706,7 +706,7 @@ def get_encounter(
         logging.error(e)
 
 
-def get_encounter_by_id(resource_id: str):
+def get_encounter_by_id(resource_id: str) -> json:
     """Gets encounter by id.
     Parameters
     ----------
@@ -740,7 +740,7 @@ def get_immunization(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets immunization.
     Parameters
     ----------
@@ -785,7 +785,7 @@ def get_immunization(
         logging.error(e)
 
 
-def get_immunization_by_id(resource_id: str):
+def get_immunization_by_id(resource_id: str) -> json:
     """Gets immunization by id.
     Parameters
     ----------
@@ -823,7 +823,7 @@ def get_location(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets location.
     Parameters
     ----------
@@ -880,7 +880,7 @@ def get_location(
         logging.error(e)
 
 
-def get_location_by_id(resource_id: str):
+def get_location_by_id(resource_id: str) -> json:
     """Gets immunization by id.
     Parameters
     ----------
@@ -914,7 +914,7 @@ def get_medication(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets medication.
     Parameters
     ----------
@@ -959,7 +959,7 @@ def get_medication(
         logging.error(e)
 
 
-def get_medication_by_id(resource_id: str):
+def get_medication_by_id(resource_id: str) -> json:
     """Gets medication by id.
     Parameters
     ----------
@@ -994,7 +994,7 @@ def get_medication_request(
     intent: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets medication request.
     Parameters
     ----------
@@ -1042,7 +1042,7 @@ def get_medication_request(
         logging.error(e)
 
 
-def get_medication_request_by_id(resource_id: str):
+def get_medication_request_by_id(resource_id: str) -> json:
     """Gets medication request by id.
     Parameters
     ----------
@@ -1079,7 +1079,7 @@ def get_observation(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets observation.
     Parameters
     ----------
@@ -1133,7 +1133,7 @@ def get_observation(
         logging.error(e)
 
 
-def get_observation_by_id(resource_id: str):
+def get_observation_by_id(resource_id: str) -> json:
     """Gets observation by id.
     Parameters
     ----------
@@ -1171,7 +1171,7 @@ def get_organization(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets organization.
     Parameters
     ----------
@@ -1228,7 +1228,7 @@ def get_organization(
         logging.error(e)
 
 
-def get_organization_by_id(resource_id: str):
+def get_organization_by_id(resource_id: str) -> json:
     """Gets organization by id.
     Parameters
     ----------
@@ -1260,7 +1260,7 @@ def get_patient(
     identifier: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets patient.
     Parameters
     ----------
@@ -1299,7 +1299,7 @@ def get_patient(
         logging.error(e)
 
 
-def get_patient_by_id(resource_id: str):
+def get_patient_by_id(resource_id: str) -> json:
     """Gets patient by id.
     Parameters
     ----------
@@ -1335,7 +1335,7 @@ def get_practitioner(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets practitioner.
     Parameters
     ----------
@@ -1386,7 +1386,7 @@ def get_practitioner(
         logging.error(e)
 
 
-def get_practitioner_by_id(resource_id: str):
+def get_practitioner_by_id(resource_id: str) -> json:
     """Gets practitioner by id.
     Parameters
     ----------
@@ -1420,7 +1420,7 @@ def get_practitioner_role(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets practitioner role.
     Parameters
     ----------
@@ -1465,7 +1465,7 @@ def get_practitioner_role(
         logging.error(e)
 
 
-def get_practitioner_role_by_id(resource_id: str):
+def get_practitioner_role_by_id(resource_id: str) -> json:
     """Gets practitioner role by id.
     Parameters
     ----------
@@ -1500,7 +1500,7 @@ def get_procedure(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-):
+) -> json:
     """Gets procedure.
     Parameters
     ----------
@@ -1548,7 +1548,7 @@ def get_procedure(
         logging.error(e)
 
 
-def get_procedure_by_id(resource_id: str):
+def get_procedure_by_id(resource_id: str) -> json:
     """Gets procedure by id.
     Parameters
     ----------
@@ -1575,7 +1575,7 @@ def get_procedure_by_id(resource_id: str):
         logging.error(e)
 
 
-def get_metadata():
+def get_metadata() -> json:
     """Gets metadata.
     Returns
     -------
