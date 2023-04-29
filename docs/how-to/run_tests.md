@@ -19,7 +19,7 @@ poetry shell
 All tests should pass.
 
 ```console
-pytest -v
+poetry run pytest -v
 ```
 
 ## Tests
