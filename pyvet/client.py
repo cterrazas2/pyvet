@@ -1,13 +1,21 @@
 import logging
 import requests
+
+# the below is an internal version, with some modifications. It is not the same as the one in the pyvet package.
 import pyvet.oidc_client as oidc
+
+# import oidc_client as oidc
 from pyvet.creds import (
     API_BACKOFF_FACTOR,
     API_FORCE_LIST,
     API_KEY_HEADER,
     API_RETRIES,
+    AUTH_SERVER,
     CLIENT_ID,
     CLIENT_SECRET,
+    DEFAULT_SCOPE,
+    ISSUER,
+    REDIRECT,
 )
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -31,18 +39,14 @@ disability_rating.read service_history.read veteran_status.read
 
 """
 
-AUTH_SERVER = "https://sandbox-api.va.gov/oauth2"
-ISSUER = "https://sandbox-api.va.gov"
-REDIRECT = "http://127.0.0.1:39303/oauth2/callback"
 
-
-def get_bearer_token(va_api: str, scope=None):
+def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str:
     """Get a bearer token from the VA OIDC server.
     Parameters
     ----------
     va_api : str
         The VA API to request a token for.
-    scope : str, optional
+    scope : str
         A scope to request from the VA OIDC server (different per VA API).
     Returns
     -------
@@ -79,7 +83,7 @@ def get_bearer_token(va_api: str, scope=None):
         logging.error(e)
 
 
-def create_session():
+def create_session() -> requests.Session:
     """Create a session with the VA API.
     Returns
     -------

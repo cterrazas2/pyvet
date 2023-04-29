@@ -28,3 +28,11 @@ API_URL = VA_SANDBOX_API if DEV else VA_PROD_API
 API_RETRIES = 5
 API_BACKOFF_FACTOR = 0.3
 API_FORCE_LIST = (500, 502, 504)
+
+####################
+# VA AUTH INFO     #
+####################
+AUTH_SERVER = "https://sandbox-api.va.gov/oauth2"
+ISSUER = "https://sandbox-api.va.gov"
+REDIRECT = "http://127.0.0.1:39303/oauth2/callback"
+DEFAULT_SCOPE = "profile openid offline_access"
