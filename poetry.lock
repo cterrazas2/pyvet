@@ -879,6 +879,33 @@ files = [
 ]
 
 [[package]]
+name = "types-requests"
+version = "2.29.0.0"
+description = "Typing stubs for requests"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-requests-2.29.0.0.tar.gz", hash = "sha256:c86f4a955d943d2457120dbe719df24ef0924e11177164d10a0373cf311d7b4d"},
+    {file = "types_requests-2.29.0.0-py3-none-any.whl", hash = "sha256:4cf6e323e856c779fbe8815bb977a5bf5d6c5034713e4c17ff2a9a20610f5b27"},
+]
+
+[package.dependencies]
+types-urllib3 = "<1.27"
+
+[[package]]
+name = "types-urllib3"
+version = "1.26.25.11"
+description = "Typing stubs for urllib3"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "types-urllib3-1.26.25.11.tar.gz", hash = "sha256:697102ddf4f781eed6f692353f40cee1098643526f5a8b99f49d2ede90fd3754"},
+    {file = "types_urllib3-1.26.25.11-py3-none-any.whl", hash = "sha256:04235e792139cf3624b25d38faab593456738fbdb7439634046172e3b1339400"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.5.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -931,4 +958,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.3)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "bd3c5a9f32830b39c2374b1f0b3b84f14601f91a3952ba9763e89174a5dab10d"
+content-hash = "556e8b7d8dadaac2558163bd3d907abec23b7ca0c095a2ab31621846cad80159"

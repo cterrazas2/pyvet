@@ -112,7 +112,6 @@ class TestVeteranVerification(unittest.TestCase):
         service_history = get_service_history()
         mock_token.assert_called_once()
         assert mock_token.return_value == "somerandomtoken"
-        print(f"mock_get.headers: {mock_get.headers}")
         assert mock_get.headers == self.headers
         self.assertDictEqual(service_history, mock_service_history)
         mock_get.assert_called_once_with(
