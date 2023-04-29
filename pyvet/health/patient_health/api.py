@@ -10,6 +10,7 @@ from pyvet.client import (
     current_session as session,
     get_bearer_token,
 )
+from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "fhir/v0/r4/"
 HEALTH_SCOPE = "profile openid offline_access launch/patient patient/AllergyIntolerance.read patient/Appointment.read patient/Binary.read patient/Condition.read patient/Device.read patient/DeviceRequest.read patient/DiagnosticReport.read patient/DocumentReference.read patient/Encounter.read patient/Immunization.read patient/Location.read patient/Medication.read patient/MedicationOrder.read patient/MedicationRequest.read patient/MedicationStatement.read patient/Observation.read patient/Organization.read patient/Patient.read patient/Practitioner.read patient/PractitionerRole.read patient/Procedure.read"
@@ -22,7 +23,7 @@ def get_allergy_intolerance(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets allergy intolerance.
     Parameters
     ----------
@@ -47,7 +48,7 @@ def get_allergy_intolerance(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     allergy_url = HEALTH_URL + "AllergyIntolerance"
     params = {
@@ -61,13 +62,12 @@ def get_allergy_intolerance(
     try:
         r = session.get(allergy_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_allergy_intolerance_by_id(resource_id: str) -> json:
+def get_allergy_intolerance_by_id(resource_id: str) -> Json:
     """Gets allergy intolerance by id.
     Parameters
     ----------
@@ -82,14 +82,13 @@ def get_allergy_intolerance_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     allergy_url = HEALTH_URL + f"AllergyIntolerance/{resource_id}"
     try:
         r = session.get(allergy_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -103,7 +102,7 @@ def get_appointment(
     date: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets appointment.
     Parameters
     ----------
@@ -132,7 +131,7 @@ def get_appointment(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     appointment_url = HEALTH_URL + "Appointment"
     params = {
@@ -148,13 +147,12 @@ def get_appointment(
     try:
         r = session.get(appointment_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_appointment_by_id(resource_id: str) -> json:
+def get_appointment_by_id(resource_id: str) -> Json:
     """Gets appointment by id.
     Parameters
     ----------
@@ -169,19 +167,18 @@ def get_appointment_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     appointment_url = HEALTH_URL + f"Appointment/{resource_id}"
     try:
         r = session.get(appointment_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_binary_by_id(resource_id: str) -> json:
+def get_binary_by_id(resource_id: str) -> Json:
     """Gets binary by id.
     Parameters
     ----------
@@ -196,14 +193,13 @@ def get_binary_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     binary_url = HEALTH_URL + f"Binary/{resource_id}"
     try:
         r = session.get(binary_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -219,7 +215,7 @@ def get_condition(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets condition.
     Parameters
     ----------
@@ -254,7 +250,7 @@ def get_condition(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     condition_url = HEALTH_URL + "Condition"
     params = {
@@ -272,13 +268,12 @@ def get_condition(
     try:
         r = session.get(condition_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_condition_by_id(resource_id: str) -> json:
+def get_condition_by_id(resource_id: str) -> Json:
     """Gets condition by id.
     Parameters
     ----------
@@ -293,14 +288,13 @@ def get_condition_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     condition_url = HEALTH_URL + f"Condition/{resource_id}"
     try:
         r = session.get(condition_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -313,7 +307,7 @@ def get_device(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets device.
     Parameters
     ----------
@@ -340,7 +334,7 @@ def get_device(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     condition_url = HEALTH_URL + "Device"
     params = {
@@ -355,13 +349,12 @@ def get_device(
     try:
         r = session.get(condition_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_device_by_id(resource_id: str) -> json:
+def get_device_by_id(resource_id: str) -> Json:
     """Gets device by id.
     Parameters
     ----------
@@ -376,14 +369,13 @@ def get_device_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     device_url = HEALTH_URL + f"Device/{resource_id}"
     try:
         r = session.get(device_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -395,7 +387,7 @@ def get_device_request(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets device request.
     Parameters
     ----------
@@ -420,7 +412,7 @@ def get_device_request(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     device_request_url = HEALTH_URL + "DeviceRequest"
     params = {
@@ -434,13 +426,12 @@ def get_device_request(
     try:
         r = session.get(device_request_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_device_request_by_id(resource_id: str) -> json:
+def get_device_request_by_id(resource_id: str) -> Json:
     """Gets device request by id.
     Parameters
     ----------
@@ -455,14 +446,13 @@ def get_device_request_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     device_request_url = HEALTH_URL + f"DeviceRequest/{resource_id}"
     try:
         r = session.get(device_request_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -478,7 +468,7 @@ def get_diagnostic_report(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets diagnostic report.
     Parameters
     ----------
@@ -511,7 +501,7 @@ def get_diagnostic_report(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     diagnostic_report_url = HEALTH_URL + "DiagnosticReport"
     params = {
@@ -529,13 +519,12 @@ def get_diagnostic_report(
     try:
         r = session.get(diagnostic_report_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_diagnostic_report_by_id(resource_id: str) -> json:
+def get_diagnostic_report_by_id(resource_id: str) -> Json:
     """Gets diagnostic report by id.
     Parameters
     ----------
@@ -550,14 +539,13 @@ def get_diagnostic_report_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     diagnostic_report_url = HEALTH_URL + f"DiagnosticReport/{resource_id}"
     try:
         r = session.get(diagnostic_report_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -571,7 +559,7 @@ def get_document_reference(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets document reference.
     Parameters
     ----------
@@ -600,7 +588,7 @@ def get_document_reference(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     document_reference_url = HEALTH_URL + "DocumentReference"
     params = {
@@ -616,13 +604,12 @@ def get_document_reference(
     try:
         r = session.get(document_reference_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_document_reference_by_id(resource_id: str) -> json:
+def get_document_reference_by_id(resource_id: str) -> Json:
     """Gets document reference by id.
     Parameters
     ----------
@@ -637,14 +624,13 @@ def get_document_reference_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     document_reference_url = HEALTH_URL + f"DocumentReference/{resource_id}"
     try:
         r = session.get(document_reference_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -657,7 +643,7 @@ def get_encounter(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets encounter.
     Parameters
     ----------
@@ -684,7 +670,7 @@ def get_encounter(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     encounter_url = HEALTH_URL + "Encounter"
     params = {
@@ -699,13 +685,12 @@ def get_encounter(
     try:
         r = session.get(encounter_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_encounter_by_id(resource_id: str) -> json:
+def get_encounter_by_id(resource_id: str) -> Json:
     """Gets encounter by id.
     Parameters
     ----------
@@ -720,14 +705,13 @@ def get_encounter_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     encounter_url = HEALTH_URL + f"Encounter/{resource_id}"
     try:
         r = session.get(encounter_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -739,7 +723,7 @@ def get_immunization(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets immunization.
     Parameters
     ----------
@@ -764,7 +748,7 @@ def get_immunization(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     immunization_url = HEALTH_URL + "Immunization"
     params = {
@@ -778,13 +762,12 @@ def get_immunization(
     try:
         r = session.get(immunization_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_immunization_by_id(resource_id: str) -> json:
+def get_immunization_by_id(resource_id: str) -> Json:
     """Gets immunization by id.
     Parameters
     ----------
@@ -799,14 +782,13 @@ def get_immunization_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     immunization_url = HEALTH_URL + f"Immunization/{resource_id}"
     try:
         r = session.get(immunization_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -822,7 +804,7 @@ def get_location(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets location.
     Parameters
     ----------
@@ -855,7 +837,7 @@ def get_location(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     location_url = HEALTH_URL + "Location"
     params = {
@@ -873,13 +855,12 @@ def get_location(
     try:
         r = session.get(location_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_location_by_id(resource_id: str) -> json:
+def get_location_by_id(resource_id: str) -> Json:
     """Gets immunization by id.
     Parameters
     ----------
@@ -894,14 +875,13 @@ def get_location_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     location_url = HEALTH_URL + f"Location/{resource_id}"
     try:
         r = session.get(location_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -913,7 +893,7 @@ def get_medication(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets medication.
     Parameters
     ----------
@@ -938,7 +918,7 @@ def get_medication(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     medication_url = HEALTH_URL + "Medication"
     params = {
@@ -952,13 +932,12 @@ def get_medication(
     try:
         r = session.get(medication_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_medication_by_id(resource_id: str) -> json:
+def get_medication_by_id(resource_id: str) -> Json:
     """Gets medication by id.
     Parameters
     ----------
@@ -973,14 +952,13 @@ def get_medication_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     medication_url = HEALTH_URL + f"Medication/{resource_id}"
     try:
         r = session.get(medication_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -993,7 +971,7 @@ def get_medication_request(
     intent: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets medication request.
     Parameters
     ----------
@@ -1020,7 +998,7 @@ def get_medication_request(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     medication_request_url = HEALTH_URL + "MedicationRequest"
     params = {
@@ -1035,13 +1013,12 @@ def get_medication_request(
     try:
         r = session.get(medication_request_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_medication_request_by_id(resource_id: str) -> json:
+def get_medication_request_by_id(resource_id: str) -> Json:
     """Gets medication request by id.
     Parameters
     ----------
@@ -1056,14 +1033,13 @@ def get_medication_request_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     medication_request_url = HEALTH_URL + f"MedicationRequest/{resource_id}"
     try:
         r = session.get(medication_request_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1078,7 +1054,7 @@ def get_observation(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets observation.
     Parameters
     ----------
@@ -1109,7 +1085,7 @@ def get_observation(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     observation_url = HEALTH_URL + "Observation"
     params = {
@@ -1126,13 +1102,12 @@ def get_observation(
     try:
         r = session.get(observation_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_observation_by_id(resource_id: str) -> json:
+def get_observation_by_id(resource_id: str) -> Json:
     """Gets observation by id.
     Parameters
     ----------
@@ -1147,14 +1122,13 @@ def get_observation_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     observation_url = HEALTH_URL + f"Observation/{resource_id}"
     try:
         r = session.get(observation_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1170,7 +1144,7 @@ def get_organization(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets organization.
     Parameters
     ----------
@@ -1203,7 +1177,7 @@ def get_organization(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     organization_url = HEALTH_URL + "Organization"
     params = {
@@ -1221,13 +1195,12 @@ def get_organization(
     try:
         r = session.get(organization_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_organization_by_id(resource_id: str) -> json:
+def get_organization_by_id(resource_id: str) -> Json:
     """Gets organization by id.
     Parameters
     ----------
@@ -1242,14 +1215,13 @@ def get_organization_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     organization_url = HEALTH_URL + f"Organization/{resource_id}"
     try:
         r = session.get(organization_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1259,7 +1231,7 @@ def get_patient(
     identifier: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets patient.
     Parameters
     ----------
@@ -1280,7 +1252,7 @@ def get_patient(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     patient_url = HEALTH_URL + "Patient"
     params = {
@@ -1292,13 +1264,12 @@ def get_patient(
     try:
         r = session.get(patient_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_patient_by_id(resource_id: str) -> json:
+def get_patient_by_id(resource_id: str) -> Json:
     """Gets patient by id.
     Parameters
     ----------
@@ -1313,14 +1284,13 @@ def get_patient_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     patient_url = HEALTH_URL + f"Patient/{resource_id}"
     try:
         r = session.get(patient_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1334,7 +1304,7 @@ def get_practitioner(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets practitioner.
     Parameters
     ----------
@@ -1363,7 +1333,7 @@ def get_practitioner(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     practitioner_url = HEALTH_URL + "Practitioner"
     params = {
@@ -1379,13 +1349,12 @@ def get_practitioner(
     try:
         r = session.get(practitioner_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_practitioner_by_id(resource_id: str) -> json:
+def get_practitioner_by_id(resource_id: str) -> Json:
     """Gets practitioner by id.
     Parameters
     ----------
@@ -1400,14 +1369,13 @@ def get_practitioner_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     practitioner_url = HEALTH_URL + f"Practitioner/{resource_id}"
     try:
         r = session.get(practitioner_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1419,7 +1387,7 @@ def get_practitioner_role(
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets practitioner role.
     Parameters
     ----------
@@ -1444,7 +1412,7 @@ def get_practitioner_role(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     practitioner_role_url = HEALTH_URL + "PractitionerRole"
     params = {
@@ -1458,13 +1426,12 @@ def get_practitioner_role(
     try:
         r = session.get(practitioner_role_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_practitioner_role_by_id(resource_id: str) -> json:
+def get_practitioner_role_by_id(resource_id: str) -> Json:
     """Gets practitioner role by id.
     Parameters
     ----------
@@ -1479,14 +1446,13 @@ def get_practitioner_role_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     practitioner_role_url = HEALTH_URL + f"PractitionerRole/{resource_id}"
     try:
         r = session.get(practitioner_role_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -1499,7 +1465,7 @@ def get_procedure(
     last_updated: list[str] | None = None,
     page: int = 1,
     count: int = 30,
-) -> json:
+) -> Json:
     """Gets procedure.
     Parameters
     ----------
@@ -1526,7 +1492,7 @@ def get_procedure(
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     procedure_url = HEALTH_URL + "Procedure"
     params = {
@@ -1541,13 +1507,12 @@ def get_procedure(
     try:
         r = session.get(procedure_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_procedure_by_id(resource_id: str) -> json:
+def get_procedure_by_id(resource_id: str) -> Json:
     """Gets procedure by id.
     Parameters
     ----------
@@ -1562,19 +1527,18 @@ def get_procedure_by_id(resource_id: str) -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     procedure_url = HEALTH_URL + f"Procedure/{resource_id}"
     try:
         r = session.get(procedure_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_metadata() -> json:
+def get_metadata() -> Json:
     """Gets metadata.
     Returns
     -------
@@ -1585,13 +1549,12 @@ def get_metadata() -> json:
         token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     metadata_url = HEALTH_URL + "metadata"
     try:
         r = session.get(metadata_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)

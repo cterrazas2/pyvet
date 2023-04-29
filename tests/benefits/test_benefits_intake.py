@@ -135,7 +135,7 @@ class TestBenefitsIntake(unittest.TestCase):
         }
         mock_open.assert_called()
         mock_put.assert_called_once_with(
-            upload_url,
+            url=upload_url,
             files=mock_files,
         )
 

@@ -10,6 +10,7 @@ from pyvet.client import (
     current_session as session,
     get_bearer_token,
 )
+from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "community-care/v0/eligibility/"
 HEALTH_SCOPE = (
@@ -19,7 +20,7 @@ HEALTH_SCOPE = (
 
 def get_eligibility(
     patient: str, service_type: str, extended_drive_min: int | None = None
-) -> json:
+) -> Json:
     """Get community care eligibility for a patient for a particular service type.
     Parameters
     ----------
@@ -38,7 +39,7 @@ def get_eligibility(
         token = get_bearer_token(va_api="community-care", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
-            return
+            return None
         session.headers["Authorization"] = f"Bearer {token}"
     status_url = HEALTH_URL + "search"
     params = dict(
@@ -47,7 +48,6 @@ def get_eligibility(
     try:
         r = session.get(status_url, headers=session.headers, params=params)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)

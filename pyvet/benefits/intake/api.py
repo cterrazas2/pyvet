@@ -9,12 +9,12 @@ import requests
 from collections import defaultdict
 from pyvet.client import current_session as session
 from pyvet.creds import API_URL
-from typing import BinaryIO
+from pyvet.json_alias import Json
 
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
-def create_path_to_upload_files() -> dict[str, str]:
+def create_path_to_upload_files() -> Json:
     """Creates a path to upload files to the VA benefits intake api.
     Returns
     -------
@@ -25,8 +25,7 @@ def create_path_to_upload_files() -> dict[str, str]:
     try:
         r = session.post(ref_url)
         r.raise_for_status()
-        r = r.json()
-        return r.get("data").get("attributes")
+        return r.json().get("data").get("attributes")
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -35,7 +34,7 @@ def upload_files(
     params: dict[str, str],
     uploads_dir: str = "uploads",
     metadata: dict[str, str] | None = None,
-) -> requests.Response:
+) -> requests.Response | None:
     """Uploads file(s) to the benefit intake api.
     Parameters
     ----------
@@ -74,7 +73,7 @@ def upload_files(
     uploads_dir = pathlib.Path().resolve().as_posix() + f"/{uploads_dir}/"
     attachments_dir = uploads_dir + "attachments/"
 
-    files: dict[str, BinaryIO | tuple] = defaultdict()
+    files: dict = {}
 
     # add any metadata
     if metadata:
@@ -99,8 +98,13 @@ def upload_files(
         except OSError as ose:
             logging.error(ose)
 
+        file_url: str | bytes = params.get("location", "")
+        if not file_url:
+            logging.error("No file upload location found.")
+            return None
+
         r = session.put(
-            params.get("location"),
+            url=file_url,
             files=files,
         )
 
@@ -114,7 +118,7 @@ def upload_files(
         logging.error(e)
 
 
-def bulk_status_report(guids: list[str]) -> json:
+def bulk_status_report(guids: list[str]) -> Json:
     """Get the status of multiple documents.
     Parameters
     ----------
@@ -130,13 +134,12 @@ def bulk_status_report(guids: list[str]) -> json:
     try:
         r = session.post(status_url, json=dict(ids=guids))
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_uploaded_document(doc_id: str) -> json:
+def get_uploaded_document(doc_id: str) -> Json:
     """Gets the status of a previously uploaded document.
     Parameters
     ----------
@@ -151,13 +154,12 @@ def get_uploaded_document(doc_id: str) -> json:
     try:
         r = session.get(ref_url)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def download_uploaded_document(doc_id: str) -> json:
+def download_uploaded_document(doc_id: str) -> Json:
     """Downloads a previously uploaded document. This endpoint is only for testing environment.
     Parameters
     ----------
@@ -172,7 +174,6 @@ def download_uploaded_document(doc_id: str) -> json:
     try:
         r = session.get(ref_url)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)

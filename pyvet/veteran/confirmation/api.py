@@ -7,6 +7,7 @@ import requests
 
 from pyvet.creds import API_URL
 from pyvet.client import current_session as session
+from pyvet.json_alias import Json
 
 CONFIRMATION_URL = API_URL + "veteran-confirmation/v1/"
 
@@ -27,7 +28,7 @@ def get_status(
     birth_place_city: str,
     birth_place_state: str,
     birth_place_country: str,
-) -> json:
+) -> Json:
     """Gets a veteran's status.
     Parameters
     ----------
@@ -86,7 +87,6 @@ def get_status(
     try:
         r = session.post(status_url, json=json_data)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)

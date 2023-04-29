@@ -12,6 +12,7 @@ from pyvet.client import (
     get_bearer_token,
 )
 from pyvet.creds import API_URL
+from pyvet.json_alias import Json
 
 BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
 CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
@@ -19,11 +20,11 @@ CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
 
 def get_claims(
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Get claims for a veteran.
     Parameters
     ----------
@@ -55,7 +56,7 @@ def get_claims(
         }"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetcing token failed.")
-        return
+        return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
         session.headers["X-VA-First-Name"] = first_name
@@ -64,8 +65,7 @@ def get_claims(
     try:
         r = session.get(claims_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -73,10 +73,10 @@ def get_claims(
 def get_claim(
     claim_id: str,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
 ):
     """Get claim details.
     Parameters
@@ -120,8 +120,7 @@ def get_claim(
     try:
         r = session.get(claim_url, headers=session.headers)
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -129,11 +128,11 @@ def get_claim(
 def submit_526(
     is_first_claim: bool = False,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Submit a 526 claim.
     Parameters
     ----------
@@ -172,8 +171,7 @@ def submit_526(
             files={"form526": open("form526.pdf", "rb")},
         )
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -181,11 +179,11 @@ def submit_526(
 def upload_526(
     doc_id: str,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Upload a 526 claim.
     Parameters
     ----------
@@ -212,10 +210,10 @@ def upload_526(
 def upload_supporting_doc_526(
     doc_id: str,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
 ):
     """Upload a supporting document for a 526 claim.
     Parameters
@@ -242,11 +240,11 @@ def upload_supporting_doc_526(
 
 def submit_intent_to_file(
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Submit an intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
         If the consumer is a representative on behalf of a veteran.
@@ -268,11 +266,11 @@ def submit_intent_to_file(
 
 def get_last_active_intent_to_file(
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Get the last active intent to file for disability compensation, burial, or pension claims.
     is_representative : bool
         If the consumer is a representative on behalf of a veteran.
@@ -294,11 +292,11 @@ def get_last_active_intent_to_file(
 
 def submit_poa(
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Submit a Power of Attorney form 2122.
     Parameters
     ----------
@@ -323,11 +321,11 @@ def submit_poa(
 def upload_signed_poa(
     poa_id: str,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Upload a signed Power of Attorney form 2122.
     Parameters
     ----------
@@ -354,11 +352,11 @@ def upload_signed_poa(
 def get_poa_status_by_id(
     poa_id: str,
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Get the status of a Power of Attorney form 2122 by an id.
     Parameters
     ----------
@@ -384,11 +382,11 @@ def get_poa_status_by_id(
 
 def get_status_poa_last_active(
     is_representative: bool = False,
-    ssn: str | None = None,
-    first_name: str | None = None,
-    last_name: str | None = None,
-    birth_date: str | None = None,
-) -> json:
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
     """Get the status of the last active Power of Attorney form 2122.
     Parameters
     ----------

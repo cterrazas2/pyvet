@@ -41,7 +41,7 @@ disability_rating.read service_history.read veteran_status.read
 """
 
 
-def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> oidc.TokenResponse:
+def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
     """Get a bearer token from the VA OIDC server.
     Parameters
     ----------
@@ -84,8 +84,7 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> oidc.TokenRespo
             scope=scope,
             interactive=True,
         )
-        # current_session.token = token
-        return token
+        return token.access_token
     except Exception as e:
         logging.error(e)
 
