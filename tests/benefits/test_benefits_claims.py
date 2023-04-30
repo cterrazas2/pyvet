@@ -127,7 +127,7 @@ class TestBenefitsClaims(unittest.TestCase):
             MOCK_INTENT_TO_FILE_LAST_ACTIVE,
         )
         mock_get.assert_called_once_with(
-            self.benefits_claims_url + f"claims/forms/0966/active",
+            self.benefits_claims_url + f"forms/0966/active",
             headers=dict(
                 apiKey=creds.API_KEY_HEADER.get("apiKey"),
                 Authorization="Bearer somerandomtoken",
@@ -163,7 +163,7 @@ class TestBenefitsClaims(unittest.TestCase):
         )
         mock_get.assert_called_once_with(
             self.benefits_claims_url
-            + "claims/forms/2122/05b41b80-9990-4e0c-86f1-44db8bca2225",
+            + "forms/2122/05b41b80-9990-4e0c-86f1-44db8bca2225",
             headers=dict(
                 apiKey=creds.API_KEY_HEADER.get("apiKey"),
                 Authorization="Bearer somerandomtoken",
@@ -196,7 +196,7 @@ class TestBenefitsClaims(unittest.TestCase):
             MOCK_POA_LAST_ACTIVE,
         )
         mock_get.assert_called_once_with(
-            self.benefits_claims_url + "claims/forms/2122/active",
+            self.benefits_claims_url + "forms/2122/active",
             headers=dict(
                 apiKey=creds.API_KEY_HEADER.get("apiKey"),
                 Authorization="Bearer somerandomtoken",
