@@ -288,7 +288,7 @@ def get_last_active_intent_to_file(
     r : json
         Response in json format.
     """
-    active_intent_url = BENEFITS_INTAKE_URL + "claims/forms/0966/active"
+    active_intent_url = BENEFITS_INTAKE_URL + "forms/0966/active"
     authorization = session.headers.get("Authorization")
     if authorization is None:
         logging.error("No token set.")
@@ -404,7 +404,7 @@ def get_poa_status_by_id(
     r : json
         Response in json format.
     """
-    poa_url = BENEFITS_INTAKE_URL + f"claims/forms/2122/{poa_id}"
+    poa_url = BENEFITS_INTAKE_URL + f"forms/2122/{poa_id}"
     authorization = session.headers.get("Authorization")
     if authorization is None:
         logging.error("No token set.")
@@ -456,7 +456,7 @@ def get_status_poa_last_active(
     r : json
         Response in json format.
     """
-    poa_url = BENEFITS_INTAKE_URL + "claims/forms/2122/active"
+    poa_url = BENEFITS_INTAKE_URL + "forms/2122/active"
     authorization = session.headers.get("Authorization")
     if authorization is None:
         logging.error("No token set.")
