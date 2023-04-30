@@ -14,3 +14,25 @@ repos:
     rev: 22.3.0
     hooks:
     -   id: black
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.2.0
+    hooks:
+    -   id: mypy
+        additional_dependencies: [tokenize-rt==3.2.0]
+        args: ['--no-implicit-optional', '--ignore-missing-imports', '--no-warn-no-return', '--install-types', '--non-interactive']
+-   repo: https://github.com/codespell-project/codespell
+    rev: v2.2.4
+    hooks:
+    -   id: codespell
+        args: ['pyvet/','tests/']
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+    -   id: bandit
+        name: bandit
+        description: 'Bandit is a tool for finding common security issues in Python code'
+        entry: bandit
+        language: python
+        language_version: python3
+        types: [python]
+        args: ['--exclude', 'tests/', '-r', 'pyvet/']

@@ -29,6 +29,7 @@ class TestHealthProviderDirectory(unittest.TestCase):
     def setUp(self):
         self.headers = creds.API_KEY_HEADER
         self.health_url = creds.VA_SANDBOX_API + "provider-directory/v0/r4/"
+        creds.API_KEY_HEADER["Authorization"] = None
 
     def test_get_location(self, mock_get):
         mock_get.return_value.status_code = 200

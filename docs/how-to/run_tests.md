@@ -4,27 +4,34 @@
 
 PyVet uses [Poetry](https://python-poetry.org) for management of dependencies and virtual environments.
 
-```bash
-# install and create virtual environment
-$ poetry install
+Install and create a virtual environment.
 
-# activate the virtual environment
-$ poetry shell
+```console
+poetry install
+```
 
-# all tests should pass
-$ pytest -v
+Activate the virtual environment.
+
+```console
+poetry shell
+```
+
+All tests should pass.
+
+```console
+poetry run pytest -v
 ```
 
 ## Tests
 
 To run all the tests locally, you can run:
 
-```bash
+```console
 python -m unittest -v
 ```
 
-or via pytest
+or via pytest:
 
-```bash
+```console
 pytest -v
 ```

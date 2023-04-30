@@ -1,12 +1,14 @@
 """
 Facilities  API: https://developer.va.gov/explore/facilities/docs/facilities?version=current
 """
+import json
 import logging
 import pandas as pd
 import requests
 
 from pyvet.creds import API_URL
 from pyvet.client import current_session as session
+from pyvet.json_alias import Json
 
 FACILITIES_URL = API_URL + "va_facilities/v0"
 FACILITIES_QUERY_MSG = """
@@ -22,7 +24,7 @@ FACILITIES_QUERY_MSG = """
     """
 
 
-def export_to_csv(file_name: str, data: list[str]):
+def export_to_csv(file_name: str, data: list[dict[str, str]]) -> None:
     """Exports data to csv file.
     Parameters
     ----------
@@ -39,7 +41,7 @@ def export_to_csv(file_name: str, data: list[str]):
             pd_norm.to_csv(file_name, mode="a", header=False)
 
 
-def get_ids():
+def get_ids() -> Json:
     """Gets all VA Facility IDs with optional params.
     Returns
     -------
@@ -57,51 +59,43 @@ def get_ids():
 
 
 def get_nearby(
-    address: str,
-    city: str,
-    state: str,
-    zip_code: str,
+    latitude: float,
+    longitude: float,
     drive_time: int | None = None,
     export_csv_file: bool = False,
-):
+) -> Json:
     """Gets all VA Facilities within a certain drive time.
     Parameters
     ----------
-    address : str
-        The address to search.
-    city : str
-        The city to search.
-    state : str
-        The state to search.
-    zip_code : str
-        The zip code to search.
+    latitude : float
+        The latitude to search.
+    longitude : float
+        The longitude to search.
     drive_time : int
         The drive time to search.
     export_csv_file : bool
         Whether to export data to csv file.
     Returns
     -------
-    r : json
+    json_conversion : json
         Response in json format.
     """
     params = dict(
-        street_address=address,
-        city=city,
-        state=state,
-        zip=zip_code,
+        lat=latitude,
+        lng=longitude,
         drive_time=drive_time,
     )
     nearby_url = FACILITIES_URL + "/nearby"
     try:
         r = session.get(nearby_url, params=params)
         r.raise_for_status()
-        r = r.json()
+        json_conversion = r.json()
         if export_csv_file:
             output_file = "nearby.csv"
-            csv_data = r.get("data")
+            csv_data = json_conversion.get("data")
             export_to_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
-        return r
+        return json_conversion
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
@@ -120,7 +114,7 @@ def get_facilities_by_query(
     zip_code: str | None = None,
     page: int = 1,
     per_page: int = 30,
-):
+) -> Json:
     """Gets all VA Facilities with optional params.
     Parameters
     ----------
@@ -239,7 +233,7 @@ def get_facilities_by_query(
         logging.error(FACILITIES_QUERY_MSG)
 
 
-def get_all(export_csv_file: bool = False):
+def get_all(export_csv_file: bool = False) -> Json:
     """Gets all VA Facilities.
     Parameters
     ----------
@@ -247,7 +241,7 @@ def get_all(export_csv_file: bool = False):
         Whether to export data to csv file.
     Returns
     -------
-    r : json
+    json_conversion : json
         Response in json format.
     """
     params = dict(Accept="application/geo+json")
@@ -255,18 +249,18 @@ def get_all(export_csv_file: bool = False):
     try:
         r = session.get(all_url, params=params)
         r.raise_for_status()
-        r = r.json()
+        json_conversion = r.json()
         if export_csv_file:
             output_file = "all_va_facilities.csv"
-            csv_data = r.get("features")
+            csv_data = json_conversion.get("features")
             export_to_csv(file_name=output_file, data=csv_data)
             logging.info("Success: Facilities data populated in all_va_facilities.csv.")
-        return r
+        return json_conversion
     except requests.exceptions.RequestException as e:
         logging.error(e)
 
 
-def get_facility(f_id: str):
+def get_facility(f_id: str) -> Json:
     """Gets a VA Facility by id.
     Parameters
     ----------
@@ -285,7 +279,6 @@ def get_facility(f_id: str):
             params=params,
         )
         r.raise_for_status()
-        r = r.json()
-        return r
+        return r.json()
     except requests.exceptions.RequestException as e:
         logging.error(e)

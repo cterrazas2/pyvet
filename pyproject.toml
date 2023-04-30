@@ -14,11 +14,13 @@ oidc-client = "^0.2.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
-
-[tool.oidc]
-issuer = "https://sandbox-api.va.gov/"  # URL of your OIDC provider
-client_id = "<application ID>"  # Application ID given by your OIDC provider
-
+mypy = "^1.2.0"
+bandit = "^1.7.5"
+codespell = "^2.2.4"
+pre-commit = ">=2.3.0"
+coverage = "^7.2.4"
+pytest = "^7.3.1"
+types-requests = "^2.29.0.0"
 
 [build-system]
 requires = ["poetry-core"]
