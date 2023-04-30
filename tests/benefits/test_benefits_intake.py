@@ -121,7 +121,7 @@ class TestBenefitsIntake(unittest.TestCase):
             "docType": "21-22",
             "businessLine": "CMP",
         }
-        test_upload_dir = "tests/mock_uploads_data"
+        test_upload_dir = "tests/data/mock_uploads_data"
         upload_url = mock_params.get("location")
         upload_files(
             params=mock_params,
