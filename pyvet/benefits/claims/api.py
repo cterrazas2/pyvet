@@ -245,7 +245,7 @@ def submit_intent_to_file(
     last_name: str = "",
     birth_date: str = "",
 ) -> Json:
-    """Submit an intent to file for disability compensation, burial, or pension claims.
+    """Submit an intent to file for disability compensation or pension claims (burial not allowed).
     is_representative : bool
         If the consumer is a representative on behalf of a veteran.
     ssn : str
@@ -261,7 +261,37 @@ def submit_intent_to_file(
     r : json
         Response in json format.
     """
-    pass
+    submission_url = BENEFITS_INTAKE_URL + "forms/0966"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {
+        get_bearer_token(
+            va_api="claims", scope=CLAIM_SCOPE
+        )
+        }"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetcing token failed.")
+        return None
+
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+
+    try:
+        r = session.post(
+            submission_url,
+            headers=session.headers,
+            data={"type": "form/0966", "attributes": {"type": "compensation"}},
+        )
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def get_last_active_intent_to_file(
