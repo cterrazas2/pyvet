@@ -2,7 +2,8 @@
 
 ## Environment
 
-PyVet uses [Poetry](https://python-poetry.org) for management of dependencies and virtual environments.
+PyVet uses [Poetry](https://python-poetry.org) for management of dependencies
+ and virtual environments.
 
 Install and create a virtual environment.
 

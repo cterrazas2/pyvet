@@ -5,7 +5,8 @@
 ```python
 from pyvet.veteran.verification.api import get_status
 
-# Confirm veteran status, will return confirmed or not confirmed. Note, oidc handshake is happening here.
+# Confirm veteran status, will return confirmed or not confirmed. Note, oidc
+# handshake is happening here.
 status = get_status() # {'veteran_status': confirmed}
 ```
 
