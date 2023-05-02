@@ -1,9 +1,8 @@
 """Dataclasses for Intent to File API"""
 # pylint: skip-file
 import base64
-from datetime import datetime
 from dataclasses import dataclass
-
+from datetime import datetime
 from typing import Annotated
 
 BytesBase64 = Annotated[bytes, bytes]

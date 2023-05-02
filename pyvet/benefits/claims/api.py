@@ -15,7 +15,6 @@ from pyvet.client import (
     get_bearer_token,
 )
 from pyvet.creds import API_URL
-from pyvet.json_alias import Json
 from pyvet.file_submission_schemas import (
     Address,
     Claimant,
@@ -26,6 +25,7 @@ from pyvet.file_submission_schemas import (
     Signatures,
     Veteran,
 )
+from pyvet.json_alias import Json
 
 BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
 CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
