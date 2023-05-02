@@ -9,7 +9,7 @@ from requests import Session
 
 from unittest.mock import patch
 
-mock_confirmed = dict(veteran_status="confirmed")
+mock_confirmed = {"veteran_status": "confirmed"}
 
 mock_disability_rating = {
     "data": {
@@ -65,12 +65,12 @@ mock_service_history = {
 @patch.object(
     Session,
     "get",
-    headers=dict(
-        apiKey=creds.API_KEY_HEADER.get("apiKey"),
-        Authorization=creds.API_KEY_HEADER.get(
+    headers={
+        "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+        "Authorization": creds.API_KEY_HEADER.get(
             "Authorization", "Bearer somerandomtoken"
         ),
-    ),
+    },
 )
 class TestVeteranVerification(unittest.TestCase):
     def setUp(self):

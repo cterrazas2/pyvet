@@ -11,72 +11,76 @@ from pyvet.benefits.intake.api import (
 )
 from unittest.mock import ANY, patch, mock_open
 
-mock_create_path = dict(
-    data=dict(
-        id="6d8433c1-cd55-4c24-affd-f592287a7572",
-        type="document_upload",
-        attributes=dict(
-            guid="6d8433c1-cd55-4c24-affd-f592287a7572",
-            status="pending",
-            code="string",
-            detail="string",
-            location="https://sandbox-api.va.gov/services_user_content/vba_documents/some-random-id",
-            updated_at="2018-07-30T17:31:15.958Z",
-            uploaded_pdf=None,
-        ),
-    )
-)
+mock_create_path = {
+    "data": {
+        "id": "6d8433c1-cd55-4c24-affd-f592287a7572",
+        "type": "document_upload",
+        "attributes": {
+            "guid": "6d8433c1-cd55-4c24-affd-f592287a7572",
+            "status": "pending",
+            "code": "string",
+            "detail": "string",
+            "location": "https://sandbox-api.va.gov/services_user_content/vba_documents/some-random-id",
+            "updated_at": "2018-07-30T17:31:15.958Z",
+            "uploaded_pdf": None,
+        },
+    }
+}
 
-mock_bulk = dict(
-    data=[
-        dict(
-            attributes=dict(
-                code="DOC105",
-                detail="Invalid or unknown id",
-                guid="6d8433c1-cd55-4c24-affd-f592287a7572",
-                location=None,
-                status="error",
-                updated_at=None,
-                uploaded_pdf=None,
-            ),
-            id="6d8433c1-cd55-4c24-affd-f592287a7572",
-            type="document_upload",
-        )
-    ]
-)
+mock_bulk = {
+    "data": [
+        {
+            "attributes": {
+                "code": "DOC105",
+                "detail": "Invalid or unknown id",
+                "guid": "6d8433c1-cd55-4c24-affd-f592287a7572",
+                "location": None,
+                "status": "error",
+                "updated_at": None,
+                "uploaded_pdf": None,
+            },
+            "id": "6d8433c1-cd55-4c24-affd-f592287a7572",
+            "type": "document_upload",
+        },
+    ],
+}
 
-mock_doc = dict(
-    data=dict(
-        id="6d8433c1-cd55-4c24-affd-f592287a7572",
-        type="document_upload",
-        attributes=dict(
-            guid="6d8433c1-cd55-4c24-affd-f592287a7572",
-            status="received",
-            code="string",
-            message="string",
-            detail="string",
-            updated_at="2018-07-30T17:31:15.958Z",
-            uploaded_pdf=dict(
-                total_documents=2,
-                total_pages=3,
-                content=dict(
-                    page_count=1,
-                    dimensions=dict(
-                        height=11,
-                        width=8.5,
-                        oversized_pdf=False,
-                    ),
-                    attachments=[
-                        dict(
-                            page_count=2,
-                            dimensions=dict(height=11, width=8.5, oversized_pdf=False),
-                        )
+mock_doc = {
+    "data": {
+        "id": "6d8433c1-cd55-4c24-affd-f592287a7572",
+        "type": "document_upload",
+        "attributes": {
+            "guid": "6d8433c1-cd55-4c24-affd-f592287a7572",
+            "status": "received",
+            "code": "string",
+            "message": "string",
+            "detail": "string",
+            "updated_at": "2018-07-30T17:31:15.958Z",
+            "uploaded_pdf": {
+                "total_documents": 2,
+                "total_pages": 3,
+                "content": {
+                    "page_count": 1,
+                    "dimensions": {
+                        "height": 11,
+                        "width": 8.5,
+                        "oversized_pdf": False,
+                    },
+                    "attachments": [
+                        {
+                            "page_count": 2,
+                            "dimensions": {
+                                "height": 11,
+                                "width": 8.5,
+                                "oversized_pdf": False,
+                            },
+                        }
                     ],
-                ),
-            ),
-        ),
-    )
-)
+                },
+            },
+        },
+    }
+}
 
 
 class TestBenefitsIntake(unittest.TestCase):
@@ -103,15 +107,15 @@ class TestBenefitsIntake(unittest.TestCase):
     def test_upload_files(self, mock_put, mock_open):
         mock_put.return_value.status_code = 200
         assert mock_put.headers == self.headers
-        mock_params = dict(
-            guid="6d8433c1-cd55-4c24-affd-f592287a7572",
-            status="pending",
-            code="string",
-            detail="string",
-            location="https://sandbox-api.va.gov/services_user_content/vba_documents/some-random-id",
-            updated_at="2018-07-30T17:31:15.958Z",
-            uploaded_pdf="null",
-        )
+        mock_params = {
+            "guid": "6d8433c1-cd55-4c24-affd-f592287a7572",
+            "status": "pending",
+            "code": "string",
+            "detail": "string",
+            "location": "https://sandbox-api.va.gov/services_user_content/vba_documents/some-random-id",
+            "updated_at": "2018-07-30T17:31:15.958Z",
+            "uploaded_pdf": "null",
+        }
         mock_metadata = {
             "veteranFirstName": "Jane",
             "veteranLastName": "Doe",
@@ -149,7 +153,7 @@ class TestBenefitsIntake(unittest.TestCase):
         self.assertDictEqual(bulk, mock_bulk)
         mock_post.assert_called_once_with(
             self.benefits_intake_url + "uploads/report",
-            json=dict(ids=mock_guids),
+            json={"ids": mock_guids},
         )
 
     @patch.object(Session, "get", headers=creds.API_KEY_HEADER)

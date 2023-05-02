@@ -1,12 +1,12 @@
 """
 Health API: https://developer.va.gov/explore/health
 """
-import json
 import logging
+
 import requests
 
-from pyvet.creds import API_URL
 from pyvet.client import current_session as session
+from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "provider-directory/v0/r4/"

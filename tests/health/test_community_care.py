@@ -66,10 +66,10 @@ mock_community_care = {
     return_value="somerandomtoken",
 )
 @patch.object(Session().headers, "get", return_value=None)
-@patch.object(Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey")))
+@patch.object(Session, "get", headers={"apiKey": creds.API_KEY_HEADER.get("apiKey")})
 class TestHealthCommunityCare(unittest.TestCase):
     def setUp(self):
-        self.headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+        self.headers = {"apiKey": creds.API_KEY_HEADER.get("apiKey")}
         self.health_url = creds.VA_SANDBOX_API + "community-care/v0/eligibility/"
         creds.API_KEY_HEADER["Authorization"] = None
 
@@ -83,15 +83,15 @@ class TestHealthCommunityCare(unittest.TestCase):
         self.assertDictEqual(eligibility, mock_community_care)
         mock_get.assert_called_once_with(
             self.health_url + "search",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
-            params=dict(
-                patient="32000225",
-                serviceType="Dermatology",
-                extendedDriveMin=None,
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
+            params={
+                "patient": "32000225",
+                "serviceType": "Dermatology",
+                "extendedDriveMin": None,
+            },
         )
 
 

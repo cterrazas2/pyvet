@@ -1,15 +1,17 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/community_care?version=current
 """
-import json
 import logging
+
 import requests
 
-from pyvet.creds import API_URL
 from pyvet.client import (
     current_session as session,
+)
+from pyvet.client import (
     get_bearer_token,
 )
+from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "community-care/v0/eligibility/"
@@ -36,15 +38,17 @@ def get_eligibility(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="community-care", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
         session.headers["Authorization"] = f"Bearer {token}"
     status_url = HEALTH_URL + "search"
-    params = dict(
-        patient=patient, serviceType=service_type, extendedDriveMin=extended_drive_min
-    )
+    params = {
+        "patient": patient,
+        "serviceType": service_type,
+        "extendedDriveMin": extended_drive_min,
+    }
     try:
         r = session.get(status_url, headers=session.headers, params=params)
         r.raise_for_status()

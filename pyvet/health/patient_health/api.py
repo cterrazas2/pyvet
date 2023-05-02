@@ -1,19 +1,32 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/fhir?version=current
 """
-import json
 import logging
+
 import requests
 
-from pyvet.creds import API_URL
 from pyvet.client import (
     current_session as session,
+)
+from pyvet.client import (
     get_bearer_token,
 )
+from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "fhir/v0/r4/"
-HEALTH_SCOPE = "profile openid offline_access launch/patient patient/AllergyIntolerance.read patient/Appointment.read patient/Binary.read patient/Condition.read patient/Device.read patient/DeviceRequest.read patient/DiagnosticReport.read patient/DocumentReference.read patient/Encounter.read patient/Immunization.read patient/Location.read patient/Medication.read patient/MedicationOrder.read patient/MedicationRequest.read patient/MedicationStatement.read patient/Observation.read patient/Organization.read patient/Patient.read patient/Practitioner.read patient/PractitionerRole.read patient/Procedure.read"
+HEALTH_SCOPE = """
+profile openid offline_access launch/patient
+patient/AllergyIntolerance.read patient/Appointment.read
+patient/Binary.read patient/Condition.read patient/Device.read
+patient/DeviceRequest.read patient/DiagnosticReport.read
+patient/DocumentReference.read patient/Encounter.read
+patient/Immunization.read patient/Location.read patient/Medication.read
+patient/MedicationOrder.read patient/MedicationRequest.read
+patient/MedicationStatement.read patient/Observation.read
+patient/Organization.read patient/Patient.read patient/Practitioner.read
+patient/PractitionerRole.read patient/Procedure.read
+"""
 
 
 def get_allergy_intolerance(
@@ -45,7 +58,7 @@ def get_allergy_intolerance(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -79,7 +92,7 @@ def get_allergy_intolerance_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -128,7 +141,7 @@ def get_appointment(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -164,7 +177,7 @@ def get_appointment_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -190,7 +203,7 @@ def get_binary_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -247,7 +260,7 @@ def get_condition(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -285,7 +298,7 @@ def get_condition_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -303,7 +316,7 @@ def get_device(
     patient: str | None = None,
     resource_id: str | None = None,
     identifier: str | None = None,
-    type: str | None = None,
+    code: str | None = None,
     last_updated: str | None = None,
     page: int = 1,
     count: int = 30,
@@ -317,7 +330,7 @@ def get_device(
         The logical id of the resource.
     identifier : str
         The logical identifier of the resource.
-    type : str
+    code : str
         The code used to identify the medical device.
     last_updated : str
         The date of when the device record was last updated.
@@ -331,7 +344,7 @@ def get_device(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -341,7 +354,7 @@ def get_device(
         "patient": patient,
         "_id": resource_id,
         "identifier": identifier,
-        "type": type,
+        "type": code,
         "_lastUpdated": last_updated,
         "page": page,
         "_count": count,
@@ -366,7 +379,7 @@ def get_device_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -409,7 +422,7 @@ def get_device_request(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -443,7 +456,7 @@ def get_device_request_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -498,7 +511,7 @@ def get_diagnostic_report(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -536,7 +549,7 @@ def get_diagnostic_report_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -554,7 +567,7 @@ def get_document_reference(
     patient: str | None = None,
     resource_id: str | None = None,
     identifier: str | None = None,
-    type: str | None = None,
+    doc_type: str | None = None,
     date: list[str] | None = None,
     last_updated: str | None = None,
     page: int = 1,
@@ -569,7 +582,7 @@ def get_document_reference(
         The logical id of the resource.
     identifier : str
         The logical identifier of the resource.
-    type : str
+    doc_type : str
         The type of the document reference.
     date : list[str]
         The list of date(s) of the document reference.
@@ -585,7 +598,7 @@ def get_document_reference(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -595,7 +608,7 @@ def get_document_reference(
         "patient": patient,
         "_id": resource_id,
         "identifier": identifier,
-        "type": type,
+        "type": doc_type,
         "date": date,
         "_lastUpdated": last_updated,
         "page": page,
@@ -621,7 +634,7 @@ def get_document_reference_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -667,7 +680,7 @@ def get_encounter(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -702,7 +715,7 @@ def get_encounter_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -745,7 +758,7 @@ def get_immunization(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -779,7 +792,7 @@ def get_immunization_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -834,7 +847,7 @@ def get_location(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -872,7 +885,7 @@ def get_location_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -915,7 +928,7 @@ def get_medication(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -949,7 +962,7 @@ def get_medication_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -995,7 +1008,7 @@ def get_medication_request(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1030,7 +1043,7 @@ def get_medication_request_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1082,7 +1095,7 @@ def get_observation(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1119,7 +1132,7 @@ def get_observation_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1174,7 +1187,7 @@ def get_organization(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1212,7 +1225,7 @@ def get_organization_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1249,7 +1262,7 @@ def get_patient(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1281,7 +1294,7 @@ def get_patient_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1330,7 +1343,7 @@ def get_practitioner(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1366,7 +1379,7 @@ def get_practitioner_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1409,7 +1422,7 @@ def get_practitioner_role(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1443,7 +1456,7 @@ def get_practitioner_role_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1489,7 +1502,7 @@ def get_procedure(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1524,7 +1537,7 @@ def get_procedure_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -1546,7 +1559,7 @@ def get_metadata() -> Json:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="fhir", scope=HEALTH_SCOPE)
+        token = get_bearer_token(scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None

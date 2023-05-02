@@ -1,15 +1,17 @@
 """
 Veteran Verification API: https://developer.va.gov/explore/verification/docs/veteran_verification?version=current
 """
-import json
 import logging
+
 import requests
 
-from pyvet.creds import API_URL
 from pyvet.client import (
     current_session as session,
+)
+from pyvet.client import (
     get_bearer_token,
 )
+from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 VERIFICATION_URL = API_URL + "veteran_verification/v1/"
@@ -24,9 +26,7 @@ def get_status() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(
-            va_api="veteran_verification", scope=VERIFICATION_SCOPE
-        )
+        token = get_bearer_token(scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -48,9 +48,7 @@ def get_disability_rating() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(
-            va_api="veteran_verification", scope=VERIFICATION_SCOPE
-        )
+        token = get_bearer_token(scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -72,9 +70,7 @@ def get_service_history() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(
-            va_api="veteran_verification", scope=VERIFICATION_SCOPE
-        )
+        token = get_bearer_token(scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None

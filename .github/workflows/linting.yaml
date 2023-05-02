@@ -22,12 +22,14 @@ jobs:
           architecture: x64
 
       - run: |
-          pip install bandit black codespell mypy==1.2.0
+          pip install bandit black codespell pylint ruff mypy==1.2.0
           pip install types-requests
-      - run: bandit -x ./tests -r . || true
+      - run: bandit -x ./tests -r pyvet || true
       - run: black --diff --check .
       - run: codespell --skip=./tests,.git,*.css,*.csv,*.html,*.ini,*.ipynb,*.js,*.json,*.lock,*.scss,*.txt,*.yaml
       - run: mypy --ignore-missing-imports --no-implicit-optional --no-warn-no-return pyvet
+      - run: pylint --rcfile=pylintrc --ignore-paths=tests/ -rn pyvet
+      - run: ruff pyvet
 
   markdown-link-check:
     name: Markdown
