@@ -54,3 +54,8 @@ repos:
            "--ignore-paths=tests/", # Ignore tests
            "pyvet" # pyvet repo
          ]
+-    repo: https://github.com/charliermarsh/ruff-pre-commit
+     # Ruff version.
+     rev: "v0.0.264"
+     hooks:
+     - id: ruff
