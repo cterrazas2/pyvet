@@ -77,7 +77,7 @@ all_facilities = get_all(export_csv_file=True)
 
 # or just get nearby VA facilities and export it to a csv file
 nearby_facilities = get_nearby(
-    # Provide an empty string for address if unknown and thencity/state/zip
+    # Provide an empty string for address if unknown and then city/state/zip
     # below to filter
     address="",
     city="Boston",

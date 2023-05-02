@@ -14,5 +14,5 @@ authorization via a Proof Key for Code Exchange (PCKE). This results in a
 `code` from the VA's `/authorization` endpoint.
 2. The authentication continues to the `/token` endpoint, utilizing the `code`
 received from step 1. Upon success, a bearer `token` (along with other metadata)
-is provided. `pyvet` will then return the desired data ftom the VA oauth2 API
+is provided. `pyvet` will then return the desired data from the VA oauth2 API
 to the consumer.
