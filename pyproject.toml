@@ -3,7 +3,6 @@ name = "pyvet"
 version = "0.1.0"
 description = "Python library to retrieve veteran data from the Department of Veterans Affairs"
 authors = ["cterrazas2 <12790854+cterrazas2@users.noreply.github.com>"]
-license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
