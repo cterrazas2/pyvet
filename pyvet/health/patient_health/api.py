@@ -247,7 +247,7 @@ def get_condition(
     onset_date : str
         The date of onset of the condition.
     last_updated : str
-        The dat of when the comdition record was last updated.
+        The dat of when the condition record was last updated.
     date : List[str]
         The list of date(s) of the appointment.
     page : int

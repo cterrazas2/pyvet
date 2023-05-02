@@ -52,7 +52,7 @@ def get_claims(
             "Authorization"
         ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -103,7 +103,7 @@ def get_claim(
             "Authorization"
         ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -291,7 +291,7 @@ def get_last_active_intent_to_file(
             "Authorization"
         ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -403,7 +403,7 @@ def get_poa_status_by_id(
             "Authorization"
         ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -451,7 +451,7 @@ def get_status_poa_last_active(
             "Authorization"
         ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn

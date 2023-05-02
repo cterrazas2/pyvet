@@ -30,7 +30,7 @@ class TestVeteranConfirmation(unittest.TestCase):
             state="TX",
             country="USA",
             home_phone_number="555-555-5555",
-            mothers_maiden_mame="Smith",
+            mothers_maiden_name="Smith",
             birth_place_city="Johnson City",
             birth_place_state="MA",
             birth_place_country="USA",

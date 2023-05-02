@@ -24,7 +24,7 @@ def get_status(
     state: str,
     country: str,
     home_phone_number: str,
-    mothers_maiden_mame: str,
+    mothers_maiden_name: str,
     birth_place_city: str,
     birth_place_state: str,
     birth_place_country: str,
@@ -54,7 +54,7 @@ def get_status(
         The country the veteran lives in.
     home_phone_number: str
         Phone number of veteran.
-    mothers_maiden_mame: str
+    mothers_maiden_name: str
         Veteran's mother's maiden name.
     birth_place_city: str
         City of birth for veteran.
@@ -79,7 +79,7 @@ def get_status(
         "state": state,
         "country": country,
         "homePhoneNumber": home_phone_number,
-        "mothersMaidenName": mothers_maiden_mame,
+        "mothersMaidenName": mothers_maiden_name,
         "birthPlaceCity": birth_place_city,
         "birthPlaceState": birth_place_state,
         "birthPlaceCountry": birth_place_country,
