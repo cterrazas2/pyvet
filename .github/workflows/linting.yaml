@@ -28,7 +28,7 @@ jobs:
       - run: black --diff --check .
       - run: codespell --skip=./tests,.git,*.css,*.csv,*.html,*.ini,*.ipynb,*.js,*.json,*.lock,*.scss,*.txt,*.yaml
       - run: mypy --ignore-missing-imports --no-implicit-optional --no-warn-no-return pyvet
-      - run: pylint --rcfile=pylintrc --ignore-paths=tests/ -rn pyvet
+      - run: pylint --rcfile=.pylintrc --ignore-paths=tests/ -rn pyvet
       - run: ruff pyvet
 
   markdown-link-check:
