@@ -4,10 +4,10 @@ from pyvet import creds
 from pyvet.benefits.claims.api import (
     get_claims,
     get_claim,
-    submit_526,
-    upload_526,
-    upload_supporting_doc_526,
-    submit_intent_to_file,
+    # submit_526,
+    # upload_526,
+    # upload_supporting_doc_526,
+    # submit_intent_to_file,
     get_last_active_intent_to_file,
     get_poa_status_by_id,
     get_status_poa_last_active,
@@ -28,10 +28,10 @@ mock_headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
 
 class TestBenefitsClaims(unittest.TestCase):
     def setUp(self):
-        self.headers = dict(
-            apiKey=creds.API_KEY_HEADER.get("apiKey"),
-            Authorization="Bearer somerandomtoken",
-        )
+        self.headers = {
+            "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+            "Authorization": "Bearer somerandomtoken",
+        }
         self.benefits_claims_url = creds.VA_SANDBOX_API + "claims/v1/"
         creds.API_KEY_HEADER["Authorization"] = None
 
@@ -61,10 +61,10 @@ class TestBenefitsClaims(unittest.TestCase):
         )
         mock_get.assert_called_once_with(
             self.benefits_claims_url + "claims",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
         )
         creds.API_KEY_HEADER["Authorization"] = None
 
@@ -74,7 +74,7 @@ class TestBenefitsClaims(unittest.TestCase):
     )
     @patch.object(Session().headers, "get", return_value=None)
     @patch.object(
-        Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+        Session, "get", headers={"apiKey": creds.API_KEY_HEADER.get("apiKey")}
     )
     def test_get_claim(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
@@ -95,10 +95,10 @@ class TestBenefitsClaims(unittest.TestCase):
         )
         mock_get.assert_called_once_with(
             self.benefits_claims_url + f"claims/{600106271}",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
         )
 
     @patch(
@@ -164,10 +164,10 @@ class TestBenefitsClaims(unittest.TestCase):
         )
         mock_get.assert_called_once_with(
             self.benefits_claims_url + f"forms/0966/active",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
             params={"type": "compensation"},
         )
 
@@ -177,7 +177,7 @@ class TestBenefitsClaims(unittest.TestCase):
     )
     @patch.object(Session().headers, "get", return_value=None)
     @patch.object(
-        Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+        Session, "get", headers={"apiKey": creds.API_KEY_HEADER.get("apiKey")}
     )
     def test_get_poa_status_by_id(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
@@ -200,10 +200,10 @@ class TestBenefitsClaims(unittest.TestCase):
         mock_get.assert_called_once_with(
             self.benefits_claims_url
             + "forms/2122/05b41b80-9990-4e0c-86f1-44db8bca2225",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
         )
 
     @patch(
@@ -212,7 +212,7 @@ class TestBenefitsClaims(unittest.TestCase):
     )
     @patch.object(Session().headers, "get", return_value=None)
     @patch.object(
-        Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+        Session, "get", headers={"apiKey": creds.API_KEY_HEADER.get("apiKey")}
     )
     def test_status_poa_last_active(self, mock_get, mock_auth, mock_token):
         mock_get.return_value.status_code = 200
@@ -233,10 +233,10 @@ class TestBenefitsClaims(unittest.TestCase):
         )
         mock_get.assert_called_once_with(
             self.benefits_claims_url + "forms/2122/active",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
         )
 
 

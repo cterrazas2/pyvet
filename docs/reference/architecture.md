@@ -1,6 +1,9 @@
 # PyVet Architecture
 
-`pyvet` is a python library that helps organizations, companies, and even veterans themselves analyze and research data from the Department of Veterans Affairs. This document outlines the quickest way to start contributing and get familiar with the code base.
+`pyvet` is a python library that helps organizations, companies, and even
+veterans themselves analyze and research data from the Department of Veterans
+Affairs. This document outlines the quickest way to start contributing and
+get familiar with the code base.
 
 ## Code Setup
 
@@ -15,7 +18,8 @@
     .
     .
     .
-    client.py                     # Where a session is created for a user (for applications that require persistence)
+    client.py                     # Where a session is created for a user
+                                   (for applications that require persistence)
     creds.py                      # Where to store all credentials
 
 /tests                            # All unit tests are here

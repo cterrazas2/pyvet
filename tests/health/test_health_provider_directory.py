@@ -35,17 +35,18 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_LOCATION
         assert mock_get.headers == self.headers
-        mock_params = dict(
-            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            address="151 KNOLLCROFT ROAD",
-            city="LYONS",
-            state="NJ",
-            zip_code="07939",
-            name="VISUAL IMPAIRMENT SVCS OUTPATIENT REHAB",
-            page=1,
-            count=30,
-        )
+
+        mock_params = {
+            "resource_id": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "identifier": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "address": "151 KNOLLCROFT ROAD",
+            "city": "LYONS",
+            "state": "NJ",
+            "zip_code": "07939",
+            "name": "VISUAL IMPAIRMENT SVCS OUTPATIENT REHAB",
+            "page": 1,
+            "count": 30,
+        }
         location = get_location(**mock_params)
         self.assertDictEqual(location, MOCK_LOCATION)
         mock_get.assert_called_once_with(
@@ -78,17 +79,17 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_ORG
         assert mock_get.headers == self.headers
-        mock_params = dict(
-            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            address="2360 E PERSHING BLVD",
-            city="CHEYENNE",
-            state="WY",
-            zip_code="82001",
-            name="CHEYENNE VA MEDICAL",
-            page=1,
-            count=30,
-        )
+        mock_params = {
+            "resource_id": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "identifier": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "address": "2360 E PERSHING BLVD",
+            "city": "CHEYENNE",
+            "state": "WY",
+            "zip_code": "82001",
+            "name": "CHEYENNE VA MEDICAL",
+            "page": 1,
+            "count": 30,
+        }
         organization = get_organization(**mock_params)
         self.assertDictEqual(organization, MOCK_ORG)
         mock_get.assert_called_once_with(
@@ -121,15 +122,15 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER
         assert mock_get.headers == self.headers
-        mock_params = dict(
-            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            family="DOE922",
-            given="JANE460",
-            name="DOE922",
-            page=1,
-            count=30,
-        )
+        mock_params = {
+            "resource_id": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "identifier": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "family": "DOE922",
+            "given": "JANE460",
+            "name": "DOE922",
+            "page": 1,
+            "count": 30,
+        }
         practitioner = get_practitioner(**mock_params)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER)
         mock_get.assert_called_once_with(
@@ -160,13 +161,13 @@ class TestHealthProviderDirectory(unittest.TestCase):
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = MOCK_PRACTITIONER_ROLE
         assert mock_get.headers == self.headers
-        mock_params = dict(
-            resource_id="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            identifier="I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
-            name="DOE922",
-            page=1,
-            count=30,
-        )
+        mock_params = {
+            "resource_id": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "identifier": "I2-4KG3N5YUSPTWD3DAFMLMRL5V5U000000",
+            "name": "DOE922",
+            "page": 1,
+            "count": 30,
+        }
         practitioner = get_practitioner_role(**mock_params)
         self.assertDictEqual(practitioner, MOCK_PRACTITIONER_ROLE)
         mock_get.assert_called_once_with(

@@ -3,7 +3,6 @@ name = "pyvet"
 version = "0.1.0"
 description = "Python library to retrieve veteran data from the Department of Veterans Affairs"
 authors = ["cterrazas2 <12790854+cterrazas2@users.noreply.github.com>"]
-license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -21,6 +20,9 @@ pre-commit = ">=2.3.0"
 coverage = "^7.2.4"
 pytest = "^7.3.1"
 types-requests = "^2.29.0.0"
+
+[tool.ruff]
+select = ["I"]
 
 [build-system]
 requires = ["poetry-core"]

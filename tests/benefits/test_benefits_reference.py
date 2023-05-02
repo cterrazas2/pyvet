@@ -18,7 +18,7 @@ from tests.data.mock_benefits_reference import (
     MOCK_DISABILITIES_DATA,
     MOCK_INTAKE_SITES,
     MOCK_MILITARY_PAY_TYPES,
-    MOCK_SERVICE_BRANCES,
+    MOCK_SERVICE_BRANCHES,
     MOCK_SPECIAL_CIRCUMSTANCES,
     MOCK_STATES,
     MOCK_TREATMENT_CENTERS,
@@ -42,7 +42,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(contention_types, MOCK_CONTENTION)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "contention-types",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_countries(self, mock_get):
@@ -53,7 +53,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(countries, MOCK_COUNTRIES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "countries",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_disabilities(self, mock_get):
@@ -64,7 +64,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(disabilities, MOCK_DISABILITIES_DATA)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "disabilities",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_intake_sites(self, mock_get):
@@ -75,7 +75,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(intake_sites, MOCK_INTAKE_SITES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "intake-sites",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_military_pay_types(self, mock_get):
@@ -86,18 +86,18 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(mil_pay_types, MOCK_MILITARY_PAY_TYPES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "military-pay-types",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_service_branches(self, mock_get):
         mock_get.return_value.status_code = 200
-        mock_get.return_value.json.return_value = MOCK_SERVICE_BRANCES
+        mock_get.return_value.json.return_value = MOCK_SERVICE_BRANCHES
         assert mock_get.headers == self.headers
         branches = get_service_branches()
-        self.assertDictEqual(branches, MOCK_SERVICE_BRANCES)
+        self.assertDictEqual(branches, MOCK_SERVICE_BRANCHES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "service-branches",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_special_circumstances(self, mock_get):
@@ -108,7 +108,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(special, MOCK_SPECIAL_CIRCUMSTANCES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "special-circumstances",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_states(self, mock_get):
@@ -119,7 +119,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(states, MOCK_STATES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "states",
-            params=dict(page=1, pageSize=30),
+            params={"page": 1, "pageSize": 30},
         )
 
     def test_get_treatment_centers(self, mock_get):
@@ -130,7 +130,7 @@ class TestBenefitsReference(unittest.TestCase):
         self.assertDictEqual(centers, MOCK_TREATMENT_CENTERS)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "treatment-centers",
-            params=dict(stateCode=None, page=1, pageSize=30),
+            params={"stateCode": None, "page": 1, "pageSize": 30},
         )
 
 

@@ -5,8 +5,9 @@ import json
 import logging
 import os
 import pathlib
+
 import requests
-from collections import defaultdict
+
 from pyvet.client import current_session as session
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
@@ -52,15 +53,17 @@ def upload_files(
 
     Notes
     -------
-    To upload files to the VA benefits intake api, files must contain any of the below fields (except metadata) and all naming must match exactly:
+    To upload files to the VA benefits intake api, files must contain any of
+    the below fields (except metadata) and all naming must match exactly:
         metadata - a dict of file metadata
         content - main content file
         attachment1 - 1st attachment file
         attachmentN - Nth attachment file
 
-    Currently, pyvet will look in the uploads_dir, defaults to `uploads/`, within the current working directory.
-    You should ensure this directory exists and place all files you want to upload here. Below is an example file
-    structure:
+    Currently, pyvet will look in the uploads_dir, defaults to `uploads/`,
+    within the current working directory. You should ensure this directory
+    exists and place all files you want to upload here. Below is an example
+    file structure:
 
     uploads/
         attachments/
@@ -80,21 +83,23 @@ def upload_files(
         try:
             serialized_json = json.dumps(metadata)
             files["metadata"] = (None, f"{serialized_json};type=application/json")
-        except Exception as e:
+        except TypeError as e:
             logging.error(e)
     try:
         # upload the main content pdf
         try:
             for file in os.listdir(uploads_dir):
                 if not os.path.isdir(file) and "attachments" not in file:
-                    files["content"] = open(uploads_dir + file, "rb")
+                    with open(uploads_dir + file, "rb") as f:
+                        files["content"] = f.read()
         except OSError as ose:
             logging.error(ose)
 
         # then upload all other attachment pdfs
         try:
             for i, file in enumerate(os.listdir(attachments_dir)):
-                files[f"attachment{i+1}"] = open(attachments_dir + file, "rb")
+                with open(attachments_dir + file, "rb") as f:
+                    files[f"attachment{i+1}"] = f.read()
         except OSError as ose:
             logging.error(ose)
 
@@ -111,8 +116,7 @@ def upload_files(
         r.raise_for_status()
         if r.status_code == 200:
             return r
-        else:
-            logging.error(f"Invalid Response status code of {r.status_code}")
+        logging.error("Invalid Response status code of %s", r.status_code)
 
     except requests.exceptions.RequestException as e:
         logging.error(e)
@@ -132,7 +136,7 @@ def bulk_status_report(guids: list[str]) -> Json:
     """
     status_url = BENEFITS_INTAKE_URL + "uploads/report"
     try:
-        r = session.post(status_url, json=dict(ids=guids))
+        r = session.post(status_url, json={"ids": guids})
         r.raise_for_status()
         return r.json()
     except requests.exceptions.RequestException as e:

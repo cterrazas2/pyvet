@@ -1,13 +1,13 @@
 """
 Facilities  API: https://developer.va.gov/explore/facilities/docs/facilities?version=current
 """
-import json
 import logging
+
 import pandas as pd
 import requests
 
-from pyvet.creds import API_URL
 from pyvet.client import current_session as session
+from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 FACILITIES_URL = API_URL + "va_facilities/v0"
@@ -48,7 +48,7 @@ def get_ids() -> Json:
     r : json
         Response in json format.
     """
-    params = dict(type="health")
+    params = {"type": "health"}
     ids_url = FACILITIES_URL + "/ids"
     try:
         r = session.get(ids_url, params=params)
@@ -80,11 +80,11 @@ def get_nearby(
     json_conversion : json
         Response in json format.
     """
-    params = dict(
-        lat=latitude,
-        lng=longitude,
-        drive_time=drive_time,
-    )
+    params = {
+        "lat": latitude,
+        "lng": longitude,
+        "drive_time": drive_time,
+    }
     nearby_url = FACILITIES_URL + "/nearby"
     try:
         r = session.get(nearby_url, params=params)
@@ -207,21 +207,21 @@ def get_facilities_by_query(
         )
     )
     if combos_met:
-        params = dict(
-            bbox=bbox,
-            ids=ids,
-            lat=latitude,
-            long=longitude,
-            radius=radius,
-            type=facility_type,
-            services=services,
-            mobile=mobile,
-            state=state,
-            visn=visn,
-            zip=zip_code,
-            page=page,
-            per_page=per_page,
-        )
+        params = {
+            "bbox": bbox,
+            "ids": ids,
+            "lat": latitude,
+            "long": longitude,
+            "radius": radius,
+            "type": facility_type,
+            "services": services,
+            "mobile": mobile,
+            "state": state,
+            "visn": visn,
+            "zip": zip_code,
+            "page": page,
+            "per_page": per_page,
+        }
         bbox_url = FACILITIES_URL + "/facilities"
         try:
             r = session.get(bbox_url, params=params)
@@ -244,7 +244,7 @@ def get_all(export_csv_file: bool = False) -> Json:
     json_conversion : json
         Response in json format.
     """
-    params = dict(Accept="application/geo+json")
+    params = {"Accept": "application/geo+json"}
     all_url = FACILITIES_URL + "/facilities/all"
     try:
         r = session.get(all_url, params=params)
@@ -271,7 +271,7 @@ def get_facility(f_id: str) -> Json:
     r : json
         Response in json format.
     """
-    params = dict(id=f_id)
+    params = {"id": f_id}
     facility_url = FACILITIES_URL + "/facilities/" + f_id
     try:
         r = session.get(

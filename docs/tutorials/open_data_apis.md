@@ -3,31 +3,34 @@
 ## Veteran Confirmation
 
 ```python
-from pyvet.veteran.confirmation.api import get_status
+from pyvet.veteran.confirmation.api import get_status, Veteran
 
-# Confirm veteran status, will return confirmed or not confirmed. Note, this is fake VA data below.
-status = get_status(
+# Confirm veteran status, will return confirmed or not confirmed.
+# Note, this is fake VA data below.
+some_veteran = Veteran(
     first_name="Alfredo",
-    last_name= "Armstrong",
-    birth_date= "1993-06-08",
-    middle_name= "M",
-    gender= "M",
-    street_address= "17020 Tortoise St",
-    city= "Round Rock",
-    zip_code= "78664",
-    state= "TX",
-    country= "USA",
+    last_name="Armstrong",
+    birth_date="1993-06-08",
+    middle_name="M",
+    gender="M",
+    street_address="17020 Tortoise St",
+    city="Round Rock",
+    zip_code="78664",
+    state="TX",
+    country="USA",
     home_phone_number="555-555-5555",
-    mothers_maiden_mame="Smith",
+    mothers_maiden_name="Smith",
     birth_place_city="Johnson City",
     birth_place_state="MA",
     birth_place_country="USA",
 )
+status = get_status(some_veteran) # {'veteran_status': 'confirmed'}
 ```
 
 ## Veteran Benefits Intake
 
-You can upload multiple files to the Veteran Benefits Administration (VBA) with `pyvet`.
+You can upload multiple files to the Veteran Benefits Administration (VBA) with
+`pyvet`.
 
 ```python
 from pyvet.benefits.intake.api import create_path_to_upload_files, upload_files
@@ -74,7 +77,9 @@ all_facilities = get_all(export_csv_file=True)
 
 # or just get nearby VA facilities and export it to a csv file
 nearby_facilities = get_nearby(
-    address="", # Provide an empty string for address if unknown and then city/state/zip below to filter
+    # Provide an empty string for address if unknown and then city/state/zip
+    # below to filter
+    address="",
     city="Boston",
     state="MA",
     zip_code="02108",

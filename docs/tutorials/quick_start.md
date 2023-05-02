@@ -1,11 +1,13 @@
 # Usage
 
 To retrieve veteran data from the API, ensure your VA API key is set.
-You should store your API key in an environment variable or in the `creds.py` named, `API_KEY`.
+You should store your API key in an environment variable or in the `creds.py`
+named, `API_KEY`.
 
 ## Veteran Benefits Intake
 
-You can upload multiple files to the Veteran Benefits Administration (VBA) with `pyvet`.
+You can upload multiple files to the Veteran Benefits Administration (VBA) with
+`pyvet`.
 
 ```python
 from pyvet.benefits.intake.api import create_path_to_upload_files, upload_files

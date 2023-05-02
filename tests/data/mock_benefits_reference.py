@@ -31,7 +31,7 @@ MOCK_TREATMENT_CENTERS = {
     "totalPages": 1,
 }
 
-MOCK_SERVICE_BRANCES = {
+MOCK_SERVICE_BRANCHES = {
     "items": [
         {"code": "AF", "description": "Air Force"},
         {"code": "N ACAD", "description": "Naval Academy"},

@@ -7,7 +7,9 @@
 
 ## Poetry
 
-PyVet uses [Poetry](https://python-poetry.org) for management of dependencies and virtual environments. First, use `poetry install` to install the dependencies, then run `poetry shell` to activate the virtual environment.
+PyVet uses [Poetry](https://python-poetry.org) for management of dependencies
+ and virtual environments. First, use `poetry install` to install the
+ dependencies, then run `poetry shell` to activate the virtual environment.
 
 ## Pip
 

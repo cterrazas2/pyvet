@@ -1,0 +1,22 @@
+[MASTER]
+ignore-paths=tests/
+
+[MESSAGES CONTROL]
+
+disable=import-error,inconsistent-return-statements,duplicate-code,too-many-lines,broad-exception-caught
+
+[BASIC]
+
+# Good variable names which should always be accepted, separated by a comma.
+good-names=i, e, f, r
+
+[DESIGN]
+
+# Maximum number of arguments for function / method
+max-args=15
+
+# Maximum number of locals for function / method body
+max-locals=25
+
+[FORMAT]
+max-line-length=120

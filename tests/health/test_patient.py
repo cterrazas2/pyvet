@@ -92,10 +92,10 @@ from unittest.mock import patch
     return_value="somerandomtoken",
 )
 @patch.object(Session().headers, "get", return_value=None)
-@patch.object(Session, "get", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey")))
+@patch.object(Session, "get", headers={"apiKey": creds.API_KEY_HEADER.get("apiKey")})
 class TestHealthPatient(unittest.TestCase):
     def setUp(self):
-        self.headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+        self.headers = {"apiKey": creds.API_KEY_HEADER.get("apiKey")}
         self.health_url = creds.VA_SANDBOX_API + "fhir/v0/r4/"
         # we use one session so we reset the token here if it's been set by another test globally.
         creds.API_KEY_HEADER["Authorization"] = None
@@ -154,10 +154,10 @@ class TestHealthPatient(unittest.TestCase):
         self.assertDictEqual(appointment, MOCK_APPOINTMENT)
         mock_get.assert_called_once_with(
             self.health_url + "Appointment",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
+            headers={
+                "apiKey": creds.API_KEY_HEADER.get("apiKey"),
+                "Authorization": "Bearer somerandomtoken",
+            },
             params={
                 "patient": None,
                 "_id": None,
