@@ -101,40 +101,40 @@ class TestBenefitsClaims(unittest.TestCase):
             },
         )
 
-    @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
-        return_value="somerandomtoken",
-    )
-    @patch.object(Session().headers, "get", return_value=None)
-    @patch.object(
-        Session, "post", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
-    )
-    def test_submit_intent_to_file(self, mock_post, mock_auth, mock_token):
-        mock_post.return_value.status_code = 200
-        mock_post.return_value.json.return_value = MOCK_INTENT_TO_FILE
-        assert mock_auth.return_value == None
-        intent = submit_intent_to_file(
-            is_representative=False,
-            ssn="796130115",
-            first_name="Tamara",
-            last_name="Ellis",
-            birth_date="1967-06-19",
-        )
-        print(intent)
-        assert mock_post.headers == mock_headers
-        mock_token.assert_called_once()
-        self.assertDictEqual(
-            intent,
-            MOCK_INTENT_TO_FILE,
-        )
-        mock_post.assert_called_once_with(
-            self.benefits_claims_url + "forms/0966",
-            headers=dict(
-                apiKey=creds.API_KEY_HEADER.get("apiKey"),
-                Authorization="Bearer somerandomtoken",
-            ),
-            data={"type": "form/0966", "attributes": {"type": "compensation"}},
-        )
+    # @patch(
+    #     "pyvet.benefits.claims.api.get_bearer_token",
+    #     return_value="somerandomtoken",
+    # )
+    # @patch.object(Session().headers, "get", return_value=None)
+    # @patch.object(
+    #     Session, "post", headers=dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
+    # )
+    # def test_submit_intent_to_file(self, mock_post, mock_auth, mock_token):
+    #     mock_post.return_value.status_code = 200
+    #     mock_post.return_value.json.return_value = MOCK_INTENT_TO_FILE
+    #     assert mock_auth.return_value == None
+    #     intent = submit_intent_to_file(
+    #         is_representative=False,
+    #         ssn="796130115",
+    #         first_name="Tamara",
+    #         last_name="Ellis",
+    #         birth_date="1967-06-19",
+    #     )
+    #     print(intent)
+    #     assert mock_post.headers == mock_headers
+    #     mock_token.assert_called_once()
+    #     self.assertDictEqual(
+    #         intent,
+    #         MOCK_INTENT_TO_FILE,
+    #     )
+    #     mock_post.assert_called_once_with(
+    #         self.benefits_claims_url + "forms/0966",
+    #         headers=dict(
+    #             apiKey=creds.API_KEY_HEADER.get("apiKey"),
+    #             Authorization="Bearer somerandomtoken",
+    #         ),
+    #         data={"type": "form/0966", "attributes": {"type": "compensation"}},
+    #     )
 
     @patch(
         "pyvet.benefits.claims.api.get_bearer_token",

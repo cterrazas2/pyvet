@@ -1,3 +1,5 @@
+"""Dataclasses for Intent to File API"""
+# pylint: skip-file
 import base64
 from datetime import datetime
 from dataclasses import dataclass
@@ -9,6 +11,8 @@ BytesBase64 = Annotated[bytes, bytes]
 
 @dataclass
 class Address:
+    """Address dataclass for Intent to File API"""
+
     numberAndStreet: str
     city: str
     country: str
@@ -21,6 +25,8 @@ class Address:
 
 @dataclass
 class Phone:
+    """Phone dataclass for Intent to File API"""
+
     areaCode: str
     phoneNumber: str
     countryCode: str | None = None
@@ -29,6 +35,8 @@ class Phone:
 
 @dataclass
 class Veteran:
+    """Veteran dataclass for Intent to File API"""
+
     address: Address
     phone: Phone
     emailAddress: str
@@ -38,6 +46,8 @@ class Veteran:
 
 @dataclass
 class Claimant:
+    """Claimant dataclass for Intent to File API"""
+
     firstName: str
     lastName: str
     address: Address
@@ -49,6 +59,8 @@ class Claimant:
 
 @dataclass
 class ServiceOrganization:
+    """Service Organization dataclass for Intent to File API"""
+
     poaCode: str
     description: str | None = None
     organizationNamestring: str | None = None
@@ -61,18 +73,24 @@ class ServiceOrganization:
 
 @dataclass
 class Signature:
+    """Signature dataclass for Intent to File API"""
+
     # Base64 encoded png image of the signature.
     title: BytesBase64
 
 
 @dataclass
 class Signatures:
+    """Signatures dataclass for Intent to File API"""
+
     veteran: Signature
     representative: Signature
 
 
 @dataclass
 class POAForm:
+    """POA Form dataclass for Intent to File API"""
+
     veteran: Veteran
     claimant: Claimant
     serviceOrganization: ServiceOrganization

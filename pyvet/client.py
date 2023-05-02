@@ -3,7 +3,6 @@ Client module for the VA API.
 """
 import logging
 
-# the below is an internal version, with some modifications.
 import oidc_client as oidc
 import requests
 from requests.adapters import HTTPAdapter
@@ -26,8 +25,6 @@ def get_bearer_token(scope: str = DEFAULT_SCOPE) -> str | None:
     """Get a bearer token from the VA OIDC server.
     Parameters
     ----------
-    va_api : str
-        The VA API to request a token for.
     scope : str
         A scope to request from the VA OIDC server (different per VA API).
     Returns

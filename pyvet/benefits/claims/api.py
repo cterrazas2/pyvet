@@ -274,11 +274,7 @@ def submit_intent_to_file(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {
-        get_bearer_token(
-            va_api="claims", scope=CLAIM_SCOPE
-        )
-        }"""
+        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetcing token failed.")
         return None
@@ -381,13 +377,9 @@ def submit_poa(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {
-        get_bearer_token(
-            va_api="claims", scope=CLAIM_SCOPE
-        )
-        }"""
+        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetcing token failed.")
+        logging.error("Fetching token failed.")
         return None
 
     if is_representative:
