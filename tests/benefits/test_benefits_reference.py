@@ -18,7 +18,7 @@ from tests.data.mock_benefits_reference import (
     MOCK_DISABILITIES_DATA,
     MOCK_INTAKE_SITES,
     MOCK_MILITARY_PAY_TYPES,
-    MOCK_SERVICE_BRANCES,
+    MOCK_SERVICE_BRANCHES,
     MOCK_SPECIAL_CIRCUMSTANCES,
     MOCK_STATES,
     MOCK_TREATMENT_CENTERS,
@@ -91,10 +91,10 @@ class TestBenefitsReference(unittest.TestCase):
 
     def test_get_service_branches(self, mock_get):
         mock_get.return_value.status_code = 200
-        mock_get.return_value.json.return_value = MOCK_SERVICE_BRANCES
+        mock_get.return_value.json.return_value = MOCK_SERVICE_BRANCHES
         assert mock_get.headers == self.headers
         branches = get_service_branches()
-        self.assertDictEqual(branches, MOCK_SERVICE_BRANCES)
+        self.assertDictEqual(branches, MOCK_SERVICE_BRANCHES)
         mock_get.assert_called_once_with(
             self.benefits_reference_url + "service-branches",
             params={"page": 1, "pageSize": 30},
