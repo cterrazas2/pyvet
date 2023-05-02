@@ -59,3 +59,4 @@ repos:
      rev: "v0.0.264"
      hooks:
      - id: ruff
+       args: ['pyvet']
