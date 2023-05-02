@@ -40,3 +40,17 @@ repos:
      rev: v0.34.0
      hooks:
      - id: markdownlint
+-    repo: local
+     hooks:
+     - id: pylint
+       name: pylint
+       entry: pylint
+       language: system
+       types: [python]
+       args:
+         [
+           "-rn", # Only display messages
+           "--rcfile=.pylintrc", # Link to your config file
+           "--ignore-paths=tests/", # Ignore tests
+           "pyvet" # pyvet repo
+         ]

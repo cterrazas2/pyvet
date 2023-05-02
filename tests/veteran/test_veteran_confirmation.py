@@ -5,7 +5,7 @@ from requests import Session
 
 from unittest.mock import patch
 
-mock_confirmed = dict(veteran_status="confirmed")
+mock_confirmed = {"veteran_status": "confirmed"}
 
 
 @patch.object(Session, "post", headers=creds.API_KEY_HEADER)
@@ -38,23 +38,23 @@ class TestVeteranConfirmation(unittest.TestCase):
         self.assertDictEqual(vet_status, mock_confirmed)
         mock_post.assert_called_once_with(
             self.confirmation_url + "status",
-            json=dict(
-                firstName="Alfredo",
-                lastName="Armstrong",
-                birthDate="1993-06-08",
-                middleName="M",
-                gender="M",
-                streetAddressLine1="17020 Tortoise St",
-                city="Round Rock",
-                zipCode="78664",
-                state="TX",
-                country="USA",
-                homePhoneNumber="555-555-5555",
-                mothersMaidenName="Smith",
-                birthPlaceCity="Johnson City",
-                birthPlaceState="MA",
-                birthPlaceCountry="USA",
-            ),
+            json={
+                "firstName": "Alfredo",
+                "lastName": "Armstrong",
+                "birthDate": "1993-06-08",
+                "middleName": "M",
+                "gender": "M",
+                "streetAddressLine1": "17020 Tortoise St",
+                "city": "Round Rock",
+                "zipCode": "78664",
+                "state": "TX",
+                "country": "USA",
+                "homePhoneNumber": "555-555-5555",
+                "mothersMaidenName": "Smith",
+                "birthPlaceCity": "Johnson City",
+                "birthPlaceState": "MA",
+                "birthPlaceCountry": "USA",
+            },
         )
 
 

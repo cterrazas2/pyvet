@@ -33,7 +33,7 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(facility, MOCK_FACILITY)
         mock_get.assert_called_once_with(
             self.facilities_url + f"facilities/{mock_id}",
-            params=dict(id=mock_id),
+            params={"id": mock_id},
         )
 
     def test_get_facilities(self, mock_get):
@@ -44,7 +44,7 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(all_facilities, MOCK_FACILITIES)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities/all",
-            params=dict(Accept="application/geo+json"),
+            params={"Accept": "application/geo+json"},
         )
 
     def test_get_facility_ids(self, mock_get):
@@ -55,7 +55,7 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(all_facility_ids, MOCK_FACILITY_IDS)
         mock_get.assert_called_once_with(
             self.facilities_url + "ids",
-            params=dict(type="health"),
+            params={"type": "health"},
         )
 
     def test_nearby_facilities(self, mock_get):
@@ -72,11 +72,11 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(nearby_facilities, MOCK_NEARBY)
         mock_get.assert_called_once_with(
             self.facilities_url + "nearby",
-            params=dict(
-                lat=mock_lat,
-                lng=mock_lon,
-                drive_time=mock_drive_time,
-            ),
+            params={
+                "lat": mock_lat,
+                "lng": mock_lon,
+                "drive_time": mock_drive_time,
+            },
         )
 
     def test_facilities_invalid_query(self, mock_get):
@@ -106,21 +106,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=None,
-                ids=["vha_688", "vha_644"],
-                lat=None,
-                long=None,
-                radius=None,
-                type="health",
-                services=[],
-                mobile=False,
-                state=None,
-                visn=None,
-                zip=None,
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": None,
+                "ids": ["vha_688", "vha_644"],
+                "lat": None,
+                "long": None,
+                "radius": None,
+                "type": "health",
+                "services": [],
+                "mobile": False,
+                "state": None,
+                "visn": None,
+                "zip": None,
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
     def test_facilities_lat_lon_query(self, mock_get):
@@ -138,21 +138,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=None,
-                ids=["vha_688", "vha_644"],
-                lat=56.7,
-                long=-123.4,
-                radius=10.0,
-                type="health",
-                services=[],
-                mobile=False,
-                state=None,
-                visn=None,
-                zip=None,
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": None,
+                "ids": ["vha_688", "vha_644"],
+                "lat": 56.7,
+                "long": -123.4,
+                "radius": 10.0,
+                "type": "health",
+                "services": [],
+                "mobile": False,
+                "state": None,
+                "visn": None,
+                "zip": None,
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
     def test_facilities_bbox_query(self, mock_get):
@@ -168,21 +168,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=[-105.4, 39.4, -104.5, 40.1],
-                ids=["vha_688", "vha_644"],
-                lat=None,
-                long=None,
-                radius=None,
-                type="health",
-                services=[],
-                mobile=True,
-                state=None,
-                visn=None,
-                zip=None,
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": [-105.4, 39.4, -104.5, 40.1],
+                "ids": ["vha_688", "vha_644"],
+                "lat": None,
+                "long": None,
+                "radius": None,
+                "type": "health",
+                "services": [],
+                "mobile": True,
+                "state": None,
+                "visn": None,
+                "zip": None,
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
     def test_facilities_state_query(self, mock_get):
@@ -198,21 +198,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=None,
-                ids=["vha_688", "vha_644"],
-                lat=None,
-                long=None,
-                radius=None,
-                type="health",
-                services=[],
-                mobile=True,
-                state="CA",
-                visn=None,
-                zip=None,
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": None,
+                "ids": ["vha_688", "vha_644"],
+                "lat": None,
+                "long": None,
+                "radius": None,
+                "type": "health",
+                "services": [],
+                "mobile": True,
+                "state": "CA",
+                "visn": None,
+                "zip": None,
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
     def test_facilities_zip_code_query(self, mock_get):
@@ -228,21 +228,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=None,
-                ids=["vha_688", "vha_644"],
-                lat=None,
-                long=None,
-                radius=None,
-                type="health",
-                services=[],
-                mobile=True,
-                state=None,
-                visn=None,
-                zip="80301",
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": None,
+                "ids": ["vha_688", "vha_644"],
+                "lat": None,
+                "long": None,
+                "radius": None,
+                "type": "health",
+                "services": [],
+                "mobile": True,
+                "state": None,
+                "visn": None,
+                "zip": "80301",
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
     def test_facilities_visn_query(self, mock_get):
@@ -257,21 +257,21 @@ class TestFacilities(unittest.TestCase):
         self.assertDictEqual(queried_facilities, MOCK_QUERY_JSON)
         mock_get.assert_called_once_with(
             self.facilities_url + "facilities",
-            params=dict(
-                bbox=None,
-                ids=["vha_688", "vha_644"],
-                lat=None,
-                long=None,
-                radius=None,
-                type=None,
-                services=[],
-                mobile=True,
-                state=None,
-                visn=26,
-                zip=None,
-                page=1,
-                per_page=30,
-            ),
+            params={
+                "bbox": None,
+                "ids": ["vha_688", "vha_644"],
+                "lat": None,
+                "long": None,
+                "radius": None,
+                "type": None,
+                "services": [],
+                "mobile": True,
+                "state": None,
+                "visn": 26,
+                "zip": None,
+                "page": 1,
+                "per_page": 30,
+            },
         )
 
 

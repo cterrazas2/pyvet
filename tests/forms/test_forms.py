@@ -22,7 +22,7 @@ class TestForms(unittest.TestCase):
         self.assertDictEqual(form, MOCK_FORM)
         mock_get.assert_called_once_with(
             self.forms_url + f"/{mock_form_name}",
-            params=dict(form_name=mock_form_name),
+            params={"form_name": mock_form_name},
         )
 
     def test_get_forms(self, mock_get):
@@ -33,7 +33,7 @@ class TestForms(unittest.TestCase):
         self.assertDictEqual(all_forms, MOCK_FORMS)
         mock_get.assert_called_once_with(
             self.forms_url,
-            params=dict(query=None),
+            params={"query": None},
         )
 
 
