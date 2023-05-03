@@ -54,8 +54,7 @@ class TokenCache:
             A bearer token.
         """
         token = self.tokens.get(va_api)
-        if token:
-            return token
+        return token if token else None
 
 
 def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
