@@ -87,6 +87,9 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
             scope=scope,
             interactive=True,
         )
+        if token is None:
+            logging.error("Fetching token failed.")
+            return None
         token_cache.tokens[va_api] = token.access_token
         return token.access_token
     except Exception as e:

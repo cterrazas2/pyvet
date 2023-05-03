@@ -25,12 +25,11 @@ def get_status() -> Json | None:
     r : json
         Response in json format.
     """
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
-        if token is None:
-            logging.error("Fetching token failed.")
-            return None
-        session.headers["Authorization"] = f"Bearer {token}"
+        return None
     status_url = VERIFICATION_URL + "status"
     try:
         r = session.get(status_url, headers=session.headers)
@@ -47,12 +46,11 @@ def get_disability_rating() -> Json | None:
     r : json
         Response in json format.
     """
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
-        if token is None:
-            logging.error("Fetching token failed.")
-            return None
-        session.headers["Authorization"] = f"Bearer {token}"
+        return None
     disability_rating_url = VERIFICATION_URL + "disability_rating"
     try:
         r = session.get(disability_rating_url, headers=session.headers)
@@ -69,12 +67,11 @@ def get_service_history() -> Json | None:
     r : json
         Response in json format.
     """
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
-        if token is None:
-            logging.error("Fetching token failed.")
-            return None
-        session.headers["Authorization"] = f"Bearer {token}"
+        return None
     service_history_url = VERIFICATION_URL + "service_history"
     try:
         r = session.get(service_history_url, headers=session.headers)

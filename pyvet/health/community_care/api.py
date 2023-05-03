@@ -37,12 +37,11 @@ def get_eligibility(
     r : json
         Response in json format.
     """
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="community_care", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(va_api="community_care", scope=HEALTH_SCOPE)
-        if token is None:
-            logging.error("Fetching token failed.")
-            return None
-        session.headers["Authorization"] = f"Bearer {token}"
+        return None
     status_url = HEALTH_URL + "search"
     params = {
         "patient": patient,
