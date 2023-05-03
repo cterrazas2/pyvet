@@ -1,9 +1,12 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.benefits.claims.api import (
-    get_claims,
     get_claim,
+    get_claims,
     # submit_526,
     # upload_526,
     # upload_supporting_doc_526,
@@ -16,11 +19,9 @@ from tests.data.mock_benefits_claims import (
     MOCK_CLAIM,
     MOCK_CLAIMS,
     MOCK_INTENT_TO_FILE_LAST_ACTIVE,
-    MOCK_POA_STATUS_ID,
     MOCK_POA_LAST_ACTIVE,
+    MOCK_POA_STATUS_ID,
 )
-from unittest.mock import patch
-
 
 mock_headers = dict(apiKey=creds.API_KEY_HEADER.get("apiKey"))
 
@@ -35,7 +36,7 @@ class TestBenefitsClaims(unittest.TestCase):
         creds.API_KEY_HEADER["Authorization"] = None
 
     @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
+        "pyvet.benefits.claims.api.token_scheduler.get_bearer_token",
         return_value="somerandomtoken",
     )
     @patch.object(Session().headers, "get", return_value=None)
@@ -68,7 +69,7 @@ class TestBenefitsClaims(unittest.TestCase):
         creds.API_KEY_HEADER["Authorization"] = None
 
     @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
+        "pyvet.benefits.claims.api.token_scheduler.get_bearer_token",
         return_value="somerandomtoken",
     )
     @patch.object(Session().headers, "get", return_value=None)
@@ -101,7 +102,7 @@ class TestBenefitsClaims(unittest.TestCase):
         )
 
     @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
+        "pyvet.benefits.claims.api.token_scheduler.get_bearer_token",
         return_value="somerandomtoken",
     )
     @patch.object(Session().headers, "get", return_value=None)
@@ -136,7 +137,7 @@ class TestBenefitsClaims(unittest.TestCase):
         )
 
     @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
+        "pyvet.benefits.claims.api.token_scheduler.get_bearer_token",
         return_value="somerandomtoken",
     )
     @patch.object(Session().headers, "get", return_value=None)
@@ -171,7 +172,7 @@ class TestBenefitsClaims(unittest.TestCase):
         )
 
     @patch(
-        "pyvet.benefits.claims.api.get_bearer_token",
+        "pyvet.benefits.claims.api.token_scheduler.get_bearer_token",
         return_value="somerandomtoken",
     )
     @patch.object(Session().headers, "get", return_value=None)

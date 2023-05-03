@@ -1,5 +1,8 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.facilities.api import (
     get_all,
@@ -9,13 +12,12 @@ from pyvet.facilities.api import (
     get_nearby,
 )
 from tests.data.mock_facilities import (
-    MOCK_FACILITY,
     MOCK_FACILITIES,
+    MOCK_FACILITY,
     MOCK_FACILITY_IDS,
     MOCK_NEARBY,
     MOCK_QUERY_JSON,
 )
-from unittest.mock import patch
 
 
 @patch.object(Session, "get", headers=creds.API_KEY_HEADER)

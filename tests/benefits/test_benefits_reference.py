@@ -1,10 +1,13 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.benefits.reference.api import (
-    get_disabilities,
     get_contention_types,
     get_countries,
+    get_disabilities,
     get_intake_sites,
     get_military_pay_types,
     get_service_branches,
@@ -23,7 +26,6 @@ from tests.data.mock_benefits_reference import (
     MOCK_STATES,
     MOCK_TREATMENT_CENTERS,
 )
-from unittest.mock import patch
 
 
 @patch.object(Session, "get", headers=creds.API_KEY_HEADER)

@@ -1,15 +1,17 @@
 import json
 import unittest
+from unittest.mock import ANY, mock_open, patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.benefits.intake.api import (
-    create_path_to_upload_files,
-    upload_files,
     bulk_status_report,
-    get_uploaded_document,
+    create_path_to_upload_files,
     download_uploaded_document,
+    get_uploaded_document,
+    upload_files,
 )
-from unittest.mock import ANY, patch, mock_open
 
 mock_create_path = {
     "data": {

@@ -1,10 +1,11 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.forms.api import get_form, get_forms
-
 from tests.data.mock_forms_data import MOCK_FORM, MOCK_FORMS
-from unittest.mock import patch
 
 
 @patch.object(Session, "get", headers=creds.API_KEY_HEADER)

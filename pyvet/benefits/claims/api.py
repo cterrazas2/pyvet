@@ -9,9 +9,7 @@ import requests
 from pyvet.client import (
     current_session as session,
 )
-from pyvet.client import (
-    get_bearer_token,
-)
+from pyvet.client import token_scheduler
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
@@ -47,7 +45,7 @@ def get_claims(
     claims_url = BENEFITS_INTAKE_URL + "claims"
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     if is_representative:
@@ -94,7 +92,7 @@ def get_claim(
     claim_url = BENEFITS_INTAKE_URL + f"claims/{claim_id}"
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     if is_representative:
@@ -139,7 +137,7 @@ def submit_526(
         Response in json format.
     """
     submission_url = BENEFITS_INTAKE_URL + "forms/526"
-    token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
+    token = token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
     if session.headers.get("Authorization") is None:
         session.headers["Authorization"] = f"Bearer {token}"
 
@@ -278,7 +276,7 @@ def get_last_active_intent_to_file(
     active_intent_url = BENEFITS_INTAKE_URL + "forms/0966/active"
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     if is_representative:
@@ -386,7 +384,7 @@ def get_poa_status_by_id(
     poa_url = BENEFITS_INTAKE_URL + f"forms/2122/{poa_id}"
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     if is_representative:
@@ -430,7 +428,7 @@ def get_status_poa_last_active(
     poa_url = BENEFITS_INTAKE_URL + "forms/2122/active"
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     if is_representative:

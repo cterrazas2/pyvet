@@ -1,13 +1,14 @@
 import unittest
-from pyvet import creds
-from pyvet.veteran.verification.api import (
-    get_status,
-    get_disability_rating,
-    get_service_history,
-)
+from unittest.mock import patch
+
 from requests import Session
 
-from unittest.mock import patch
+from pyvet import creds
+from pyvet.veteran.verification.api import (
+    get_disability_rating,
+    get_service_history,
+    get_status,
+)
 
 mock_confirmed = {"veteran_status": "confirmed"}
 
@@ -58,7 +59,7 @@ mock_service_history = {
 
 
 @patch(
-    "pyvet.veteran.verification.api.get_bearer_token",
+    "pyvet.veteran.verification.api.token_scheduler.get_bearer_token",
     return_value="somerandomtoken",
 )
 @patch.object(Session().headers, "get", return_value=None)
