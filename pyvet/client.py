@@ -3,7 +3,6 @@ Client module for the VA API.
 """
 import logging
 
-# the below is an internal version, with some modifications.
 import oidc_client as oidc
 import requests
 from requests.adapters import HTTPAdapter
