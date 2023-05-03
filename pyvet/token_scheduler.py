@@ -130,24 +130,34 @@ class TokenScheduler:
             logging.error("No session found.")
             return {}
         self.current_session.headers["Authorization"] = f"""Bearer {token}"""
-        response = self.current_session.get(
-            "https://sandbox-api.va.gov/oauth2/userinfo"
-        )
-        if response.status_code != 200:
-            logging.error("User info request failed.")
+        try:
+            response = self.current_session.get(
+                "https://sandbox-api.va.gov/oauth2/userinfo"
+            )
+            if response.status_code != 200:
+                logging.error("User info request failed.")
+                return {}
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            logging.error(e)
             return {}
-        return response.json()
 
     def manage_tokens(self) -> dict:
         """Manage tokens."""
         if self.current_session is None:
             logging.error("No session found.")
             return {}
-        response = self.current_session.get("https://sandbox-api.va.gov/oauth2/manage")
-        if response.status_code != 200:
-            logging.error("Token management request failed.")
+        try:
+            response = self.current_session.get(
+                "https://sandbox-api.va.gov/oauth2/manage"
+            )
+            if response.status_code != 200:
+                logging.error("Token management request failed.")
+                return {}
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            logging.error(e)
             return {}
-        return response.json()
 
     def get_bearer_token(self, va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
         """Get a bearer token from the VA OIDC server.
