@@ -50,7 +50,7 @@ def get_claims(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+        ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetching token failed.")
         return None
@@ -101,7 +101,7 @@ def get_claim(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+        ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetching token failed.")
         return None
@@ -147,7 +147,7 @@ def submit_526(
         Response in json format.
     """
     submission_url = BENEFITS_INTAKE_URL + "forms/526"
-    token = get_bearer_token(scope=CLAIM_SCOPE)
+    token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
     if session.headers.get("Authorization") is None:
         session.headers["Authorization"] = f"Bearer {token}"
 
@@ -289,7 +289,7 @@ def get_last_active_intent_to_file(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+        ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetching token failed.")
         return None
@@ -401,7 +401,7 @@ def get_poa_status_by_id(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+        ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetching token failed.")
         return None
@@ -449,7 +449,7 @@ def get_status_poa_last_active(
         logging.error("No token set.")
         session.headers[
             "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+        ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         logging.error("Fetching token failed.")
         return None

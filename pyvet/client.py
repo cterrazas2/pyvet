@@ -22,7 +22,43 @@ from pyvet.creds import (
 )
 
 
-def get_bearer_token(scope: str = DEFAULT_SCOPE) -> str | None:
+class TokenCache:
+    """A simple token cache."""
+
+    def __init__(self):
+        self.tokens: dict[str, str] = {}
+
+    def has_token(self, va_api: str) -> bool:
+        """Check if a token exists for a VA API.
+        Parameters
+        ----------
+        va_api : str
+            The VA API to check for a token.
+        Returns
+        -------
+        has_token : bool
+            Whether or not a token exists for the VA API.
+        """
+        has_token = va_api in self.tokens
+        return has_token
+
+    def get_token(self, va_api: str) -> str | None:
+        """Get a token for a VA API.
+        Parameters
+        ----------
+        va_api : str
+            The VA API to get a token for.
+        Returns
+        -------
+        token : str
+            A bearer token.
+        """
+        token = self.tokens.get(va_api)
+        if token:
+            return token
+
+
+def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
     """Get a bearer token from the VA OIDC server.
     Parameters
     ----------
@@ -36,6 +72,11 @@ def get_bearer_token(scope: str = DEFAULT_SCOPE) -> str | None:
         A bearer token.
     """
     try:
+        if token_cache.has_token(va_api):
+            return token_cache.get_token(va_api)
+        logging.error(
+            "No token found, requesting a new one for VA %s api.", va_api.capitalize()
+        )
         token = oidc.login(
             provider_config=oidc.config.ProviderConfig(
                 issuer=ISSUER,
@@ -47,6 +88,7 @@ def get_bearer_token(scope: str = DEFAULT_SCOPE) -> str | None:
             scope=scope,
             interactive=True,
         )
+        token_cache.tokens[va_api] = token.access_token
         return token.access_token
     except Exception as e:
         logging.error(e)
@@ -75,6 +117,7 @@ def create_session() -> requests.Session:
 
 
 current_session = create_session()
+token_cache = TokenCache()
 
 if current_session.headers.get("apiKey") == "REPLACE ME":
     logging.error(

@@ -26,7 +26,7 @@ def get_status() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(scope=VERIFICATION_SCOPE)
+        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -48,7 +48,7 @@ def get_disability_rating() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(scope=VERIFICATION_SCOPE)
+        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
@@ -70,7 +70,7 @@ def get_service_history() -> Json | None:
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(scope=VERIFICATION_SCOPE)
+        token = get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None

@@ -38,7 +38,7 @@ def get_eligibility(
         Response in json format.
     """
     if session.headers.get("Authorization") is None:
-        token = get_bearer_token(scope=HEALTH_SCOPE)
+        token = get_bearer_token(va_api="community_care", scope=HEALTH_SCOPE)
         if token is None:
             logging.error("Fetching token failed.")
             return None
