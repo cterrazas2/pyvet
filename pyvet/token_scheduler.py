@@ -110,10 +110,14 @@ class TokenScheduler:
         """
         response = requests.post(
             f"{AUTH_SERVER}/introspect",
+            headers={"Authorization": f"Basic {CLIENT_ID}"},
             data={"token": token},
-            params={"client_id": CLIENT_ID},
+            # params={"client_id": CLIENT_ID},
             timeout=5,
         )
+        # from pprint import pprint
+
+        # pprint(vars(response))
         if response.status_code != 200:
             logging.error("Token introspect failed.")
             return {}
@@ -131,9 +135,7 @@ class TokenScheduler:
             return {}
         self.current_session.headers["Authorization"] = f"""Bearer {token}"""
         try:
-            response = self.current_session.get(
-                "https://sandbox-api.va.gov/oauth2/userinfo"
-            )
+            response = self.current_session.get(f"{AUTH_SERVER}/userinfo")
             if response.status_code != 200:
                 logging.error("User info request failed.")
                 return {}
@@ -148,9 +150,7 @@ class TokenScheduler:
             logging.error("No session found.")
             return {}
         try:
-            response = self.current_session.get(
-                "https://sandbox-api.va.gov/oauth2/manage"
-            )
+            response = self.current_session.get(f"{AUTH_SERVER}/manage")
             if response.status_code != 200:
                 logging.error("Token management request failed.")
                 return {}
