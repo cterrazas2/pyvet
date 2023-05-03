@@ -45,14 +45,10 @@ def get_claims(
         Response in json format.
     """
     claims_url = BENEFITS_INTAKE_URL + "claims"
-    authorization = session.headers.get("Authorization")
-    if authorization is None:
-        logging.error("No token set.")
-        session.headers[
-            "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -96,14 +92,10 @@ def get_claim(
         Response in json format.
     """
     claim_url = BENEFITS_INTAKE_URL + f"claims/{claim_id}"
-    authorization = session.headers.get("Authorization")
-    if authorization is None:
-        logging.error("No token set.")
-        session.headers[
-            "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -147,7 +139,7 @@ def submit_526(
         Response in json format.
     """
     submission_url = BENEFITS_INTAKE_URL + "forms/526"
-    token = get_bearer_token(scope=CLAIM_SCOPE)
+    token = get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
     if session.headers.get("Authorization") is None:
         session.headers["Authorization"] = f"Bearer {token}"
 
@@ -284,14 +276,10 @@ def get_last_active_intent_to_file(
         Response in json format.
     """
     active_intent_url = BENEFITS_INTAKE_URL + "forms/0966/active"
-    authorization = session.headers.get("Authorization")
-    if authorization is None:
-        logging.error("No token set.")
-        session.headers[
-            "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -396,14 +384,10 @@ def get_poa_status_by_id(
         Response in json format.
     """
     poa_url = BENEFITS_INTAKE_URL + f"forms/2122/{poa_id}"
-    authorization = session.headers.get("Authorization")
-    if authorization is None:
-        logging.error("No token set.")
-        session.headers[
-            "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
@@ -444,14 +428,10 @@ def get_status_poa_last_active(
         Response in json format.
     """
     poa_url = BENEFITS_INTAKE_URL + "forms/2122/active"
-    authorization = session.headers.get("Authorization")
-    if authorization is None:
-        logging.error("No token set.")
-        session.headers[
-            "Authorization"
-        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    session.headers[
+        "Authorization"
+    ] = f"""Bearer {get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
     if session.headers.get("Authorization") is None:
-        logging.error("Fetching token failed.")
         return None
     if is_representative:
         session.headers["X-VA-SSN"] = ssn
