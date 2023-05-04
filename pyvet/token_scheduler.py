@@ -54,7 +54,8 @@ class TokenScheduler:
         token_verified = loop.run_until_complete(self.is_token_verified(token))
         if token and not token_verified:
             logging.error(
-                "Token expired for %s, fetching a new one.", va_api.capitalize()
+                "Token invalid (expired or revoked) for %s, fetching a new one.",
+                va_api.capitalize(),
             )
             new_token = self.fetch_new_token(va_api)
             return new_token.access_token if new_token else None
