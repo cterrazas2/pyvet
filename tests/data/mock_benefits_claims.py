@@ -121,3 +121,16 @@ MOCK_POA_LAST_ACTIVE = {
         },
     }
 }
+
+MOCK_INTENT_TO_FILE = {
+    "data": {
+        "id": "184058",
+        "type": "intent_to_file",
+        "attributes": {
+            "creation_date": "2020-08-10T08:31:26.000-05:00",
+            "expiration_date": "2021-08-10T08:31:18.000-05:00",
+            "type": "compensation",
+            "status": "duplicate",
+        },
+    }
+}

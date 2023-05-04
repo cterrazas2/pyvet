@@ -2,6 +2,8 @@
 Benefits Intake API: https://developer.va.gov/explore/benefits/docs/claims?version=v1
 Note: V1 is for external users, V2 is for internal users.
 """
+
+import base64
 import logging
 
 import requests
@@ -13,6 +15,16 @@ from pyvet.client import (
     get_bearer_token,
 )
 from pyvet.creds import API_URL
+from pyvet.file_submission_schemas import (
+    Address,
+    Claimant,
+    Phone,
+    POAForm,
+    ServiceOrganization,
+    Signature,
+    Signatures,
+    Veteran,
+)
 from pyvet.json_alias import Json
 
 BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
@@ -225,30 +237,56 @@ def submit_526(
 #     pass
 
 
-# def submit_intent_to_file(
-#     is_representative: bool = False,
-#     ssn: str = "",
-#     first_name: str = "",
-#     last_name: str = "",
-#     birth_date: str = "",
-# ) -> Json:
-#     """Submit an intent to file for disability compensation, burial, or pension claims.
-#     is_representative : bool
-#         If the consumer is a representative on behalf of a veteran.
-#     ssn : str
-#         The veteran's SSN.
-#     first_name : str
-#         The veteran's first name.
-#     last_name : str
-#         The veteran's last name.
-#     birth_date : str
-#         The veteran's birth date in iso8601 format.
-#     Returns
-#     -------
-#     r : json
-#         Response in json format.
-#     """
-#     pass
+def submit_intent_to_file(
+    is_representative: bool = False,
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
+    """Submit an intent to file for disability compensation or pension claims (burial not allowed).
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    submission_url = BENEFITS_INTAKE_URL + "forms/0966"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetcing token failed.")
+        return None
+
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+
+    try:
+        r = session.post(
+            submission_url,
+            headers=session.headers,
+            data={"type": "form/0966", "attributes": {"type": "compensation"}},
+        )
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 def get_last_active_intent_to_file(
@@ -296,32 +334,105 @@ def get_last_active_intent_to_file(
         logging.error(e)
 
 
-# def submit_poa(
-#     is_representative: bool = False,
-#     ssn: str = "",
-#     first_name: str = "",
-#     last_name: str = "",
-#     birth_date: str = "",
-# ) -> Json:
-#     """Submit a Power of Attorney form 2122.
-#     Parameters
-#     ----------
-#     is_representative : bool
-#         If the consumer is a representative on behalf of a veteran.
-#     ssn : str
-#         The veteran's SSN.
-#     first_name : str
-#         The veteran's first name.
-#     last_name : str
-#         The veteran's last name.
-#     birth_date : str
-#         The veteran's birth date in iso8601 format.
-#     Returns
-#     -------
-#     r : json
-#         Response in json format.
-#     """
-#     pass
+def submit_poa(
+    is_representative: bool = False,
+    ssn: str = "",
+    first_name: str = "",
+    last_name: str = "",
+    birth_date: str = "",
+) -> Json:
+    """Submit a Power of Attorney form 2122.
+    Parameters
+    ----------
+    is_representative : bool
+        If the consumer is a representative on behalf of a veteran.
+    ssn : str
+        The veteran's SSN.
+    first_name : str
+        The veteran's first name.
+    last_name : str
+        The veteran's last name.
+    birth_date : str
+        The veteran's birth date in iso8601 format.
+    Returns
+    -------
+    r : json
+        Response in json format.
+    """
+    submission_url = BENEFITS_INTAKE_URL + "forms/2122"
+    authorization = session.headers.get("Authorization")
+    if authorization is None:
+        logging.error("No token set.")
+        session.headers[
+            "Authorization"
+        ] = f"""Bearer {get_bearer_token(scope=CLAIM_SCOPE)}"""
+    if session.headers.get("Authorization") is None:
+        logging.error("Fetching token failed.")
+        return None
+
+    if is_representative:
+        session.headers["X-VA-SSN"] = ssn
+        session.headers["X-VA-First-Name"] = first_name
+        session.headers["X-VA-Last-Name"] = last_name
+        session.headers["X-VA-Birth-Date"] = birth_date
+
+    poa_form: POAForm = POAForm(
+        veteran=Veteran(
+            address=Address(
+                numberAndStreet="123 Main St",
+                city="Anytown",
+                country="USA",
+                zipFirstFive="12345",
+            ),
+            phone=Phone(
+                areaCode="123",
+                phoneNumber="4567890",
+            ),
+            emailAddress="example@example.com",
+        ),
+        claimant=Claimant(
+            firstName="John",
+            lastName="Doe",
+            address=Address(
+                numberAndStreet="123 Main St",
+                city="Anytown",
+                country="USA",
+                zipFirstFive="12345",
+            ),
+            phone=Phone(
+                areaCode="123",
+                phoneNumber="4567890",
+            ),
+            email="example@example.com",
+            relationship="self",
+        ),
+        serviceOrganization=ServiceOrganization(
+            poaCode="1",
+        ),
+        recordConsent=True,
+        signatures=Signatures(
+            veteran=Signature(
+                title=base64.b64encode(b"John Doe"),
+            ),
+            representative=Signature(
+                title=base64.b64encode(b"Jane Doe"),
+            ),
+        ),
+    )
+
+    try:
+        r = session.post(
+            submission_url,
+            headers=session.headers,
+            data={
+                "type": "form/21-22",
+                "attributes": poa_form,
+            },
+        )
+        r.raise_for_status()
+        return r.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(e)
 
 
 # def upload_signed_poa(
