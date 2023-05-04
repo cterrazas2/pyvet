@@ -1,10 +1,11 @@
 """The token scheduler module."""
-
+import asyncio
 import logging
-import time
 
 import oidc_client as oidc
 import requests
+from okta_jwt_verifier import BaseJWTVerifier
+from okta_jwt_verifier.exceptions import JWTValidationException
 
 from pyvet.creds import (
     AUTH_SERVER,
@@ -49,12 +50,17 @@ class TokenScheduler:
         """
         token = self.tokens.get(va_api)
         # Check if token is expired
-        if token and self.is_token_expired(token):
+        loop = asyncio.get_event_loop()
+        token_verified = loop.run_until_complete(self.is_token_verified(token))
+        if token and not token_verified:
+            logging.error(
+                "Token expired for %s, fetching a new one.", va_api.capitalize()
+            )
             new_token = self.fetch_new_token(va_api)
             return new_token.access_token if new_token else None
         return token.access_token if token else None
 
-    def is_token_expired(self, token: oidc.oauth.TokenResponse) -> bool:
+    async def is_token_verified(self, token: oidc.oauth.TokenResponse) -> bool:
         """Check if a token is expired.
         Parameters
         ----------
@@ -62,11 +68,19 @@ class TokenScheduler:
             A token.
         Returns
         -------
-        is_expired : bool
+        bool
             Whether or not the token is expired.
         """
-        # This should get replaced with a check against the token introspection endpoint.
-        return time.time() > token.expires_at
+        # This should get replaced with a check against the /introspection endpoint.
+        # Where we see if the token's status is active or not.
+        jwt_verifier = BaseJWTVerifier(issuer=f"{ISSUER}", client_id=CLIENT_ID)
+        try:
+            await jwt_verifier.verify_access_token(token.access_token)
+            return True
+        except JWTValidationException as e:
+            logging.error("Token verification failed.")
+            logging.error(e)
+            return False
 
     def fetch_new_token(self, va_api: str) -> oidc.oauth.TokenResponse | None:
         """Fetch a new token using the refresh token for a client.
@@ -85,19 +99,23 @@ class TokenScheduler:
             "client_id": CLIENT_ID,
             "scope": token.scope,
         }
-        response = requests.post(
-            f"{AUTH_SERVER}/token",
-            params=params,
-            timeout=5,
-        )
-        if response.status_code != 200:
-            logging.error("Token refresh failed.")
-            return None
         try:
-            token = oidc.oauth.TokenResponse(**response.json())
-            self.tokens[va_api] = token
-            return token
-        except TypeError as e:
+            response = requests.post(
+                f"{AUTH_SERVER}/token",
+                params=params,
+                timeout=5,
+            )
+            if response.status_code != 200:
+                logging.error("Token refresh failed.")
+                return None
+            try:
+                token = oidc.oauth.TokenResponse(**response.json())
+                self.tokens[va_api] = token
+                return token
+            except TypeError as e:
+                logging.error(e)
+                return None
+        except requests.exceptions.RequestException as e:
             logging.error(e)
             return None
 
