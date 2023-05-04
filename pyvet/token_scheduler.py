@@ -57,7 +57,7 @@ class TokenScheduler:
                 "Token invalid (expired or revoked) for %s, fetching a new one.",
                 va_api.capitalize(),
             )
-            new_token = self.fetch_new_token(va_api)
+            new_token = self.fetch_and_set_token(va_api)
             return new_token.access_token if new_token else None
         return token.access_token if token else None
 
@@ -83,8 +83,8 @@ class TokenScheduler:
             logging.error(e)
             return False
 
-    def fetch_new_token(self, va_api: str) -> oidc.oauth.TokenResponse | None:
-        """Fetch a new token using the refresh token for a client.
+    def fetch_and_set_token(self, va_api: str) -> oidc.oauth.TokenResponse | None:
+        """Fetch a token using the refresh token for a client and set it.
         Parameters
         ----------
         va_api : str
