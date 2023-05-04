@@ -23,4 +23,5 @@ name and its token, or key value pair respectively.
 
 The token cache will be updated on initial entry of a bearer token and then
 once it becomes invalid (expired or revoked). The refresh token will be used
-to retrieve another token.
+to retrieve another token. If the refresh token is expired, then the entire
+authentication process is initiated for the veteran's approval.
