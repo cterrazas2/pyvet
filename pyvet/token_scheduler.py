@@ -1,5 +1,4 @@
 """The token scheduler module."""
-import asyncio
 import logging
 
 import oidc_client as oidc
@@ -47,10 +46,7 @@ class TokenScheduler:
             A bearer token.
         """
         token = self.tokens.get(va_api)
-        loop = asyncio.get_event_loop()
-        token_verified = loop.run_until_complete(
-            self.is_token_verified(token),
-        )
+        token_verified = self.is_token_verified(token)
         if token and not token_verified:
             logging.error(
                 "Token invalid (expired or revoked) for %s, fetching a new one.",
@@ -60,7 +56,7 @@ class TokenScheduler:
             return new_token.access_token if new_token else None
         return token.access_token if token else None
 
-    async def is_token_verified(self, token: oidc.oauth.TokenResponse) -> bool:
+    def is_token_verified(self, token: oidc.oauth.TokenResponse) -> bool:
         """Check if a token is expired.
         Parameters
         ----------
