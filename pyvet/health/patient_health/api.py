@@ -142,6 +142,7 @@ def get_appointment(
     if session.headers.get("Authorization") is None:
         return None
     appointment_url = HEALTH_URL + "Appointment"
+    # session.headers["Accept"] = "application/fhir+json"
     params = {
         "patient": patient,
         "_id": resource_id,

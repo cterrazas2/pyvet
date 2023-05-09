@@ -27,13 +27,6 @@ def get_status() -> Json | None:
     session.headers["Authorization"] = f"""Bearer {token}"""
     if session.headers.get("Authorization") is None:
         return None
-    # from pprint import pprint
-
-    # print("Getting user info")
-    # pprint(token_scheduler.get_user_info(token))
-    # print("Introspecting token")
-    # pprint(token_scheduler.introspect_token(token))
-
     status_url = VERIFICATION_URL + "status"
     try:
         r = session.get(status_url, headers=session.headers)

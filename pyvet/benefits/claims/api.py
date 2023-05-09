@@ -13,7 +13,7 @@ from pyvet.client import token_scheduler
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
-BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
+BENEFITS_CLAIMS_URL = API_URL + "claims/v1/"
 CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
 
 
@@ -42,7 +42,7 @@ def get_claims(
     r : json
         Response in json format.
     """
-    claims_url = BENEFITS_INTAKE_URL + "claims"
+    claims_url = BENEFITS_CLAIMS_URL + "claims"
     session.headers[
         "Authorization"
     ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
@@ -89,7 +89,7 @@ def get_claim(
     r : json
         Response in json format.
     """
-    claim_url = BENEFITS_INTAKE_URL + f"claims/{claim_id}"
+    claim_url = BENEFITS_CLAIMS_URL + f"claims/{claim_id}"
     session.headers[
         "Authorization"
     ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
@@ -136,7 +136,7 @@ def submit_526(
     r : json
         Response in json format.
     """
-    submission_url = BENEFITS_INTAKE_URL + "forms/526"
+    submission_url = BENEFITS_CLAIMS_URL + "forms/526"
     token = token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)
     if session.headers.get("Authorization") is None:
         session.headers["Authorization"] = f"Bearer {token}"
@@ -273,7 +273,7 @@ def get_last_active_intent_to_file(
     r : json
         Response in json format.
     """
-    active_intent_url = BENEFITS_INTAKE_URL + "forms/0966/active"
+    active_intent_url = BENEFITS_CLAIMS_URL + "forms/0966/active"
     session.headers[
         "Authorization"
     ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
@@ -381,7 +381,7 @@ def get_poa_status_by_id(
     r : json
         Response in json format.
     """
-    poa_url = BENEFITS_INTAKE_URL + f"forms/2122/{poa_id}"
+    poa_url = BENEFITS_CLAIMS_URL + f"forms/2122/{poa_id}"
     session.headers[
         "Authorization"
     ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""
@@ -425,7 +425,7 @@ def get_status_poa_last_active(
     r : json
         Response in json format.
     """
-    poa_url = BENEFITS_INTAKE_URL + "forms/2122/active"
+    poa_url = BENEFITS_CLAIMS_URL + "forms/2122/active"
     session.headers[
         "Authorization"
     ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="claims", scope=CLAIM_SCOPE)}"""

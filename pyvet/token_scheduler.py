@@ -4,8 +4,6 @@ import logging
 
 import oidc_client as oidc
 import requests
-from okta_jwt_verifier import BaseJWTVerifier
-from okta_jwt_verifier.exceptions import JWTValidationException
 
 from pyvet.creds import (
     AUTH_SERVER,
@@ -73,16 +71,12 @@ class TokenScheduler:
         bool
             Whether or not the token is expired.
         """
-        # This should get replaced with a check against the /introspection endpoint.
-        # Where we see if the token's status is active or not.
-        jwt_verifier = BaseJWTVerifier(issuer=f"{ISSUER}", client_id=CLIENT_ID)
-        try:
-            await jwt_verifier.verify_access_token(token.access_token)
-            return True
-        except JWTValidationException as e:
-            logging.error("Token verification failed.")
-            logging.error(e)
+        if token is None:
             return False
+        instrospect_token = self.introspect_token(token.access_token)
+        if instrospect_token is None:
+            return False
+        return (instrospect_token.get("active") is True) if instrospect_token else False
 
     def fetch_and_set_token(self, va_api: str) -> oidc.oauth.TokenResponse | None:
         """Fetch a token using the refresh token for a client and set it.
@@ -130,14 +124,15 @@ class TokenScheduler:
         """
         response = requests.post(
             f"{AUTH_SERVER}/introspect",
-            headers={"Authorization": f"Basic {CLIENT_ID}"},
-            data={"token": token},
-            # params={"client_id": CLIENT_ID},
+            headers=None,
+            data={
+                "token": token,
+                "token_type_hint": "access_token",
+                "client_id": CLIENT_ID,
+            },
             timeout=5,
         )
-        # from pprint import pprint
 
-        # pprint(vars(response))
         if response.status_code != 200:
             logging.error("Token introspect failed.")
             return {}
