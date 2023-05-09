@@ -76,7 +76,7 @@ class TokenScheduler:
         instrospect_token = self.introspect_token(token.access_token)
         if instrospect_token is None:
             return False
-        return (instrospect_token.get("active") is True) if instrospect_token else False
+        return instrospect_token.get("active") is True
 
     def fetch_and_set_token(self, va_api: str) -> oidc.oauth.TokenResponse | None:
         """Fetch a token using the refresh token for a client and set it.
