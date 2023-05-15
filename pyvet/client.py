@@ -1,6 +1,7 @@
 """
 Client module for the VA API.
 """
+import functools
 import logging
 
 import oidc_client as oidc
@@ -115,6 +116,31 @@ def create_session() -> requests.Session:
     session.mount("http://", adapter)
     session.mount("https://", adapter)
     return session
+
+
+def session_call(exceptions=(requests.exceptions.RequestException), default=None):
+    """Decorator to handle exceptions from a session call.
+    Parameters
+    ----------
+    exceptions : tuple
+        A tuple of exceptions to catch.
+    default : any
+        A default value to return if an exception is caught.
+    """
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                response = func(*args, **kwargs)
+                response.raise_for_status()
+                return response.json()
+            except exceptions:
+                return default
+
+        return wrapper
+
+    return decorator
 
 
 current_session = create_session()

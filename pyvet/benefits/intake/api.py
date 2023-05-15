@@ -1,6 +1,7 @@
 """
 Benefits Intake API: https://developer.va.gov/explore/benefits/docs/benefits?version=current
 """
+# mypy: disable-error-code="attr-defined"
 import json
 import logging
 import os
@@ -9,12 +10,14 @@ import pathlib
 import requests
 
 from pyvet.client import current_session as session
+from pyvet.client import session_call
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 BENEFITS_INTAKE_URL = API_URL + "vba_documents/v1/"
 
 
+@session_call()
 def create_path_to_upload_files() -> Json:
     """Creates a path to upload files to the VA benefits intake api.
     Returns
@@ -23,14 +26,11 @@ def create_path_to_upload_files() -> Json:
         Response in json format.
     """
     ref_url = BENEFITS_INTAKE_URL + "uploads"
-    try:
-        r = session.post(ref_url)
-        r.raise_for_status()
-        return r.json().get("data").get("attributes")
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    response = session.post(ref_url)
+    return response.get("data").get("attributes")
 
 
+@session_call(exceptions=(requests.exceptions.RequestException, OSError))
 def upload_files(
     params: dict[str, str],
     uploads_dir: str = "uploads",
@@ -85,43 +85,29 @@ def upload_files(
             files["metadata"] = (None, f"{serialized_json};type=application/json")
         except TypeError as e:
             logging.error(e)
-    try:
-        # upload the main content pdf
-        try:
-            for file in os.listdir(uploads_dir):
-                if not os.path.isdir(file) and "attachments" not in file:
-                    with open(uploads_dir + file, "rb") as f:
-                        files["content"] = f.read()
-        except OSError as ose:
-            logging.error(ose)
+    # upload the main content pdf
+    for file in os.listdir(uploads_dir):
+        if not os.path.isdir(file) and "attachments" not in file:
+            with open(uploads_dir + file, "rb") as f:
+                files["content"] = f.read()
 
-        # then upload all other attachment pdfs
-        try:
-            for i, file in enumerate(os.listdir(attachments_dir)):
-                with open(attachments_dir + file, "rb") as f:
-                    files[f"attachment{i+1}"] = f.read()
-        except OSError as ose:
-            logging.error(ose)
+    # then upload all other attachment pdfs
+    for i, file in enumerate(os.listdir(attachments_dir)):
+        with open(attachments_dir + file, "rb") as f:
+            files[f"attachment{i+1}"] = f.read()
 
-        file_url: str | bytes = params.get("location", "")
-        if not file_url:
-            logging.error("No file upload location found.")
-            return None
+    file_url: str | bytes = params.get("location", "")
+    if not file_url:
+        logging.error("No file upload location found.")
+        return None
 
-        r = session.put(
-            url=file_url,
-            files=files,
-        )
-
-        r.raise_for_status()
-        if r.status_code == 200:
-            return r
-        logging.error("Invalid Response status code of %s", r.status_code)
-
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.put(
+        url=file_url,
+        files=files,
+    )
 
 
+@session_call()
 def bulk_status_report(guids: list[str]) -> Json:
     """Get the status of multiple documents.
     Parameters
@@ -135,14 +121,10 @@ def bulk_status_report(guids: list[str]) -> Json:
         Response in json format.
     """
     status_url = BENEFITS_INTAKE_URL + "uploads/report"
-    try:
-        r = session.post(status_url, json={"ids": guids})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.post(status_url, json={"ids": guids})
 
 
+@session_call()
 def get_uploaded_document(doc_id: str) -> Json:
     """Gets the status of a previously uploaded document.
     Parameters
@@ -155,14 +137,10 @@ def get_uploaded_document(doc_id: str) -> Json:
         Response in json format.
     """
     ref_url = BENEFITS_INTAKE_URL + f"uploads/{doc_id}"
-    try:
-        r = session.get(ref_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url)
 
 
+@session_call()
 def download_uploaded_document(doc_id: str) -> Json:
     """Downloads a previously uploaded document. This endpoint is only for testing environment.
     Parameters
@@ -175,9 +153,4 @@ def download_uploaded_document(doc_id: str) -> Json:
         Response in json format.
     """
     ref_url = BENEFITS_INTAKE_URL + f"uploads/{doc_id}/download"
-    try:
-        r = session.get(ref_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url)

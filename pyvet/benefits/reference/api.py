@@ -1,17 +1,15 @@
 """
 Benefits API: https://developer.va.gov/explore/benefits/docs/benefits_reference_data?version=current
 """
-import logging
-
-import requests
-
 from pyvet.client import current_session as session
+from pyvet.client import session_call
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 BENEFITS_REFERENCE_URL = API_URL + "benefits-reference-data/v1/"
 
 
+@session_call()
 def get_contention_types(
     page: int = 1,
     page_size: int = 30,
@@ -29,14 +27,10 @@ def get_contention_types(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "contention-types"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_countries(
     page: int = 1,
     page_size: int = 30,
@@ -54,14 +48,10 @@ def get_countries(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "countries"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_disabilities(
     page: int = 1,
     page_size: int = 30,
@@ -79,14 +69,10 @@ def get_disabilities(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "disabilities"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_intake_sites(
     page: int = 1,
     page_size: int = 30,
@@ -104,14 +90,10 @@ def get_intake_sites(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "intake-sites"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_military_pay_types(
     page: int = 1,
     page_size: int = 30,
@@ -129,14 +111,10 @@ def get_military_pay_types(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "military-pay-types"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_service_branches(
     page: int = 1,
     page_size: int = 30,
@@ -154,14 +132,10 @@ def get_service_branches(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "service-branches"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_special_circumstances(
     page: int = 1,
     page_size: int = 30,
@@ -179,14 +153,10 @@ def get_special_circumstances(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "special-circumstances"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_states(
     page: int = 1,
     page_size: int = 30,
@@ -204,14 +174,10 @@ def get_states(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "states"
-    try:
-        r = session.get(ref_url, params={"page": page, "pageSize": page_size})
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ref_url, params={"page": page, "pageSize": page_size})
 
 
+@session_call()
 def get_treatment_centers(
     state_code: int | None = None,
     page: int = 1,
@@ -232,12 +198,7 @@ def get_treatment_centers(
         Response in json format.
     """
     ref_url = BENEFITS_REFERENCE_URL + "treatment-centers"
-    try:
-        r = session.get(
-            ref_url,
-            params={"stateCode": state_code, "page": page, "pageSize": page_size},
-        )
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(
+        ref_url,
+        params={"stateCode": state_code, "page": page, "pageSize": page_size},
+    )

@@ -1,17 +1,15 @@
 """
 Veteran Confirmation API: https://developer.va.gov/explore/verification/docs/veteran_confirmation?version=current
 """
-import logging
-
-import requests
-
 from pyvet.client import current_session as session
+from pyvet.client import session_call
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 CONFIRMATION_URL = API_URL + "veteran-confirmation/v1/"
 
 
+@session_call()
 def get_status(
     first_name: str,
     last_name: str,
@@ -84,9 +82,4 @@ def get_status(
         "birthPlaceState": birth_place_state,
         "birthPlaceCountry": birth_place_country,
     }
-    try:
-        r = session.post(status_url, json=json_data)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.post(status_url, json=json_data)

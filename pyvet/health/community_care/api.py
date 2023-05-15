@@ -1,15 +1,12 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/community_care?version=current
 """
-import logging
-
-import requests
-
 from pyvet.client import (
     current_session as session,
 )
 from pyvet.client import (
     get_bearer_token,
+    session_call,
 )
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
@@ -20,6 +17,7 @@ HEALTH_SCOPE = (
 )
 
 
+@session_call()
 def get_eligibility(
     patient: str, service_type: str, extended_drive_min: int | None = None
 ) -> Json:
@@ -48,9 +46,4 @@ def get_eligibility(
         "serviceType": service_type,
         "extendedDriveMin": extended_drive_min,
     }
-    try:
-        r = session.get(status_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(status_url, headers=session.headers, params=params)

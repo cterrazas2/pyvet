@@ -1,17 +1,15 @@
 """
 Health API: https://developer.va.gov/explore/health
 """
-import logging
-
-import requests
-
 from pyvet.client import current_session as session
+from pyvet.client import session_call
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
 HEALTH_URL = API_URL + "provider-directory/v0/r4/"
 
 
+@session_call()
 def get_location(
     resource_id: str,
     identifier: str | None = None,
@@ -61,14 +59,10 @@ def get_location(
         "_count": count,
     }
     ids_url = HEALTH_URL + "Location"
-    try:
-        r = session.get(ids_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ids_url, params=params)
 
 
+@session_call()
 def get_location_by_id(resource_id: str) -> Json:
     """Gets provider's location.
     Parameters
@@ -81,14 +75,10 @@ def get_location_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     ids_url = HEALTH_URL + f"Location/{resource_id}"
-    try:
-        r = session.get(ids_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ids_url)
 
 
+@session_call()
 def get_organization(
     resource_id: str,
     identifier: str | None = None,
@@ -138,14 +128,10 @@ def get_organization(
         "_count": count,
     }
     org_url = HEALTH_URL + "Organization"
-    try:
-        r = session.get(org_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(org_url, params=params)
 
 
+@session_call()
 def get_organization_by_id(resource_id: str) -> Json:
     """Gets an organization's location.
     Parameters
@@ -158,14 +144,10 @@ def get_organization_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     org_url = HEALTH_URL + f"Organization/{resource_id}"
-    try:
-        r = session.get(org_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(org_url)
 
 
+@session_call()
 def get_practitioner(
     resource_id: str,
     identifier: str | None = None,
@@ -207,14 +189,10 @@ def get_practitioner(
         "_count": count,
     }
     pr_role_url = HEALTH_URL + "Practitioner"
-    try:
-        r = session.get(pr_role_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(pr_role_url, params=params)
 
 
+@session_call()
 def get_practitioner_by_id(resource_id: str) -> Json:
     """Gets a practitioner by id.
     Parameters
@@ -227,14 +205,10 @@ def get_practitioner_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     pr_id_url = HEALTH_URL + f"Practitioner/{resource_id}"
-    try:
-        r = session.get(pr_id_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(pr_id_url)
 
 
+@session_call()
 def get_practitioner_role(
     resource_id: str,
     identifier: str | None = None,
@@ -268,14 +242,10 @@ def get_practitioner_role(
         "_count": count,
     }
     pr_role_url = HEALTH_URL + "PractitionerRole"
-    try:
-        r = session.get(pr_role_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(pr_role_url, params=params)
 
 
+@session_call()
 def get_practitioner_role_by_id(resource_id: str) -> Json:
     """Gets a practitioner's role by id.
     Parameters
@@ -288,9 +258,4 @@ def get_practitioner_role_by_id(resource_id: str) -> Json:
         Response in json format.
     """
     pr_role_id_url = HEALTH_URL + f"PractitionerRole/{resource_id}"
-    try:
-        r = session.get(pr_role_id_url)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(pr_role_id_url)

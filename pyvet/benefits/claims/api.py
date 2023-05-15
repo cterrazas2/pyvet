@@ -2,8 +2,6 @@
 Benefits Intake API: https://developer.va.gov/explore/benefits/docs/claims?version=v1
 Note: V1 is for external users, V2 is for internal users.
 """
-import logging
-
 import requests
 
 from pyvet.client import (
@@ -11,6 +9,7 @@ from pyvet.client import (
 )
 from pyvet.client import (
     get_bearer_token,
+    session_call,
 )
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
@@ -19,6 +18,7 @@ BENEFITS_INTAKE_URL = API_URL + "claims/v1/"
 CLAIM_SCOPE = "openid profile offline_access claim.read claim.write"
 
 
+@session_call()
 def get_claims(
     is_representative: bool = False,
     ssn: str = "",
@@ -55,14 +55,10 @@ def get_claims(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-    try:
-        r = session.get(claims_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(claims_url, headers=session.headers)
 
 
+@session_call()
 def get_claim(
     claim_id: str,
     is_representative: bool = False,
@@ -102,14 +98,10 @@ def get_claim(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-    try:
-        r = session.get(claim_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(claim_url, headers=session.headers)
 
 
+@session_call(exceptions=(requests.exceptions.RequestException, OSError))
 def submit_526(
     is_first_claim: bool = False,
     is_representative: bool = False,
@@ -148,19 +140,13 @@ def submit_526(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-
-    try:
-        with open("form526.pdf", "rb") as f:
-            form_256 = f.read()
-        r = session.post(
-            submission_url,
-            headers=session.headers,
-            files=form_256 if is_first_claim else None,  # type: ignore[arg-type]
-        )
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    with open("form526.pdf", "rb") as f:
+        form_256 = f.read()
+    return session.post(
+        submission_url,
+        headers=session.headers,
+        files=form_256 if is_first_claim else None,  # type: ignore[arg-type]
+    )
 
 
 # def upload_526(
@@ -251,6 +237,7 @@ def submit_526(
 #     pass
 
 
+@session_call()
 def get_last_active_intent_to_file(
     is_representative: bool = False,
     intent_type: str = "compensation",
@@ -286,14 +273,9 @@ def get_last_active_intent_to_file(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-    try:
-        r = session.get(
-            active_intent_url, headers=session.headers, params={"type": intent_type}
-        )
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(
+        active_intent_url, headers=session.headers, params={"type": intent_type}
+    )
 
 
 # def submit_poa(
@@ -355,6 +337,7 @@ def get_last_active_intent_to_file(
 #     pass
 
 
+@session_call()
 def get_poa_status_by_id(
     poa_id: str,
     is_representative: bool = False,
@@ -394,14 +377,10 @@ def get_poa_status_by_id(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-    try:
-        r = session.get(poa_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(poa_url, headers=session.headers)
 
 
+@session_call()
 def get_status_poa_last_active(
     is_representative: bool = False,
     ssn: str = "",
@@ -438,9 +417,4 @@ def get_status_poa_last_active(
         session.headers["X-VA-First-Name"] = first_name
         session.headers["X-VA-Last-Name"] = last_name
         session.headers["X-VA-Birth-Date"] = birth_date
-    try:
-        r = session.get(poa_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(poa_url, headers=session.headers)

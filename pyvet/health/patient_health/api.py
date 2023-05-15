@@ -1,15 +1,12 @@
 """
 Health API: https://developer.va.gov/explore/health/docs/fhir?version=current
 """
-import logging
-
-import requests
-
 from pyvet.client import (
     current_session as session,
 )
 from pyvet.client import (
     get_bearer_token,
+    session_call,
 )
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
@@ -29,6 +26,7 @@ patient/PractitionerRole.read patient/Procedure.read
 """
 
 
+@session_call()
 def get_allergy_intolerance(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -71,14 +69,10 @@ def get_allergy_intolerance(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(allergy_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(allergy_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_allergy_intolerance_by_id(resource_id: str) -> Json:
     """Gets allergy intolerance by id.
     Parameters
@@ -96,14 +90,10 @@ def get_allergy_intolerance_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     allergy_url = HEALTH_URL + f"AllergyIntolerance/{resource_id}"
-    try:
-        r = session.get(allergy_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(allergy_url, headers=session.headers)
 
 
+@session_call()
 def get_appointment(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -154,14 +144,10 @@ def get_appointment(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(appointment_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(appointment_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_appointment_by_id(resource_id: str) -> Json:
     """Gets appointment by id.
     Parameters
@@ -179,14 +165,10 @@ def get_appointment_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     appointment_url = HEALTH_URL + f"Appointment/{resource_id}"
-    try:
-        r = session.get(appointment_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(appointment_url, headers=session.headers)
 
 
+@session_call()
 def get_binary_by_id(resource_id: str) -> Json:
     """Gets binary by id.
     Parameters
@@ -204,14 +186,10 @@ def get_binary_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     binary_url = HEALTH_URL + f"Binary/{resource_id}"
-    try:
-        r = session.get(binary_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(binary_url, headers=session.headers)
 
 
+@session_call()
 def get_condition(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -272,14 +250,10 @@ def get_condition(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(condition_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(condition_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_condition_by_id(resource_id: str) -> Json:
     """Gets condition by id.
     Parameters
@@ -297,14 +271,10 @@ def get_condition_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     condition_url = HEALTH_URL + f"Condition/{resource_id}"
-    try:
-        r = session.get(condition_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(condition_url, headers=session.headers)
 
 
+@session_call()
 def get_device(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -351,14 +321,10 @@ def get_device(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(condition_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(condition_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_device_by_id(resource_id: str) -> Json:
     """Gets device by id.
     Parameters
@@ -376,14 +342,10 @@ def get_device_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     device_url = HEALTH_URL + f"Device/{resource_id}"
-    try:
-        r = session.get(device_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(device_url, headers=session.headers)
 
 
+@session_call()
 def get_device_request(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -426,14 +388,10 @@ def get_device_request(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(device_request_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(device_request_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_device_request_by_id(resource_id: str) -> Json:
     """Gets device request by id.
     Parameters
@@ -451,14 +409,10 @@ def get_device_request_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     device_request_url = HEALTH_URL + f"DeviceRequest/{resource_id}"
-    try:
-        r = session.get(device_request_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(device_request_url, headers=session.headers)
 
 
+@session_call()
 def get_diagnostic_report(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -517,14 +471,10 @@ def get_diagnostic_report(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(diagnostic_report_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(diagnostic_report_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_diagnostic_report_by_id(resource_id: str) -> Json:
     """Gets diagnostic report by id.
     Parameters
@@ -542,14 +492,10 @@ def get_diagnostic_report_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     diagnostic_report_url = HEALTH_URL + f"DiagnosticReport/{resource_id}"
-    try:
-        r = session.get(diagnostic_report_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(diagnostic_report_url, headers=session.headers)
 
 
+@session_call()
 def get_document_reference(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -600,14 +546,10 @@ def get_document_reference(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(document_reference_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(document_reference_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_document_reference_by_id(resource_id: str) -> Json:
     """Gets document reference by id.
     Parameters
@@ -625,14 +567,10 @@ def get_document_reference_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     document_reference_url = HEALTH_URL + f"DocumentReference/{resource_id}"
-    try:
-        r = session.get(document_reference_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(document_reference_url, headers=session.headers)
 
 
+@session_call()
 def get_encounter(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -679,14 +617,10 @@ def get_encounter(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(encounter_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(encounter_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_encounter_by_id(resource_id: str) -> Json:
     """Gets encounter by id.
     Parameters
@@ -704,14 +638,10 @@ def get_encounter_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     encounter_url = HEALTH_URL + f"Encounter/{resource_id}"
-    try:
-        r = session.get(encounter_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(encounter_url, headers=session.headers)
 
 
+@session_call()
 def get_immunization(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -754,14 +684,10 @@ def get_immunization(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(immunization_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(immunization_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_immunization_by_id(resource_id: str) -> Json:
     """Gets immunization by id.
     Parameters
@@ -779,14 +705,10 @@ def get_immunization_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     immunization_url = HEALTH_URL + f"Immunization/{resource_id}"
-    try:
-        r = session.get(immunization_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(immunization_url, headers=session.headers)
 
 
+@session_call()
 def get_location(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -845,14 +767,10 @@ def get_location(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(location_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(location_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_location_by_id(resource_id: str) -> Json:
     """Gets immunization by id.
     Parameters
@@ -870,14 +788,10 @@ def get_location_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     location_url = HEALTH_URL + f"Location/{resource_id}"
-    try:
-        r = session.get(location_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(location_url, headers=session.headers)
 
 
+@session_call()
 def get_medication(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -920,14 +834,10 @@ def get_medication(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(medication_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(medication_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_medication_by_id(resource_id: str) -> Json:
     """Gets medication by id.
     Parameters
@@ -945,14 +855,10 @@ def get_medication_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     medication_url = HEALTH_URL + f"Medication/{resource_id}"
-    try:
-        r = session.get(medication_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(medication_url, headers=session.headers)
 
 
+@session_call()
 def get_medication_request(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -999,14 +905,10 @@ def get_medication_request(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(medication_request_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(medication_request_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_medication_request_by_id(resource_id: str) -> Json:
     """Gets medication request by id.
     Parameters
@@ -1024,14 +926,10 @@ def get_medication_request_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     medication_request_url = HEALTH_URL + f"MedicationRequest/{resource_id}"
-    try:
-        r = session.get(medication_request_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(medication_request_url, headers=session.headers)
 
 
+@session_call()
 def get_observation(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -1086,14 +984,10 @@ def get_observation(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(observation_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(observation_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_observation_by_id(resource_id: str) -> Json:
     """Gets observation by id.
     Parameters
@@ -1111,14 +1005,10 @@ def get_observation_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     observation_url = HEALTH_URL + f"Observation/{resource_id}"
-    try:
-        r = session.get(observation_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(observation_url, headers=session.headers)
 
 
+@session_call()
 def get_organization(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -1177,14 +1067,10 @@ def get_organization(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(organization_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(organization_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_organization_by_id(resource_id: str) -> Json:
     """Gets organization by id.
     Parameters
@@ -1202,14 +1088,10 @@ def get_organization_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     organization_url = HEALTH_URL + f"Organization/{resource_id}"
-    try:
-        r = session.get(organization_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(organization_url, headers=session.headers)
 
 
+@session_call()
 def get_patient(
     resource_id: str | None = None,
     identifier: str | None = None,
@@ -1244,14 +1126,10 @@ def get_patient(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(patient_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(patient_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_patient_by_id(resource_id: str) -> Json:
     """Gets patient by id.
     Parameters
@@ -1269,14 +1147,10 @@ def get_patient_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     patient_url = HEALTH_URL + f"Patient/{resource_id}"
-    try:
-        r = session.get(patient_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(patient_url, headers=session.headers)
 
 
+@session_call()
 def get_practitioner(
     resource_id: str | None = None,
     identifier: str | None = None,
@@ -1327,14 +1201,10 @@ def get_practitioner(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(practitioner_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(practitioner_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_practitioner_by_id(resource_id: str) -> Json:
     """Gets practitioner by id.
     Parameters
@@ -1352,14 +1222,10 @@ def get_practitioner_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     practitioner_url = HEALTH_URL + f"Practitioner/{resource_id}"
-    try:
-        r = session.get(practitioner_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(practitioner_url, headers=session.headers)
 
 
+@session_call()
 def get_practitioner_role(
     resource_id: str | None = None,
     identifier: str | None = None,
@@ -1402,14 +1268,10 @@ def get_practitioner_role(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(practitioner_role_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(practitioner_role_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_practitioner_role_by_id(resource_id: str) -> Json:
     """Gets practitioner role by id.
     Parameters
@@ -1427,14 +1289,10 @@ def get_practitioner_role_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     practitioner_role_url = HEALTH_URL + f"PractitionerRole/{resource_id}"
-    try:
-        r = session.get(practitioner_role_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(practitioner_role_url, headers=session.headers)
 
 
+@session_call()
 def get_procedure(
     patient: str | None = None,
     resource_id: str | None = None,
@@ -1481,14 +1339,10 @@ def get_procedure(
         "page": page,
         "_count": count,
     }
-    try:
-        r = session.get(procedure_url, headers=session.headers, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(procedure_url, headers=session.headers, params=params)
 
 
+@session_call()
 def get_procedure_by_id(resource_id: str) -> Json:
     """Gets procedure by id.
     Parameters
@@ -1506,14 +1360,10 @@ def get_procedure_by_id(resource_id: str) -> Json:
     if session.headers.get("Authorization") is None:
         return None
     procedure_url = HEALTH_URL + f"Procedure/{resource_id}"
-    try:
-        r = session.get(procedure_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(procedure_url, headers=session.headers)
 
 
+@session_call()
 def get_metadata() -> Json:
     """Gets metadata.
     Returns
@@ -1527,9 +1377,4 @@ def get_metadata() -> Json:
     if session.headers.get("Authorization") is None:
         return None
     metadata_url = HEALTH_URL + "metadata"
-    try:
-        r = session.get(metadata_url, headers=session.headers)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(metadata_url, headers=session.headers)

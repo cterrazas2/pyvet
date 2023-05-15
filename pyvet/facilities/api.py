@@ -1,12 +1,13 @@
 """
 Facilities  API: https://developer.va.gov/explore/facilities/docs/facilities?version=current
 """
+# mypy: disable-error-code="attr-defined"
 import logging
 
 import pandas as pd
-import requests
 
 from pyvet.client import current_session as session
+from pyvet.client import session_call
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
@@ -41,6 +42,7 @@ def export_to_csv(file_name: str, data: list[dict[str, str]]) -> None:
             pd_norm.to_csv(file_name, mode="a", header=False)
 
 
+@session_call()
 def get_ids() -> Json:
     """Gets all VA Facility IDs with optional params.
     Returns
@@ -50,14 +52,10 @@ def get_ids() -> Json:
     """
     params = {"type": "health"}
     ids_url = FACILITIES_URL + "/ids"
-    try:
-        r = session.get(ids_url, params=params)
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(ids_url, params=params)
 
 
+@session_call()
 def get_nearby(
     latitude: float,
     longitude: float,
@@ -86,20 +84,16 @@ def get_nearby(
         "drive_time": drive_time,
     }
     nearby_url = FACILITIES_URL + "/nearby"
-    try:
-        r = session.get(nearby_url, params=params)
-        r.raise_for_status()
-        json_conversion = r.json()
-        if export_csv_file:
-            output_file = "nearby.csv"
-            csv_data = json_conversion.get("data")
-            export_to_csv(file_name=output_file, data=csv_data)
-            logging.info("Success: Nearby VA Facilities data populated in nearby.csv.")
-        return json_conversion
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    response = session.get(nearby_url, params=params)
+    if export_csv_file:
+        output_file = "nearby.csv"
+        csv_data = response.get("data")
+        export_to_csv(file_name=output_file, data=csv_data)
+        logging.info("Success: Nearby VA Facilities data populated in %s.", output_file)
+    return response
 
 
+@session_call()
 def get_facilities_by_query(
     bbox: list[float] | None = None,
     ids: list[str] | None = None,
@@ -223,16 +217,11 @@ def get_facilities_by_query(
             "per_page": per_page,
         }
         bbox_url = FACILITIES_URL + "/facilities"
-        try:
-            r = session.get(bbox_url, params=params)
-            r.raise_for_status()
-            return r.json()
-        except requests.exceptions.RequestException as e:
-            logging.error(e)
-    else:
-        logging.error(FACILITIES_QUERY_MSG)
+        return session.get(bbox_url, params=params)
+    logging.error(FACILITIES_QUERY_MSG)
 
 
+@session_call()
 def get_all(export_csv_file: bool = False) -> Json:
     """Gets all VA Facilities.
     Parameters
@@ -246,20 +235,16 @@ def get_all(export_csv_file: bool = False) -> Json:
     """
     params = {"Accept": "application/geo+json"}
     all_url = FACILITIES_URL + "/facilities/all"
-    try:
-        r = session.get(all_url, params=params)
-        r.raise_for_status()
-        json_conversion = r.json()
-        if export_csv_file:
-            output_file = "all_va_facilities.csv"
-            csv_data = json_conversion.get("features")
-            export_to_csv(file_name=output_file, data=csv_data)
-            logging.info("Success: Facilities data populated in all_va_facilities.csv.")
-        return json_conversion
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    response = session.get(all_url, params=params)
+    if export_csv_file:
+        output_file = "all_va_facilities.csv"
+        csv_data = response.get("features")
+        export_to_csv(file_name=output_file, data=csv_data)
+        logging.info("Success: Facilities data populated in %s.", output_file)
+    return response
 
 
+@session_call()
 def get_facility(f_id: str) -> Json:
     """Gets a VA Facility by id.
     Parameters
@@ -273,12 +258,7 @@ def get_facility(f_id: str) -> Json:
     """
     params = {"id": f_id}
     facility_url = FACILITIES_URL + "/facilities/" + f_id
-    try:
-        r = session.get(
-            facility_url,
-            params=params,
-        )
-        r.raise_for_status()
-        return r.json()
-    except requests.exceptions.RequestException as e:
-        logging.error(e)
+    return session.get(
+        facility_url,
+        params=params,
+    )
