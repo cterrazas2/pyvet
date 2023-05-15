@@ -11,7 +11,7 @@ FORMS_URL = API_URL + "va_forms/v0/forms"
 
 
 @session_call()
-def get_forms(query: str | None = None) -> Json:
+async def get_forms(query: str | None = None) -> Json:
     """Gets all forms with optional params.
     Parameters
     ----------
@@ -22,11 +22,11 @@ def get_forms(query: str | None = None) -> Json:
     r : json
         Response in json format.
     """
-    return session.get(FORMS_URL, params={"query": query})
+    return await session.get(FORMS_URL, params={"query": query})
 
 
 @session_call()
-def get_form(form_name: str) -> Json:
+async def get_form(form_name: str) -> Json:
     """Gets a form by name.
     Parameters
     ----------
@@ -38,4 +38,4 @@ def get_form(form_name: str) -> Json:
         Response in json format.
     """
     form_url = FORMS_URL + "/" + form_name
-    return session.get(form_url, params={"form_name": form_name})
+    return await session.get(form_url, params={"form_name": form_name})

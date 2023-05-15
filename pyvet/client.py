@@ -1,19 +1,15 @@
 """
 Client module for the VA API.
 """
+import asyncio
 import functools
 import logging
 
+import httpx
 import oidc_client as oidc
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 
 from pyvet.creds import (
-    API_BACKOFF_FACTOR,
-    API_FORCE_LIST,
     API_KEY_HEADER,
-    API_RETRIES,
     AUTH_SERVER,
     CLIENT_ID,
     DEFAULT_SCOPE,
@@ -96,29 +92,34 @@ def get_bearer_token(va_api: str, scope: str = DEFAULT_SCOPE) -> str | None:
         logging.error(e)
 
 
-def create_session() -> requests.Session:
+def create_session() -> httpx.AsyncClient:
     """Create a session with the VA API.
     Returns
     -------
-    session : requests.Session:
-        A session object with the VA API key.
+    session : httpx.AsyncClient
+        A httpx session.
     """
-    session = requests.Session()
+    session = httpx.AsyncClient()
     session.headers = API_KEY_HEADER
-    retry = Retry(
-        total=API_RETRIES,
-        read=API_RETRIES,
-        connect=API_RETRIES,
-        backoff_factor=API_BACKOFF_FACTOR,
-        status_forcelist=API_FORCE_LIST,
-    )
-    adapter = HTTPAdapter(max_retries=retry)
-    session.mount("http://", adapter)
-    session.mount("https://", adapter)
     return session
 
 
-def session_call(exceptions=(requests.exceptions.RequestException), default=None):
+def run(func):
+    """Decorator to run a function in an asyncio event loop.
+    Parameters
+    ----------
+    func : function
+        The function to run.
+    """
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(func(*args, **kwargs))
+
+    return wrapper
+
+
+def session_call(exceptions=(httpx.HTTPError), default=None):
     """Decorator to handle exceptions from a session call.
     Parameters
     ----------
@@ -130,15 +131,15 @@ def session_call(exceptions=(requests.exceptions.RequestException), default=None
 
     def decorator(func):
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        async def wrapper(*args, **kwargs):
             try:
-                response = func(*args, **kwargs)
+                response = await func(*args, **kwargs)
                 response.raise_for_status()
                 return response.json()
             except exceptions:
                 return default
 
-        return wrapper
+        return run(wrapper)
 
     return decorator
 
