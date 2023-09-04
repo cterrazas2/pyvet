@@ -1,7 +1,9 @@
 import unittest
-from requests import Session
-from pyvet import creds
+from unittest.mock import patch
 
+from requests import Session
+
+from pyvet import creds
 from pyvet.health.patient_health.api import (
     get_allergy_intolerance,
     get_allergy_intolerance_by_id,
@@ -28,6 +30,7 @@ from pyvet.health.patient_health.api import (
     get_medication_by_id,
     get_medication_request,
     get_medication_request_by_id,
+    get_metadata,
     get_observation,
     get_observation_by_id,
     get_organization,
@@ -40,9 +43,7 @@ from pyvet.health.patient_health.api import (
     get_practitioner_role_by_id,
     get_procedure,
     get_procedure_by_id,
-    get_metadata,
 )
-
 from tests.data.mock_patient_data import (
     MOCK_ALLERGY_INTOLERANCE,
     MOCK_ALLERGY_INTOLERANCE_ID,
@@ -69,6 +70,7 @@ from tests.data.mock_patient_data import (
     MOCK_MEDICATION_ID,
     MOCK_MEDICATION_REQUEST,
     MOCK_MEDICATION_REQUEST_ID,
+    MOCK_METADATA,
     MOCK_OBSERVATION,
     MOCK_OBSERVATION_ID,
     MOCK_ORGANIZATION,
@@ -81,14 +83,11 @@ from tests.data.mock_patient_data import (
     MOCK_PRACTITIONER_ROLE_ID,
     MOCK_PROCEDURE,
     MOCK_PROCEDURE_ID,
-    MOCK_METADATA,
 )
-
-from unittest.mock import patch
 
 
 @patch(
-    "pyvet.health.patient_health.api.get_bearer_token",
+    "pyvet.health.patient_health.api.token_scheduler.get_bearer_token",
     return_value="somerandomtoken",
 )
 @patch.object(Session().headers, "get", return_value=None)

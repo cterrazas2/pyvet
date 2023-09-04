@@ -8,9 +8,7 @@ import requests
 from pyvet.client import (
     current_session as session,
 )
-from pyvet.client import (
-    get_bearer_token,
-)
+from pyvet.client import token_scheduler
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
@@ -25,9 +23,8 @@ def get_status() -> Json | None:
     r : json
         Response in json format.
     """
-    session.headers[
-        "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
+    token = token_scheduler.get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)
+    session.headers["Authorization"] = f"""Bearer {token}"""
     if session.headers.get("Authorization") is None:
         return None
     status_url = VERIFICATION_URL + "status"
@@ -48,7 +45,7 @@ def get_disability_rating() -> Json | None:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     disability_rating_url = VERIFICATION_URL + "disability_rating"
@@ -69,7 +66,7 @@ def get_service_history() -> Json | None:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="veteran", scope=VERIFICATION_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     service_history_url = VERIFICATION_URL + "service_history"

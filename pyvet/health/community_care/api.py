@@ -8,9 +8,7 @@ import requests
 from pyvet.client import (
     current_session as session,
 )
-from pyvet.client import (
-    get_bearer_token,
-)
+from pyvet.client import token_scheduler
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
@@ -39,7 +37,7 @@ def get_eligibility(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="community_care", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="community_care", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     status_url = HEALTH_URL + "search"

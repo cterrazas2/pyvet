@@ -1,9 +1,10 @@
 import unittest
-from pyvet import creds
-from pyvet.veteran.confirmation.api import get_status
+from unittest.mock import patch
+
 from requests import Session
 
-from unittest.mock import patch
+from pyvet import creds
+from pyvet.veteran.confirmation.api import get_status
 
 mock_confirmed = {"veteran_status": "confirmed"}
 

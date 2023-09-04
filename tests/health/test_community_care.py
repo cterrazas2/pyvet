@@ -1,9 +1,10 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.health.community_care.api import get_eligibility
-
-from unittest.mock import patch
 
 mock_community_care = {
     "patientRequest": {
@@ -62,7 +63,7 @@ mock_community_care = {
 
 
 @patch(
-    "pyvet.health.community_care.api.get_bearer_token",
+    "pyvet.health.community_care.api.token_scheduler.get_bearer_token",
     return_value="somerandomtoken",
 )
 @patch.object(Session().headers, "get", return_value=None)

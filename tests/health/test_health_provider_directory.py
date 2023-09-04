@@ -1,5 +1,8 @@
 import unittest
+from unittest.mock import patch
+
 from requests import Session
+
 from pyvet import creds
 from pyvet.health.provider.api import (
     get_location,
@@ -12,16 +15,15 @@ from pyvet.health.provider.api import (
     get_practitioner_role_by_id,
 )
 from tests.data.mock_health_data import (
-    MOCK_ORG,
-    MOCK_ORG_ID,
     MOCK_LOCATION,
     MOCK_LOCATION_ID,
+    MOCK_ORG,
+    MOCK_ORG_ID,
     MOCK_PRACTITIONER,
     MOCK_PRACTITIONER_ID,
     MOCK_PRACTITIONER_ROLE,
     MOCK_PRACTITIONER_ROLE_ID,
 )
-from unittest.mock import patch
 
 
 @patch.object(Session, "get", headers=creds.API_KEY_HEADER)

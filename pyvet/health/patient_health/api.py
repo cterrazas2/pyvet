@@ -8,9 +8,7 @@ import requests
 from pyvet.client import (
     current_session as session,
 )
-from pyvet.client import (
-    get_bearer_token,
-)
+from pyvet.client import token_scheduler
 from pyvet.creds import API_URL
 from pyvet.json_alias import Json
 
@@ -59,7 +57,7 @@ def get_allergy_intolerance(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     allergy_url = HEALTH_URL + "AllergyIntolerance"
@@ -92,7 +90,7 @@ def get_allergy_intolerance_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     allergy_url = HEALTH_URL + f"AllergyIntolerance/{resource_id}"
@@ -140,10 +138,11 @@ def get_appointment(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     appointment_url = HEALTH_URL + "Appointment"
+    # session.headers["Accept"] = "application/fhir+json"
     params = {
         "patient": patient,
         "_id": resource_id,
@@ -175,7 +174,7 @@ def get_appointment_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     appointment_url = HEALTH_URL + f"Appointment/{resource_id}"
@@ -200,7 +199,7 @@ def get_binary_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     binary_url = HEALTH_URL + f"Binary/{resource_id}"
@@ -256,7 +255,7 @@ def get_condition(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     condition_url = HEALTH_URL + "Condition"
@@ -293,7 +292,7 @@ def get_condition_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     condition_url = HEALTH_URL + f"Condition/{resource_id}"
@@ -338,7 +337,7 @@ def get_device(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     condition_url = HEALTH_URL + "Device"
@@ -372,7 +371,7 @@ def get_device_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     device_url = HEALTH_URL + f"Device/{resource_id}"
@@ -414,7 +413,7 @@ def get_device_request(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     device_request_url = HEALTH_URL + "DeviceRequest"
@@ -447,7 +446,7 @@ def get_device_request_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     device_request_url = HEALTH_URL + f"DeviceRequest/{resource_id}"
@@ -501,7 +500,7 @@ def get_diagnostic_report(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     diagnostic_report_url = HEALTH_URL + "DiagnosticReport"
@@ -538,7 +537,7 @@ def get_diagnostic_report_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     diagnostic_report_url = HEALTH_URL + f"DiagnosticReport/{resource_id}"
@@ -586,7 +585,7 @@ def get_document_reference(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     document_reference_url = HEALTH_URL + "DocumentReference"
@@ -621,7 +620,7 @@ def get_document_reference_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     document_reference_url = HEALTH_URL + f"DocumentReference/{resource_id}"
@@ -666,7 +665,7 @@ def get_encounter(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     encounter_url = HEALTH_URL + "Encounter"
@@ -700,7 +699,7 @@ def get_encounter_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     encounter_url = HEALTH_URL + f"Encounter/{resource_id}"
@@ -742,7 +741,7 @@ def get_immunization(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     immunization_url = HEALTH_URL + "Immunization"
@@ -775,7 +774,7 @@ def get_immunization_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     immunization_url = HEALTH_URL + f"Immunization/{resource_id}"
@@ -829,7 +828,7 @@ def get_location(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     location_url = HEALTH_URL + "Location"
@@ -866,7 +865,7 @@ def get_location_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     location_url = HEALTH_URL + f"Location/{resource_id}"
@@ -908,7 +907,7 @@ def get_medication(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     medication_url = HEALTH_URL + "Medication"
@@ -941,7 +940,7 @@ def get_medication_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     medication_url = HEALTH_URL + f"Medication/{resource_id}"
@@ -986,7 +985,7 @@ def get_medication_request(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     medication_request_url = HEALTH_URL + "MedicationRequest"
@@ -1020,7 +1019,7 @@ def get_medication_request_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     medication_request_url = HEALTH_URL + f"MedicationRequest/{resource_id}"
@@ -1071,7 +1070,7 @@ def get_observation(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     observation_url = HEALTH_URL + "Observation"
@@ -1107,7 +1106,7 @@ def get_observation_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     observation_url = HEALTH_URL + f"Observation/{resource_id}"
@@ -1161,7 +1160,7 @@ def get_organization(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     organization_url = HEALTH_URL + "Organization"
@@ -1198,7 +1197,7 @@ def get_organization_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     organization_url = HEALTH_URL + f"Organization/{resource_id}"
@@ -1234,7 +1233,7 @@ def get_patient(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     patient_url = HEALTH_URL + "Patient"
@@ -1265,7 +1264,7 @@ def get_patient_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     patient_url = HEALTH_URL + f"Patient/{resource_id}"
@@ -1313,7 +1312,7 @@ def get_practitioner(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     practitioner_url = HEALTH_URL + "Practitioner"
@@ -1348,7 +1347,7 @@ def get_practitioner_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     practitioner_url = HEALTH_URL + f"Practitioner/{resource_id}"
@@ -1390,7 +1389,7 @@ def get_practitioner_role(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     practitioner_role_url = HEALTH_URL + "PractitionerRole"
@@ -1423,7 +1422,7 @@ def get_practitioner_role_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     practitioner_role_url = HEALTH_URL + f"PractitionerRole/{resource_id}"
@@ -1468,7 +1467,7 @@ def get_procedure(
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     procedure_url = HEALTH_URL + "Procedure"
@@ -1502,7 +1501,7 @@ def get_procedure_by_id(resource_id: str) -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     procedure_url = HEALTH_URL + f"Procedure/{resource_id}"
@@ -1523,7 +1522,7 @@ def get_metadata() -> Json:
     """
     session.headers[
         "Authorization"
-    ] = f"""Bearer {get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
+    ] = f"""Bearer {token_scheduler.get_bearer_token(va_api="patient", scope=HEALTH_SCOPE)}"""
     if session.headers.get("Authorization") is None:
         return None
     metadata_url = HEALTH_URL + "metadata"
