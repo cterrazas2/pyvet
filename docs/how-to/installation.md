@@ -1,23 +1,20 @@
 # Install
 
-## Required software
-
-* [Python](https://www.python.org/downloads/) 3.10+
-* [Poetry](https://poetry.eustace.io/docs/#installation)
-
-## Poetry
-
-PyVet uses [Poetry](https://python-poetry.org) for management of dependencies
- and virtual environments. First, use `poetry install` to install the
- dependencies, then run `poetry shell` to activate the virtual environment.
-
 ## Pip
 
-To install the `pyvet` package run the following:
+To begin using `pyvet` run the following:
 
 ```console
 pip install pyvet
 ```
+
+Check out the [Jupyter notebook](docs/tutorials/explore_pyvet.ipynb)
+for some examples if you just want to get up and running quickly.
+
+## Required software for local development
+
+* [Python](https://www.python.org/downloads/) 3.10+
+* [Poetry](https://poetry.eustace.io/docs/#installation)
 
 ## Git
 
@@ -32,3 +29,20 @@ Or use the `gh` cli:
 ```console
 gh clone git@github.com:cterrazas2/pyvet.git
 ```
+
+## Poetry
+
+PyVet uses [Poetry](https://python-poetry.org) for management of dependencies
+and virtual environments. To install the dependencies, run
+
+```console
+poetry install
+```
+
+then
+
+```console
+poetry poetry shell
+```
+
+to activate the virtual environment.
