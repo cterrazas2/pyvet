@@ -10,8 +10,8 @@ with the code base.
 
 Follow the below if to contribute:
 
-1. [Code setup](/docs/reference/architecture.md)
-2. [Installation & Environment](/docs/how-to/installation.md)
+1. [Installation & Environment](/docs/how-to/installation.md)
+2. [Code layout](/docs/reference/architecture.md)
 3. [Style](/docs/reference/style.md)
 4. [Tests](/docs/how-to/run_tests.md)
 
