@@ -1,12 +1,5 @@
 # PyVet Architecture
 
-`pyvet` is a python library that helps organizations, companies, and even
-veterans themselves analyze and research data from the Department of Veterans
-Affairs. This document outlines the quickest way to start contributing and
-get familiar with the code base.
-
-## Code Setup
-
 ```console
 /pyvet                            # This is where the main code lives
     /benefits                     # The VA Benefits APIs
