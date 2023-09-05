@@ -1,8 +1,10 @@
 # Usage
 
 To retrieve veteran data from the API, ensure your VA API key is set.
-You should store your API key in an environment variable or in the `creds.py`
-named, `API_KEY`.
+You should store your API key in an environment variable named `VA_API_KEY`
+or in `creds.py` if you are developing locally.
+
+You can also a download a Jupyter Notebook that uses pyvet [here](explore_pyvet.ipynb).
 
 ## Veteran Benefits Intake
 
