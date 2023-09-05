@@ -8,8 +8,9 @@ To begin using `pyvet` run the following:
 pip install pyvet
 ```
 
-Check out the [Jupyter notebook]("https://github.com/cterrazas2/pyvet-jupyter/blob/main/explore_pyvet.ipynb")
-for some examples if you just want to get up and running quickly.
+Check out the
+[Jupyter]("https://github.com/cterrazas2/pyvet-jupyter/blob/main/explore_pyvet.ipynb")
+notebook for some examples if you just want to get up and running quickly.
 
 ## Required software for local development
 
