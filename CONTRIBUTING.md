@@ -21,6 +21,6 @@ Before you start working on a change, visit the
 [issues](https://github.com/cterrazas2/pyvet/issues) and
 [pull-requests](https://github.com/cterrazas2/pyvet/pulls) tabs and see if there
 is something already related to your change. If not, then once your change is
-completed locally, ideally in your own branch, ensure all tests pass (and add
+completed locally, in your own branch, ensure all tests pass (and add
 tests to your change), and then create a pull request filled out with all the
 pertinent information.
